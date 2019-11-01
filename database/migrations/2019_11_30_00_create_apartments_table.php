@@ -21,7 +21,8 @@ class CreateApartmentsTable extends Migration
             $table->integer('beds')->nullable();
             $table->integer('bathrooms')->nullable();
             $table->integer('mq')->nullable();
-            $table->string('geo_coords')->nullable();
+            $table->string('address');
+            $table->string('geo_coords');
             $table->integer('visualizations')->nullable();
             $table->boolean('active')->nullable();
         });
