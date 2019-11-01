@@ -8,7 +8,7 @@ use App\Apartment;
 
 $factory->define(Apartment::class, function (Faker $faker) {
     return [
-      'description'=>$faker-> sentence(10) ,
+      'description'=>$faker-> text(1000) ,
       'rooms'=>rand(1, 5) ,
       'beds'=>rand(1,10) ,
       'bathrooms'=>rand(1,3) ,

@@ -16,7 +16,9 @@ class Apartment extends Model
     'address',
     'geo_coords',
     'visualizations',
-    'active'
+    'active',
+    'user_id',
+    'tier_id'
   ];
 
   public function features(){

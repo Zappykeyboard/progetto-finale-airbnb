@@ -1,23 +1,35 @@
-@extends('layouts.app')
+@php
+  use App\Apartment;
+  $apts = Apartment::where('user_id', Auth::id())->get();
+
+@endphp
+@extends('layouts.base')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+  
 
-                    You are logged in!
-                </div>
-            </div>
+  @if (!empty($apts))
+    @foreach ($apts as $apt)
+      <div class="col-md-4 col-xs-12">
+        <h4>{{$apt->description}}</h4>
+        <div class="">
+          <p>Dimensioni: {{$apt->mq}}mq</p>
+          <p>Numero di camere: {{$apt->rooms}}</p>
+          <p>Posti letto: {{$apt->beds}}</p>
+          <p>Numero di bagni: {{$apt->bathromms}}</p>
+          <p>Indirizzo: {{$apt->address}}</p>
+          <p>Visualizzazioni: {{rand(100, 500)}}</p>
+          <a href="{{route('apt.show', $apt->id)}}">Visualizza</a> <br>
         </div>
-    </div>
+      </div>
+    @endforeach
+
+  @else
+    <h4>Non hai registrato alcun appartamento!</h4>
+  @endif
+
+
 </div>
 @endsection

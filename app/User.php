@@ -42,7 +42,8 @@ class User extends Authenticatable
     ];
 
 
-    public function apartaments(){
+
+    public function apartments(){
 
       return $this -> hasMany(Apartment::class);
     }
