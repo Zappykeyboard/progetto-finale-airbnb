@@ -51,11 +51,11 @@
             @endguest
                 </div>
 
-            <div class="container">
-              @yield('content')
-            </div>
-      </header>
 
+      </header>
+      <div class="container">
+        @yield('content')
+      </div>
 
         </div>
     </body>
