@@ -10,4 +10,9 @@ class Message extends Model
     'body',
     'sender_email'
   ];
+
+  public function apartment(){
+
+    return $this -> belongsTo(Apartment::class);
+  }
 }

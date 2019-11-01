@@ -14,14 +14,14 @@ class AddUsersForeignKey extends Migration
     public function up()
     {
       Schema::table('apartments_features', function (Blueprint $table) {
-        $table -> bigInteger('apartament_id') -> unsigned() -> index();
-        $table -> foreign('apartament_id', 'apartaments_features')
+        $table -> bigInteger('apartment_id') -> unsigned() -> index();
+        $table -> foreign('apartment_id', 'apartments_features')
                -> references('id')
                -> on('apartments');
 
 
         $table -> bigInteger('features_id') -> unsigned() -> index();
-        $table -> foreign('features_id', 'features_apartaments')
+        $table -> foreign('features_id', 'features_apartments')
                -> references('id')
                -> on('features');
              });
@@ -37,9 +37,9 @@ class AddUsersForeignKey extends Migration
     {
 
       Schema::table('apartments_features', function (Blueprint $table) {
-      $table -> dropForeign('apartaments_features');
-      $table -> dropColumn('apartament_id');
-      $table -> dropForeign('features_apartaments');
+      $table -> dropForeign('apartments_features');
+      $table -> dropColumn('apartment_id');
+      $table -> dropForeign('features_apartments');
       $table -> dropColumn('features_id');
     });
 

@@ -26,6 +26,21 @@ class CreateApartmentsTable extends Migration
             $table->integer('visualizations')->nullable();
             $table->boolean('active')->nullable();
         });
+
+          Schema::table('apartments', function (Blueprint $table) {
+            $table -> bigInteger('user_id') -> unsigned() -> index();
+            $table -> foreign('user_id', 'user_apartments')
+                   -> references('id')
+                   -> on('users');
+
+           $table -> bigInteger('tier_id') -> unsigned() -> index();
+           $table -> foreign('tier_id', 'apartment_tiers')
+                  -> references('id')
+                  -> on('tiers');
+          });
+
+
+
     }
 
     /**
@@ -36,5 +51,15 @@ class CreateApartmentsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('apartments');
+
+        Schema::table('apartments', function (Blueprint $table) {
+
+        $table -> dropForeign('user_apartments');
+        $table -> dropColumn('user_id');
+
+        $table -> dropForeign('apartment_tiers');
+        $table -> dropColumn('tier_id');
+
+      });
     }
 }

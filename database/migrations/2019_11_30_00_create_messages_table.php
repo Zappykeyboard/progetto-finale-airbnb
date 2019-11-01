@@ -19,6 +19,15 @@ class CreateMessagesTable extends Migration
             $table->string('sender_email');
             $table->timestamps();
         });
+
+        // AGGIUNGE CHIAVE ESTERNA
+        Schema::table('messages', function (Blueprint $table) {
+          $table -> bigInteger('apartment_id') -> unsigned() -> index();
+          $table -> foreign('apartment_id', 'apartament_messages')
+                 -> references('id')
+                 -> on('apartments');
+
+        });
     }
 
     /**
