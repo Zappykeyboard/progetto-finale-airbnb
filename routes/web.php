@@ -10,9 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Apartment;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $apts = Apartment::where('active', '1')
+              -> inRandomOrder()
+              -> take(10)
+              -> get();
+    return view('welcome', compact('apts'));
 });
 
 Auth::routes();
