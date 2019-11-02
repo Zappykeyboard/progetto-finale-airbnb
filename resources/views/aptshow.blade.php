@@ -8,9 +8,8 @@
     <p>Posti letto: {{$apt->beds}}</p>
     <p>Numero di bagni: {{$apt->bathromms}}</p>
     <p>Indirizzo: {{$apt->address}}</p>
-    @auth
+    @if(Auth::id()==$apt->user->id)
       Visualizzazioni: {{$apt-> visualizations}}
-
-    @endauth
+    @endif
   </div>
 @endsection

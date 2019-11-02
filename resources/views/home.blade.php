@@ -18,7 +18,8 @@
           <p>Posti letto: {{$apt->beds}}</p>
           <p>Numero di bagni: {{$apt->bathromms}}</p>
           <p>Indirizzo: {{$apt->address}}</p>
-          <p>Visualizzazioni: {{$apt-> visualizations}}</p>
+          <p>Visualizzazioni: {{rand(100, 500)}}</p>
+          <a href="{{route('apt.show', $apt->id)}}">Visualizza</a> <br>
         </div>
       </div>
     @endforeach
