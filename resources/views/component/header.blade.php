@@ -1,6 +1,6 @@
 <header>
   <div class="logo">
-    <img src="air.jpg" alt="boolbnb logo">
+    <a href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a> 
   </div>
   <div class="nav">
     <ul class="navBar">
