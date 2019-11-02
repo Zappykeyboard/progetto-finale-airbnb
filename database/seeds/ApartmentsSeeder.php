@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Apartment;
 use App\User;
+use App\Tier;
 
 class ApartmentsSeeder extends Seeder
 {
@@ -13,15 +14,20 @@ class ApartmentsSeeder extends Seeder
      */
     public function run()
     {
+
         factory(Apartment::class, 50)
           -> make()
-          -> each(function($apt){
-
+          -> each(function($apartment){
+             //Aggiungo valori per chiave estern user_id
              $user = User::inRandomOrder() -> first();
+             $apartment -> user() -> associate($user);
 
-             $apt -> user() -> associate($user);
-             $apt -> save();
 
-          });
-    }
+             //Aggiungo valori per chiave esterna tier_id
+             $tier = Tier::inRandomOrder() -> first();
+             $apartment -> tier() -> associate($tier);
+
+             $apartment -> save();
+    });
+  }
 }

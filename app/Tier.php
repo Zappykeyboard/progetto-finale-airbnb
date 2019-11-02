@@ -11,4 +11,9 @@ class Tier extends Model
     'name',
     'duration'
   ];
+
+  public function apartaments(){
+
+    return $this -> hasMany(Apartment::class);
+  }
 }

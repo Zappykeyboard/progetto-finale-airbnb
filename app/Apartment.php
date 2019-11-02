@@ -25,6 +25,17 @@ class Apartment extends Model
   }
 
   public function user(){
-    return $this-> belongsTo(User::class);
+
+    return $this -> belongsTo(User::class);
+  }
+
+  public function tier(){
+
+    return $this -> belongsTo(Tier::class);
+  }
+
+  public function messages(){
+
+    return $this -> belongsToMany(Message::class);
   }
 }
