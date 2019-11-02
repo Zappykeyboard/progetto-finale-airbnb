@@ -24,7 +24,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('aptcreate');
     }
 
     /**
@@ -35,7 +35,19 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+          'description' => 'required',
+          'address' => 'required',
+          'geo_coords' => 'required'
+        ]);
+
+        $validated['user_id'] = $request->user()->id;
+        $validated['tier_id'] = '1';
+        //dd($validated);
+        Apartment::create($validated);
+
+        return redirect('/home');
     }
 
     /**

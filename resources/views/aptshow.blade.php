@@ -10,6 +10,7 @@
     <p>Indirizzo: {{$apt->address}}</p>
     @auth
       Visualizzazioni: {{$apt-> visualizations}}
+
     @endauth
   </div>
 @endsection

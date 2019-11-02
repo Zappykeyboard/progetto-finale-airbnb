@@ -1,6 +1,6 @@
 <header>
   <div class="logo">
-    <a href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a> 
+    <a href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a>
   </div>
   <div class="nav">
     <ul class="navBar">
@@ -17,7 +17,7 @@
 
       @else
 
-        <li>{{ Auth::user()->lastname . ", " . Auth::user()->firstname }} </li>
+        <li> <a href="{{route('home')}}">{{ Auth::user()->lastname . ", " . Auth::user()->firstname }}</a>  </li>
         <li>  <a href="{{route('logout')}}"
           onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">

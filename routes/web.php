@@ -16,6 +16,7 @@ Route::get('/', 'IndexController@index')->name('index');
 
 Auth::routes();
 
+//richiede autorizzazione
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/users', 'UserController@index')->name('users.index');
@@ -23,3 +24,11 @@ Route::get('/users', 'UserController@index')->name('users.index');
 
 Route::get('/apt/{id}', 'ApartmentController@show')
       ->name('apt.show');
+
+Route::get('new/apt', 'ApartmentController@create')
+      ->name('apt.create')
+      ->middleware('auth');
+
+Route::post('/', 'ApartmentController@store')
+      ->name('apt.store')
+      ->middleware('auth');
