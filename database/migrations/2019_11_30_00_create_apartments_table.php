@@ -26,6 +26,7 @@ class CreateApartmentsTable extends Migration
             $table->integer('visualizations')->nullable();
             $table->boolean('active')->nullable();
         });
+
     }
 
     /**
@@ -36,5 +37,6 @@ class CreateApartmentsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('apartments');
+
     }
 }
