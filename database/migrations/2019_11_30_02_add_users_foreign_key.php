@@ -36,7 +36,7 @@ class AddUsersForeignKey extends Migration
                 -> references('id')
                 -> on('users');
 
-        $table -> bigInteger('tier_id') -> unsigned() -> index();
+        $table -> bigInteger('tier_id') -> unsigned() ->default('1') -> index();
         $table -> foreign('tier_id', 'apartment_tiers')
                -> references('id')
                -> on('tiers');
