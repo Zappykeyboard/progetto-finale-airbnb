@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/* Stabilisco le regole generali */
+
+/* Stabilisco le regole generali */
 
 * {
   margin: 0;
@@ -10,7 +11,6 @@
 body {
   overflow-x: hidden;
 }
-
 /* Metto l'immagine di sfondo e faccio in maniera si che occupi tutto lo schermo */
 
 header {
@@ -30,7 +30,7 @@ header {
   max-width: 70px;
   max-height: 70px;
   position: absolute;
-  top: 30px;
+  top : 30px;
   left: 3%;
 }
 
@@ -51,8 +51,7 @@ header {
   padding-top: 20px;
 }
 
-.inputApparts h3,
-.inputApparts .position {
+.inputApparts h3, .inputApparts .position {
   padding: 10px;
   margin-left: 40px;
 }
@@ -77,7 +76,9 @@ header {
   bottom: 10%;
 }
 
+
 /* Metto la nav bar in alto a destra */
+
 
 .navBar {
   list-style: none;
@@ -111,18 +112,18 @@ main {
   position: relative;
 }
 
+
 .appartaments {
   padding-top: 100px;
   width: 100%;
   height: 50%;
+
 }
 
 .appartaments h1 {
   flex-wrap: wrap;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
+  justify-content: center;
   align-self: center;
 }
 
@@ -151,6 +152,8 @@ main {
   display: block;
 }
 
+
+
 /* Mi occupo del footer */
 
 footer {
@@ -158,6 +161,21 @@ footer {
   height: 100vh;
   background-color: azure;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Faccio il button per i contatti */
 
@@ -169,118 +187,3 @@ footer {
   background-color: white;
   padding: 20px;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-header {
-  width: 100%;
-  height: 130px;
-}
-
-header img {
-  width: 50px;
-  height: 50px;
-  margin: 20px;
-}
-
-.photos {
-  width: 100%;
-  height: 500px;
-}
-
-.left {
-  background: url(/images/ap1.jpg?e237966ddac4aad2c3828d4e239d299c);
-  /* background-repeat: no-repeat; */
-  background-size: cover;
-  width: 50%;
-  height: 100%;
-  float: left;
-}
-
-.right {
-  background: url(/images/ap1.jpg?e237966ddac4aad2c3828d4e239d299c);
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 25%;
-  height: 50%;
-  float: left;
-}
-
-.left:hover,
-.right:hover {
-  -webkit-transition: 0.4;
-  transition: 0.4;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
-  border: 1px solid black;
-}
-
-#description {
-  width: 100%;
-  height: 600px;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-          flex-direction: row;
-}
-
-#description h1 {
-  padding: 30px;
-}
-
-.info {
-  width: 40%;
-  height: 100%;
-  margin-left: 30px;
-}
-
-.info p {
-  padding: 20px;
-  font-size: 18px;
-  font-weight: 600;
-  font-style: italic;
-  border: 1px dotted black;
-}
-
-.servizi {
-  width: 20%;
-  height: 100%;
-}
-
-.servizi ul {
-  margin-left: 100px;
-  margin-top: 40px;
-}
-
-.contact {
-  width: 40%;
-  height: 100%;
-}
-
-.form {
-  padding: 30px;
-  background-color: azure;
-  width: 70%;
-  border: 1px green solid;
-  border-radius: 5%;
-  font-size: 18px;
-}
-
-.form h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-textarea {
-  resize: none;
-}
-
-#butt {
-  padding: 20px;
-}
-

@@ -16,11 +16,28 @@ class Apartment extends Model
     'address',
     'geo_coords',
     'visualizations',
-    'active'
+    'active',
+    'user_id',
+    'tier_id'
   ];
 
   public function features(){
 
     return $this -> belongsToMany(Feature::class);
+  }
+
+  public function user(){
+
+    return $this -> belongsTo(User::class);
+  }
+
+  public function tier(){
+
+    return $this -> belongsTo(Tier::class);
+  }
+
+  public function messages(){
+
+    return $this -> belongsToMany(Message::class);
   }
 }
