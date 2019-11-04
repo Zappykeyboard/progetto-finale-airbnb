@@ -42,9 +42,9 @@ class ApartmentController extends Controller
           'geo_coords' => 'required'
         ]);
 
+        //associo lo user della sessione all'appartamento
         $validated['user_id'] = $request->user()->id;
-        $validated['tier_id'] = '1';
-        //dd($validated);
+
         Apartment::create($validated);
 
         return redirect('/home');

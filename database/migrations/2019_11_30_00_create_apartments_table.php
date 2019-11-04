@@ -23,8 +23,8 @@ class CreateApartmentsTable extends Migration
             $table->integer('mq')->nullable();
             $table->string('address')->nullable();
             $table->string('geo_coords')->nullable();
-            $table->integer('visualizations')->nullable();
-            $table->boolean('active')->nullable();
+            $table->integer('visualizations')->nullable()->default('0');
+            $table->boolean('active')->nullable()->default('1');
         });
 
     }
