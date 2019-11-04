@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
           TiersSeeder::class,
           ApartmentsSeeder::class,
           FeaturesSeeder::class,
-          MessagesSeeder::class
+          MessagesSeeder::class,
+          // ApartmentsFeaturesSeeder::class
         ]);
 
     }
