@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\Feature;
+use App\Apartment;
+
 
 class FeaturesSeeder extends Seeder
 {

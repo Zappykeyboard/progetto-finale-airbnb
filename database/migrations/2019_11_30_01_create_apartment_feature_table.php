@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApartmentsFeaturesTable extends Migration
+class CreateApartmentFeatureTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateApartmentsFeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('apartments_features', function (Blueprint $table) {
+        Schema::create('apartment_feature', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateApartmentsFeaturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apartments_features');
+        Schema::dropIfExists('apartment_feature');
     }
 }
