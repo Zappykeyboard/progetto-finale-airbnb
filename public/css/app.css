@@ -11100,3 +11100,151 @@ a.text-dark:focus {
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  width: 100%;
+  height: 75px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+}
+
+header .logo {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+header .navBar {
+  list-style: none;
+  font-size: 20px;
+  font-weight: 600;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+header .navBar li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+header .navBar li:hover {
+  color: white;
+  font-weight: 1000;
+  border-bottom: 2px solid white;
+  cursor: pointer;
+}
+
+section.row {
+  height: 50vh;
+  padding: 30px;
+}
+
+section.row .contact form {
+  width: 100%;
+  font-size: 18px;
+}
+
+section.row .contact form .form {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+}
+
+section.row .contact form .form .button {
+  margin: 20px 0;
+  padding: 10px;
+}
+
+header img {
+  width: 50px;
+  height: 50px;
+}
+
+.photos {
+  width: 100%;
+  height: calc(100vh - 75px);
+}
+
+.photos img {
+  max-height: 100%;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.white {
+  color: white;
+}
+
+header.header-absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+header.header-absolute a {
+  color: white;
+}
+
+.img-background {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.img-background img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.inputApparts {
+  width: 500px;
+  height: 450px;
+  background-color: white;
+  position: absolute;
+  left: 7%;
+  top: 20%;
+  border-radius: 20px;
+  border: 2px solid #e3342f;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.inputApparts form {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+}
+
+.inputApparts form button {
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.apartments-wrapper {
+  padding: 50px;
+}
+

@@ -1,35 +1,80 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.base')
 
-        <title>Laravel</title>
+@section('content_header')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+  <header class="row col-md-12 header-absolute  color-white">
+    {{-- <div class=""> --}}
+      <div class="logo col-md-4 col-xs-10">
+        <a class="col-md-2 col-xs-1"href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a>
+      </div>
+
+      <ul class="navBar col-md-8">
 
 
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+      @guest
+        @if (Route::has('login'))
+          <li><a href="{{ route('login') }}">Login</a></li>
+        @endif
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-            <div class="container">
-              @yield('content')
-            </div>
+        @if (Route::has('register'))
+            <li><a href="{{ route('register') }}">Register</a></li>
+        @endif
 
-        </div>
-    </body>
-</html>
+        @else
+
+          <li> <a href="{{route('home')}}">{{ Auth::user()->lastname . ", " . Auth::user()->firstname }}</a>  </li>
+          <li>  <a href="{{route('logout')}}"
+            onclick="event.preventDefault();
+                          document.getElementById('logout-form').submit();">
+            Logout
+          </a></li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+        @endguest
+        </ul>
+  </header>
+
+@endsection
+
+@section('content')
+
+  <div class="img-background">
+    <img src="/img/imag1.jpg" alt="">
+
+    <section class="row">
+      <div class="inputApparts col-lg-5 col-md-8 col-sm-12">
+        <h1>Cerca gli appartamenti nella Tua zona.</h1>
+        <form class="" action="index.html" method="post">
+          <h3>Dove: </h3>
+          <input class="position" type="text" name="position" value="" placeholder="Ovunque">
+          <!-- <input class="positionButt" type="button" name="" value="Vai"> -->
+          <h3>Quante persone: </h3>
+          <input class="position" type="text" name="position" value="" placeholder="1">
+          <!-- <input class="positionButt" type="button" name="" value="Vai"> -->
+          <h3>In data: </h3>
+          <input class="position" type="text" name="position" value="" placeholder="01-11-2019">
+          <!-- <input class="positionButt" type="button" name="" value="Vai"> -->
+          <button class ="searchGo" type="button" name="button">Avvia la ricerca</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <div class="apartments-wrapper">
+    <ul class="row">
+      <h1 class="col-md-12">Gli appartamenti in evidenza</h1>
+      @foreach ($apts as $apt)
+        <li class="col-md-4 col-sm-6">{{$apt->description}}
+           <br>
+          Proprietario: {{$apt->user->lastname}}
+          <br>
+          <a href="{{route('apt.show', $apt->id)}}">Visualizza</a>
+        </li>
+      @endforeach
+    </ul>
+
+  </div>
+
+
+@endsection
