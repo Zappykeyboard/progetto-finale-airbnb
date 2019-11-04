@@ -29,6 +29,6 @@ Route::get('new/apt', 'ApartmentController@create')
       ->name('apt.create')
       ->middleware('auth');
 
-Route::post('/', 'ApartmentController@store')
+Route::post('store/apt', 'ApartmentController@store')
       ->name('apt.store')
       ->middleware('auth');
