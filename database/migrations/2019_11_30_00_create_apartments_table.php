@@ -16,7 +16,7 @@ class CreateApartmentsTable extends Migration
         Schema::create('apartments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->integer('rooms')->nullable();
             $table->integer('beds')->nullable();
             $table->integer('bathrooms')->nullable();

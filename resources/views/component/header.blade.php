@@ -1,11 +1,12 @@
-<header>
-  <div class="logo">
-    <a href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a>
-  </div>
-  <div class="nav">
-    <ul class="navBar">
+<header class="row col-md-12">
+  {{-- <div class=""> --}}
+    <div class="logo col-md-4 col-xs-10">
+      <a class="col-md-2 col-xs-1"href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a>
+    </div>
 
-    </ul>
+    <ul class="navBar col-md-8">
+
+
     @guest
       @if (Route::has('login'))
         <li><a href="{{ route('login') }}">Login</a></li>
@@ -27,7 +28,8 @@
           @csrf
       </form>
       @endguest
-          </div>
+      </ul>
+    {{-- </div> --}}
 
 
 </header>

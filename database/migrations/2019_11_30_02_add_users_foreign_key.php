@@ -16,25 +16,26 @@ class AddUsersForeignKey extends Migration
 
 
       //relazione many-to-many apartments-features
-      Schema::table('apartments_features', function (Blueprint $table) {
+      //Tabella APARTMENTS
+      Schema::table('apartments', function (Blueprint $table) {
+        $table -> bigInteger('user_id') -> unsigned() -> index();
+        $table -> foreign('user_id', 'user_apartments')
+               -> references('id')
+               -> on('users');
+
+      Schema::table('apartment_feature', function (Blueprint $table) {
         $table -> bigInteger('apartment_id') -> unsigned() -> index();
-        $table -> foreign('apartment_id', 'apartments_features')
+        $table -> foreign('apartment_id', 'apartment_feature')
                -> references('id')
                -> on('apartments');
 
 
-        $table -> bigInteger('features_id') -> unsigned() -> index();
-        $table -> foreign('features_id', 'features_apartments')
+        $table -> bigInteger('feature_id') -> unsigned() -> index();
+        $table -> foreign('feature_id', 'features_apartments')
                -> references('id')
                -> on('features');
              });
 
-       //Tabella APARTMENTS
-       Schema::table('apartments', function (Blueprint $table) {
-         $table -> bigInteger('user_id') -> unsigned() -> index();
-         $table -> foreign('user_id', 'user_apartments')
-                -> references('id')
-                -> on('users');
 
         $table -> bigInteger('tier_id') -> unsigned() ->default('1') -> index();
         $table -> foreign('tier_id', 'apartment_tiers')
@@ -60,13 +61,13 @@ class AddUsersForeignKey extends Migration
      */
     public function down()
     {
-      // Drop Chiavi esterne APARTMENTS_FEATURES
-        Schema::table('apartments_features', function (Blueprint $table) {
+      // Drop Chiavi esterne apartment_feature
+        Schema::table('apartment_feature', function (Blueprint $table) {
 
-          $table -> dropForeign('apartments_features');
+          $table -> dropForeign('apartment_feature');
           $table -> dropColumn('apartment_id');
           $table -> dropForeign('features_apartments');
-          $table -> dropColumn('features_id');
+          $table -> dropColumn('feature_id');
       });
 
         // Drop Chiavi esterne APARTMENTS

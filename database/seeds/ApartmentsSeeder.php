@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Apartment;
 use App\User;
 use App\Tier;
+use App\Feature;
 
 class ApartmentsSeeder extends Seeder
 {
@@ -21,7 +22,6 @@ class ApartmentsSeeder extends Seeder
              //Aggiungo valori per chiave estern user_id
              $user = User::inRandomOrder() -> first();
              $apartment -> user() -> associate($user);
-
 
              //Aggiungo valori per chiave esterna tier_id
              $tier = Tier::inRandomOrder() -> first();
