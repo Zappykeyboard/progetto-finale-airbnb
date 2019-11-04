@@ -7,6 +7,13 @@ use App\Feature;
 
 class Apartment extends Model
 {
+  use FullTextSearch;
+
+  protected $searchable = [
+    'description',
+    'address'
+  ];
+
   protected $fillable = [
     'description',
     'rooms',

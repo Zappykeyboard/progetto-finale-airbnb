@@ -21,7 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/users', 'UserController@index')->name('users.index');
 
-Route::get('/search','ApartmentController@index')->name('apt.index');
+Route::post('/search','SearchPageController@SearchWithQuery')
+      ->name('searchWithQuery');
+ROute::get('/search', 'SearchPageController@index')
+      ->name('search.index');
 
 Route::get('/apt/{id}', 'ApartmentController@show')
       ->name('apt.show');

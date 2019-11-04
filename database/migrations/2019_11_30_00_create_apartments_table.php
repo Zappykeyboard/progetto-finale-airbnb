@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateApartmentsTable extends Migration
 {
@@ -27,6 +28,7 @@ class CreateApartmentsTable extends Migration
             $table->boolean('active')->nullable()->default('1');
         });
 
+        DB::statement('ALTER TABLE apartments ADD FULLTEXT fulltext_index (description, address)');
     }
 
     /**

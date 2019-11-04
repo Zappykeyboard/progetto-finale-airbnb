@@ -48,10 +48,10 @@
           Inserisci parole chiave:
         </div>
         <div class="">
-          <form class="" action="{{route('apt.index')}}" method="get">
+          <form class="" action="{{route('searchWithQuery')}}" method="post">
             @csrf
-            @method('GET')
-            <input type="text" name="search_general" value="">
+            @method('POST')
+            <input type="text" name="query" value="">
             <button type="submit" name="button">Vai</button>
           </form>
         </div>
