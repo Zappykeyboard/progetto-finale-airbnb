@@ -12,7 +12,7 @@
 @section('content')
   <a href="{{route('apt.create')}}">Registra un nuovo appartamento...</a>
 <div class="container">
-  @if (!empty($apts))
+  @if (count($apts) > 0)
     @foreach ($apts as $apt)
       <div class="col-md-4 col-xs-12">
         <h4>{{$apt->description}}</h4>
