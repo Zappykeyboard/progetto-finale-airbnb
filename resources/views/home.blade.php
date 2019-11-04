@@ -1,15 +1,17 @@
+@extends('layouts.base')
 @php
   use App\Apartment;
   $apts = Apartment::where('user_id', Auth::id())->get();
 
 @endphp
-@extends('layouts.base')
+@section('content_header')
+  @include('component.header')
+@endsection
+
 
 @section('content')
+  <a href="{{route('apt.create')}}">Registra un nuovo appartamento...</a>
 <div class="container">
-
-  
-
   @if (!empty($apts))
     @foreach ($apts as $apt)
       <div class="col-md-4 col-xs-12">

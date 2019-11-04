@@ -45,7 +45,6 @@
     <section class="row">
       <div class="inputApparts col-lg-5 col-md-8 col-sm-12">
         <h1>Cerca gli appartamenti nella Tua zona.</h1>
-        <a href="{{route('apt.create')}}">Registra un nuovo appartamento...</a>
         <form class="" action="index.html" method="post">
           <h3>Dove: </h3>
           <input class="position" type="text" name="position" value="" placeholder="Ovunque">
