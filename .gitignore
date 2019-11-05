@@ -14,3 +14,4 @@ package-lock.json
 public/img/uploads
 public/js/app.js
 public/css/app.css
+composer.lock
