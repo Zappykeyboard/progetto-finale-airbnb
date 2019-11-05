@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 public/img/uploads
+public/js/app.js
+public/css/app.css
