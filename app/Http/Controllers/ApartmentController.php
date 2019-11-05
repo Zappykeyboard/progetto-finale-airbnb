@@ -81,6 +81,9 @@ class ApartmentController extends Controller
         ]);
 
 
+        //associo lo user della sessione all'appartamento
+        $validated['user_id'] = $request->user()->id;
+
         $newApt = Apartment::create($validatedApt);
 
         foreach ($validatedFeatures['feature'] as $feature) {

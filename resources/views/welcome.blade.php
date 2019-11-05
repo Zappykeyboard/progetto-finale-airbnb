@@ -5,7 +5,7 @@
   <header class="row col-md-12 header-absolute  color-white">
     {{-- <div class=""> --}}
       <div class="logo col-md-4 col-xs-10">
-        <a class="col-md-2 col-xs-1"href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a>
+        <a class="col-md-2 col-xs-1"href="{{route('index')}}"><img src="air.jpg" alt="boolbnb logo"></a>
       </div>
 
       <ul class="navBar col-md-8">
@@ -40,11 +40,22 @@
 @section('content')
 
   <div class="img-background">
-    <img src="/img/imag1.jpg" alt="">
+    <img src="img/imag1.jpg" alt="">
 
     <section class="row">
       <div class="inputApparts col-lg-5 col-md-8 col-sm-12">
-        <h1>Cerca gli appartamenti nella Tua zona.</h1>
+        <div class="">
+          Inserisci parole chiave:
+        </div>
+        <div class="">
+          <form class="" action="{{route('apt.index')}}" method="get">
+            @csrf
+            @method('GET')
+            <input type="text" name="search_general" value="">
+            <button type="submit" name="button">Vai</button>
+          </form>
+        </div>
+        {{-- <h1>Cerca gli appartamenti nella Tua zona.</h1>
         <form class="" action="index.html" method="post">
           <h3>Dove: </h3>
           <input class="position" type="text" name="position" value="" placeholder="Ovunque">
@@ -56,7 +67,7 @@
           <input class="position" type="text" name="position" value="" placeholder="01-11-2019">
           <!-- <input class="positionButt" type="button" name="" value="Vai"> -->
           <button class ="searchGo" type="button" name="button">Avvia la ricerca</button>
-        </form>
+        </form> --}}
       </div>
     </section>
   </div>
