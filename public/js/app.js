@@ -49378,8 +49378,7 @@ function init() {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
   var app = new Vue({
     el: '#app'
-  });
-  filePondDropImg();
+  }); // filePondDropImg();
 }
 
 ; // funzione per DROPIN file immagine

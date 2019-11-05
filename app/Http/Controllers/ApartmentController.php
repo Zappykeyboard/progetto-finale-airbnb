@@ -47,27 +47,51 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
 
-        $validated = $request->validate([
+        dd($request);
+        
+
+        $validatedApt = $request->validate([
           'description' => 'required',
           'address' => 'required',
-          'mq'=> 'required',
-          'address'=> 'required',
-          'description'=> 'required',
           'mq'=> 'required',
           'rooms'=> 'required',
           'beds'=> 'required',
           'bathrooms'=> 'required',
-          'feature'=> 'required',
-          'img'
+          'img'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4048'
         ]);
-        //
-        // $validated['user_id'] = $request->user()->id;
-        // $validated['tier_id'] = '1';
-        //dd($validated);
-        // Apartment::create($validated);
-        // dd($validated);
 
-        return redirect('/home')->with(dd($validated));
+        $validatedApt['user_id'] = $request -> user() -> id;
+
+        $file = $request -> file('img');
+
+        if ($file) {
+
+          $targetPath = 'img';
+          $targetFile = $request -> user() -> id . "apt" . $file->getClientOriginalExtension();
+
+          $file->move($targetPath, $targetFile);
+
+          $validatedApt['img'] = $targetFile;
+        }
+
+
+
+        $validatedFeatures = $request->validate([
+          'feature' => 'nullable'
+        ]);
+
+
+        $newApt = Apartment::create($validatedApt);
+
+        foreach ($validatedFeatures['feature'] as $feature) {
+
+          $item = Feature::findOrFail($feature);
+
+          $item -> apartments() -> attach($newApt);
+        }
+
+        dd($newApt);
+        // return redirect('/home')->with(dd($validated));
     }
 
     /**
