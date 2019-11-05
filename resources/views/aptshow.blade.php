@@ -30,6 +30,7 @@
         <p>Indirizzo: {{$apt->address}}</p>
         @if(Auth::id()==$apt->user->id)
           Visualizzazioni: {{$apt-> visualizations}}
+          <a href="#">Modifica...</a>
         @endif
       </div>
 
@@ -54,7 +55,7 @@
               <h3>Inserisci la Tua email</h3>
               <input type="email" name="" value="">
               <h3>Scrivi il messaggio</h3>
-              <textarea #id="textToPossesor" name="name" rows="5" cols="20" minlength="10" maxlength="500"></textarea>
+              <textarea id="textToPossesor" name="name" rows="5" cols="20" minlength="10" maxlength="500"></textarea>
               <input id="butt" class="button" type="button" name="" value="Manda">
             </div>
 
