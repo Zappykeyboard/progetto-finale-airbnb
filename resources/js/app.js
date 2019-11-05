@@ -26,7 +26,43 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+ window.FilePond = require('./filepond.min.js');
+ window.FilePondPluginImagePreview = require('./filepond-plugin-image-preview.min.js');
 
-const app = new Vue({
-    el: '#app',
-});
+$(document).ready(init);
+
+function init(){
+
+  console.log("hello mikke");
+
+  var token = $('meta[name="csrf-token"]').attr('content');
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+
+
+
+  var app = new Vue({
+      el: '#app'
+  });
+
+  // filePondDropImg();
+};
+
+// funzione per DROPIN file immagine
+function filePondDropImg(){
+  FilePond.registerPlugin(
+      FilePondPluginImagePreview,
+  );
+
+  FilePond.setOptions({
+      server: {
+          url: '',
+          process: {
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          }
+      }
+  });
+  var inputElement = document.querySelector('input[type="file"]');
+  var pond = FilePond.create( inputElement );
+}

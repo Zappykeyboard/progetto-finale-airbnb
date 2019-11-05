@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Apartment;
+use App\Feature;
 
 class ApartmentController extends Controller
 {
@@ -22,9 +23,19 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('aptcreate');
+        $file= $request->file('file');
+
+        $features= Feature::all();
+        // File::create([
+        //   'title'=> $file-> getClientOriginalName(),
+        //   'description' => 'upload whit dropzone.js',
+        //   'path' => $file-> store('public/storage')
+        //
+        // ]);
+
+        return view('aptcreate_address', compact('features'));
     }
 
     /**
@@ -36,18 +47,54 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
 
-        $validated = $request->validate([
+        dd($request);
+        
+
+        $validatedApt = $request->validate([
           'description' => 'required',
           'address' => 'required',
-          'geo_coords' => 'required'
+          'mq'=> 'required',
+          'rooms'=> 'required',
+          'beds'=> 'required',
+          'bathrooms'=> 'required',
+          'img'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4048'
         ]);
+
+        $validatedApt['user_id'] = $request -> user() -> id;
+
+        $file = $request -> file('img');
+
+        if ($file) {
+
+          $targetPath = 'img';
+          $targetFile = $request -> user() -> id . "apt" . $file->getClientOriginalExtension();
+
+          $file->move($targetPath, $targetFile);
+
+          $validatedApt['img'] = $targetFile;
+        }
+
+
+
+        $validatedFeatures = $request->validate([
+          'feature' => 'nullable'
+        ]);
+
 
         //associo lo user della sessione all'appartamento
         $validated['user_id'] = $request->user()->id;
 
-        Apartment::create($validated);
+        $newApt = Apartment::create($validatedApt);
 
-        return redirect('/home');
+        foreach ($validatedFeatures['feature'] as $feature) {
+
+          $item = Feature::findOrFail($feature);
+
+          $item -> apartments() -> attach($newApt);
+        }
+
+        dd($newApt);
+        // return redirect('/home')->with(dd($validated));
     }
 
     /**
