@@ -48,7 +48,7 @@ class ApartmentController extends Controller
     {
 
         dd($request);
-        
+
 
         $validatedApt = $request->validate([
           'description' => 'required',
@@ -90,8 +90,6 @@ class ApartmentController extends Controller
           $item -> apartments() -> attach($newApt);
         }
 
-        dd($newApt);
-        // return redirect('/home')->with(dd($validated));
     }
 
     /**
