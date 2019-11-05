@@ -29,8 +29,9 @@
         <p>Numero di bagni: {{$apt->bathrooms}}</p>
         <p>Indirizzo: {{$apt->address}}</p>
         @if(Auth::id()==$apt->user->id)
-          Visualizzazioni: {{$apt-> visualizations}}
-          <a href="#">Modifica...</a>
+          Visualizzazioni: {{$apt-> visualizations}} <br>
+          <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
+          <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
         @endif
       </div>
 

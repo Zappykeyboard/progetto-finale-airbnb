@@ -46,7 +46,7 @@ class AddUsersForeignKey extends Migration
        // Tabella MESSAGES
        Schema::table('messages', function (Blueprint $table) {
          $table -> bigInteger('apartment_id') -> unsigned() -> index();
-         $table -> foreign('apartment_id', 'apartament_messages')
+         $table -> foreign('apartment_id', 'apartment_messages')
                 -> references('id')
                 -> on('apartments');
 
@@ -83,8 +83,8 @@ class AddUsersForeignKey extends Migration
 
         // Drop Chiavi esterne MESSAGES
         Schema::table('messages', function (Blueprint $table) {
-          $table -> dropForeign('user_apartments');
-          $table -> dropColumn('user_id');
+          $table -> dropForeign('apartment_messages');
+          $table -> dropColumn('apartment_id');
 
         });
 

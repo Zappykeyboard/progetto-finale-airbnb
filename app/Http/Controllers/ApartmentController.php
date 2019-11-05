@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Apartment;
 use App\Feature;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -111,7 +112,17 @@ class ApartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $apt = Apartment::findOrFail($id);
+
+        if ($apt->user_id == Auth::id()) {
+          return view('aptedit', compact('apt'));
+
+        } else {
+          return redirect('/');
+        }
+
+
     }
 
     /**
@@ -123,7 +134,54 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $validatedApt = $request->validate([
+        'description' => 'required',
+        'address' => 'required',
+        'mq'=> 'required',
+        'rooms'=> 'required',
+        'beds'=> 'required',
+        'bathrooms'=> 'required',
+        'img'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4048'
+      ]);
+
+      $apt = Apartment::findOrFail($id);
+
+      if ($apt->user_id == Auth::id()) {
+
+        //aggiungo la path per l'immagine
+        $file = $request -> file('img');
+
+        if ($file) {
+          $targetPath = 'img/uploads';
+          $targetFile = $apt->id . "apt." . $file->getClientOriginalExtension();
+
+          $file->move($targetPath, $targetFile);
+        }
+        $apt -> update([
+          'img_path'=>$targetFile
+        ]);
+
+        //raccolgo l'array di features
+        $validatedFeatures = $request->validate([
+          'feature' => 'nullable'
+        ]);
+
+        //associo le features all'appartamento
+        foreach ($validatedFeatures['feature'] as $feature) {
+
+          $item = Feature::findOrFail($feature);
+
+          //sync() aggiorna apartment_feature senza aggiungere duplicati
+          $item -> apartments() -> sync($apt,false);
+
+        }
+
+
+        return redirect('/home');
+
+      } else {
+        return redirect('/');
+      }
     }
 
     /**
@@ -134,6 +192,18 @@ class ApartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $apt = Apartment::findOrFail($id);
+
+        if ($apt->user_id == Auth::id()){
+          $apt->messages()->delete();
+          $apt->delete();
+          return redirect('/home');
+
+        } else {
+
+          return redirect('/');
+
+        }
+
     }
 }
