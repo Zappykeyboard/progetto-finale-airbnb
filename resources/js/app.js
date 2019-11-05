@@ -40,11 +40,16 @@ function init(){
 
 
 
-  var app = new Vue({
+  var create_apt = new Vue({
       el: '#app'
   });
 
   // filePondDropImg();
+
+  var message_comp = new Vue({
+
+      el: '#vue_messages'
+  });
 };
 
 // funzione per DROPIN file immagine

@@ -47,9 +47,6 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
 
-        dd($request);
-
-
         $validatedApt = $request->validate([
           'description' => 'required',
           'address' => 'required',
@@ -67,21 +64,20 @@ class ApartmentController extends Controller
         if ($file) {
 
           $targetPath = 'img';
-          $targetFile = $request -> user() -> id . "apt" . $file->getClientOriginalExtension();
+          $targetFile = rand(1,1000) . "_apt" . $file->getClientOriginalExtension();
 
           $file->move($targetPath, $targetFile);
 
-          $validatedApt['img'] = $targetFile;
+          $validatedApt['img_path'] = $targetFile;
         }
 
+        $newApt = Apartment::create($validatedApt);
 
 
         $validatedFeatures = $request->validate([
           'feature' => 'nullable'
         ]);
 
-
-        $newApt = Apartment::create($validatedApt);
 
         foreach ($validatedFeatures['feature'] as $feature) {
 
@@ -90,8 +86,8 @@ class ApartmentController extends Controller
           $item -> apartments() -> attach($newApt);
         }
 
-        dd($newApt);
-        // return redirect('/home')->with(dd($validated));
+        // dd($newAspt);
+        return redirect('/home');
     }
 
     /**

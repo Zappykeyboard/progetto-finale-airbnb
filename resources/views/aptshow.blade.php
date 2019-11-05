@@ -8,6 +8,8 @@
 
 @section('content')
 
+  @include('component.messages')
+
   <main>
 
     <div class="photos col-md-12">
@@ -48,20 +50,10 @@
 
       <div class="contact col-md-6">
 
-        <form class="" action="{{ route('msg.store', $apt-> id ) }}" method="post">
-          @csrf
-          @method('POST')
+        <div id="vue_messages">
+          <messages></messages>
+        </div>
 
-          <h1>Contatta il proprietario</h1>
-            <div class="form">
-              <label for="sender_email"><h3>Inserisci la Tua email</h3></label>
-              <input type="email" name="sender_email" value="">
-              <label for="body"><h3>Scrivi il messaggio</h3></label>
-              <textarea #id="textToPossesor" name="body" rows="5" cols="20" minlength="10" maxlength="500"></textarea>
-              <input id="sub-message" class="button" type="submit" name="" value="Manda">
-            </div>
-
-        </form>
       </div>
 
     </section>
