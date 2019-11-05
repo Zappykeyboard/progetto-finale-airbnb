@@ -7,7 +7,15 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Filepond
+@import '~filepond/dist/filepond.min.scss';
+
+// Filepond
+@import '~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.scss';
+
+
 // @import 'style';
 @import 'styledettapp';
 @import 'helper';
 @import 'index_style';
+@import 'new_apt';

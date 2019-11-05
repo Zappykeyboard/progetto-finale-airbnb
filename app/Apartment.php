@@ -14,11 +14,13 @@ class Apartment extends Model
     'bathrooms',
     'mq',
     'address',
-    'geo_coords',
     'visualizations',
     'active',
     'user_id',
-    'tier_id'
+    'tier_id',
+    'img_path',
+    'lat',
+    'lon'
   ];
 
   public function features(){
