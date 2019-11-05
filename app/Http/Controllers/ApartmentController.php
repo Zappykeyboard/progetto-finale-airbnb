@@ -65,9 +65,9 @@ class ApartmentController extends Controller
         // $validated['tier_id'] = '1';
         //dd($validated);
         // Apartment::create($validated);
-        dd($validated);
+        // dd($validated);
 
-        // return redirect('/home')->with(dd($validated));
+        return redirect('/home')->with(dd($validated));
     }
 
     /**

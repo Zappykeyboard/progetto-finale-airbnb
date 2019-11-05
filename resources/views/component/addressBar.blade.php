@@ -5,7 +5,7 @@
       <img src="/img/imag1.jpg" alt="" v-show='!formShow'>
 
 
-    <form class="" action="{{route('apt.create')}}" method="post" enctype="multipart/form-data">
+    <form class="" action="{{route('apt.store')}}" method="post" enctype="multipart/form-data">
       @csrf
       @method('POST')
 
