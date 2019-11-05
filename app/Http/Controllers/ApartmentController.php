@@ -48,7 +48,7 @@ class ApartmentController extends Controller
     {
 
         dd($request);
-        
+
 
         $validatedApt = $request->validate([
           'description' => 'required',

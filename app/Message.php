@@ -8,7 +8,8 @@ class Message extends Model
 {
   protected $fillable = [
     'body',
-    'sender_email'
+    'sender_email',
+    'apartment_id'
   ];
 
   public function apartment(){
