@@ -6,17 +6,52 @@ use Illuminate\Http\Request;
 use App\Apartment;
 use App\Feature;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class ApartmentController extends Controller
 {
+
+    private function cycleFeatures(Apartment $apt){
+
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+          'beds'=> 'required|numeric|min:1',
+          'bathrooms'=>'required|numeric|min:1',
+          'rooms'=> 'required|numeric|min:1'
+        ]);
+        $foundApts = new Apartment;
+        //cerco solo appartamenti attivi
+        $foundApts = $foundApts->where('active','>','0');
+
+        //ciclo i valori della request
+        foreach ($validated as $key => $value) {
+            $foundApts = $foundApts->where($key, '>=', $value);
+        }
+
+        if($request->features){
+
+          foreach ($request->features as $featID){
+            $foundApts = $foundApts->whereHas('features', function(Builder $query) use($featID){
+              $query->where('features.id', '=', $featID);
+            });
+          }
+        }
+
+
+
+        $foundApts = $foundApts -> get();
+
+
+        dd($foundApts);
+
     }
 
     /**
