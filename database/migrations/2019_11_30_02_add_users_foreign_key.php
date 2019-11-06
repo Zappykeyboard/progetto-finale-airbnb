@@ -21,26 +21,30 @@ class AddUsersForeignKey extends Migration
         $table -> bigInteger('user_id') -> unsigned() -> index();
         $table -> foreign('user_id', 'user_apartments')
                -> references('id')
-               -> on('users');
+               -> on('users')
+               -> onDelete('cascade');
 
       Schema::table('apartment_feature', function (Blueprint $table) {
         $table -> bigInteger('apartment_id') -> unsigned() -> index();
         $table -> foreign('apartment_id', 'apartment_feature')
                -> references('id')
-               -> on('apartments');
+               -> on('apartments')
+               -> onDelete('cascade');
 
 
         $table -> bigInteger('feature_id') -> unsigned() -> index();
         $table -> foreign('feature_id', 'features_apartments')
                -> references('id')
-               -> on('features');
+               -> on('features')
+               -> onDelete('cascade');
              });
 
 
         $table -> bigInteger('tier_id') -> unsigned() ->default('1') -> index();
         $table -> foreign('tier_id', 'apartment_tiers')
                -> references('id')
-               -> on('tiers');
+               -> on('tiers')
+               ->onDelete('cascade');
        });
 
        // Tabella MESSAGES
@@ -48,7 +52,8 @@ class AddUsersForeignKey extends Migration
          $table -> bigInteger('apartment_id') -> unsigned() -> index();
          $table -> foreign('apartment_id', 'apartment_messages')
                 -> references('id')
-                -> on('apartments');
+                -> on('apartments')
+                -> onDelete('cascade');
 
        });
 
