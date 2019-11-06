@@ -50,7 +50,7 @@
 
 
           <label for="body" name="body"><p class="card-text">inserisci il tuo messaggio:</p></label><br>
-          <textarea class="col-md-12" type="text" name="body" v-model="textarea"></textarea>
+          <textarea class="col-md-12" type="text" name="body" v-model="textarea">@{ textarea }</textarea>
           <br>
 
           <div class="text-right col-md-12 row">
