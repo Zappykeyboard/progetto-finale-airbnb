@@ -14,7 +14,7 @@ class FeaturesSeeder extends Seeder
      */
     public function run()
     {
-        factory(Feature::class, 5)
+        factory(Feature::class, 9)
         ->create()
         ->each(function($feat){
 
