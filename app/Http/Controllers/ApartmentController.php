@@ -75,6 +75,7 @@ class ApartmentController extends Controller
 
 
         $validatedFeatures = $request->validate([
+          
           'feature' => 'nullable'
         ]);
 
