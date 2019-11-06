@@ -36,8 +36,9 @@ class ApartmentController extends Controller
             $foundApts = $foundApts->where($key, '>=', $value);
         }
 
+        //se sono state selezionate features...
         if($request->features){
-
+          //...cicla e filtra gli appartamenti
           foreach ($request->features as $featID){
             $foundApts = $foundApts->whereHas('features', function(Builder $query) use($featID){
               $query->where('features.id', '=', $featID);
