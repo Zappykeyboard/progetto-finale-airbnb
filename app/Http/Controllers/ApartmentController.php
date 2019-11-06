@@ -5,17 +5,54 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Apartment;
 use App\Feature;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class ApartmentController extends Controller
 {
+
+    private function cycleFeatures(Apartment $apt){
+
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+          'beds'=> 'required|numeric|min:1',
+          'bathrooms'=>'required|numeric|min:1',
+          'rooms'=> 'required|numeric|min:1'
+        ]);
+        $foundApts = new Apartment;
+        //cerco solo appartamenti attivi
+        $foundApts = $foundApts->where('active','>','0');
+
+        //ciclo i valori della request
+        foreach ($validated as $key => $value) {
+            $foundApts = $foundApts->where($key, '>=', $value);
+        }
+
+        //se sono state selezionate features...
+        if($request->features){
+          //...cicla e filtra gli appartamenti
+          foreach ($request->features as $featID){
+            $foundApts = $foundApts->whereHas('features', function(Builder $query) use($featID){
+              $query->where('features.id', '=', $featID);
+            });
+          }
+        }
+
+
+
+        $foundApts = $foundApts -> get();
+
+
+        dd($foundApts);
+
     }
 
     /**
@@ -47,27 +84,47 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
 
-        $validated = $request->validate([
+        $validatedApt = $request->validate([
           'description' => 'required',
           'address' => 'required',
-          'mq'=> 'required',
-          'address'=> 'required',
-          'description'=> 'required',
           'mq'=> 'required',
           'rooms'=> 'required',
           'beds'=> 'required',
           'bathrooms'=> 'required',
-          'feature'=> 'required',
-          'img'
+          'img'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4048'
         ]);
-        //
-        // $validated['user_id'] = $request->user()->id;
-        // $validated['tier_id'] = '1';
-        //dd($validated);
-        // Apartment::create($validated);
-        // dd($validated);
 
-        return redirect('/home')->with(dd($validated));
+        $validatedApt['user_id'] = $request -> user() -> id;
+        //creo la nuova entità sul db
+        $newApt = Apartment::create($validatedApt);
+
+        //aggiungo la path per l'immagine
+        $file = $request -> file('img');
+
+        if ($file) {
+          $targetPath = 'img/uploads';
+          $targetFile = $newApt->id . "apt." . $file->getClientOriginalExtension();
+
+          $file->move($targetPath, $targetFile);
+        }
+        $newApt -> update([
+          'img_path'=>$targetFile
+        ]);
+
+        //raccolgo l'array di features
+        $validatedFeatures = $request->validate([
+          'feature' => 'nullable'
+        ]);
+
+        //associo le features all'appartamento
+        foreach ($validatedFeatures['feature'] as $feature) {
+
+          $item = Feature::findOrFail($feature);
+
+          $item -> apartments() -> attach($newApt);
+        }
+
+        return redirect('/home');
     }
 
     /**
@@ -91,7 +148,17 @@ class ApartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $apt = Apartment::findOrFail($id);
+
+        if ($apt->user_id == Auth::id()) {
+          return view('aptedit', compact('apt'));
+
+        } else {
+          return redirect('/');
+        }
+
+
     }
 
     /**
@@ -103,7 +170,54 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $validatedApt = $request->validate([
+        'description' => 'required',
+        'address' => 'required',
+        'mq'=> 'required',
+        'rooms'=> 'required',
+        'beds'=> 'required',
+        'bathrooms'=> 'required',
+        'img'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4048'
+      ]);
+
+      $apt = Apartment::findOrFail($id);
+
+      if ($apt->user_id == Auth::id()) {
+
+        //aggiungo la path per l'immagine
+        $file = $request -> file('img');
+
+        if ($file) {
+          $targetPath = 'img/uploads';
+          $targetFile = $apt->id . "apt." . $file->getClientOriginalExtension();
+
+          $file->move($targetPath, $targetFile);
+        }
+        $apt -> update([
+          'img_path'=>$targetFile
+        ]);
+
+        //raccolgo l'array di features
+        $validatedFeatures = $request->validate([
+          'feature' => 'nullable'
+        ]);
+
+        //associo le features all'appartamento
+        foreach ($validatedFeatures['feature'] as $feature) {
+
+          $item = Feature::findOrFail($feature);
+
+          //sync() aggiorna apartment_feature senza aggiungere duplicati
+          $item -> apartments() -> sync($apt,false);
+
+        }
+
+
+        return redirect('/home');
+
+      } else {
+        return redirect('/');
+      }
     }
 
     /**
@@ -114,6 +228,17 @@ class ApartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $apt = Apartment::findOrFail($id);
+
+        if ($apt->user_id == Auth::id()){
+          $apt->delete();
+          return redirect('/home');
+
+        } else {
+
+          return redirect('/');
+
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 
-<script type="text/javascript" id="template_addresBar">
+<script type="text/x-template" id="template_addresBar">
   <div class="myContainer">
     <div class="img-background">
       <img src="/img/imag1.jpg" alt="" v-show='!formShow'>
@@ -18,14 +18,16 @@
       <main v-show='formShow'>
 
         <div class="photos col-md-12">
-            @include('component.dropFile')
+          <!-- <label for="img"></label> -->
+          <br>
+          <input name="img" accept="image/*" type="file">
         </div>
 
         <section class="row">
 
           <div class="desc col-md-8 form-group">
             <label for="description"><h2>Inserisci qui una breve descrizione:</h2></label>
-            <textarea name="name" rows="8" cols="80"></textarea>
+            <textarea name="description" rows="8" cols="80"></textarea>
           </div>
 
           <div class="info col-md-4 form-group">
@@ -51,7 +53,7 @@
             <label for="feature"><h1>Servizi disponibili</h1></label>
             <ul>
               @foreach ($features as $feature)
-                <li><input type="checkbox" name="feature" value="{{$feature -> id}}">{{$feature-> type}}</li>
+                <li><input type="checkbox" name="feature[]" value="{{$feature -> id}}">{{$feature-> type}}</li>
               @endforeach
             </ul>
           </div>

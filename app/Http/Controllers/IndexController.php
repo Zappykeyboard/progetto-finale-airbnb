@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Apartment;
+use App\Feature;
 
 class IndexController extends Controller
 {
@@ -13,6 +14,7 @@ class IndexController extends Controller
                 -> inRandomOrder()
                 -> take(10)
                 -> get();
-      return view('welcome', compact('apts'));
+      $features = Feature::all();
+      return view('welcome', compact('apts', 'features'));
     }
 }

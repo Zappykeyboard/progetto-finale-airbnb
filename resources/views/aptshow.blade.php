@@ -11,7 +11,7 @@
   <main>
 
     <div class="photos col-md-12">
-      <img class="otherjpg col-md-12" src="/img/ap1.jpg" alt="">
+      <img class="otherjpg col-md-12" src="/img/uploads/{{$apt->img_path}}" alt="Foto dell'appartamento">
     </div>
 
 
@@ -29,7 +29,9 @@
         <p>Numero di bagni: {{$apt->bathrooms}}</p>
         <p>Indirizzo: {{$apt->address}}</p>
         @if(Auth::id()==$apt->user->id)
-          Visualizzazioni: {{$apt-> visualizations}}
+          Visualizzazioni: {{$apt-> visualizations}} <br>
+          <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
+          <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
         @endif
       </div>
 
@@ -54,7 +56,7 @@
               <h3>Inserisci la Tua email</h3>
               <input type="email" name="" value="">
               <h3>Scrivi il messaggio</h3>
-              <textarea #id="textToPossesor" name="name" rows="5" cols="20" minlength="10" maxlength="500"></textarea>
+              <textarea id="textToPossesor" name="name" rows="5" cols="20" minlength="10" maxlength="500"></textarea>
               <input id="butt" class="button" type="button" name="" value="Manda">
             </div>
 

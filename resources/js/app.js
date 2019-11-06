@@ -44,7 +44,7 @@ function init(){
       el: '#app'
   });
 
-  filePondDropImg();
+  // filePondDropImg();
 };
 
 // funzione per DROPIN file immagine
