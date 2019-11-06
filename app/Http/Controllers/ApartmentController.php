@@ -195,7 +195,6 @@ class ApartmentController extends Controller
         $apt = Apartment::findOrFail($id);
 
         if ($apt->user_id == Auth::id()){
-          $apt->messages()->delete();
           $apt->delete();
           return redirect('/home');
 
