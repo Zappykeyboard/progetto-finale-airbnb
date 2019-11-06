@@ -7,33 +7,78 @@
 
   <div class="box">
 
-    <!-- <form class="" action="{{ route('msg.store', $apt-> id ) }}" method="post">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item">
+            <a class="nav-link" :class="active_btn_msg" @click="setAbilitedMessages()">Messaggi</a>
+          </li>
+
+          @if (Auth::user() -> id != $apt -> user -> id)
+            <li class="nav-item">
+              <a class="nav-link" :class="active_btn_form" @click="setAbilitedForm()">Contatta il proprietario</a>
+            </li>
+            @endif
+
+        </ul>
+      </div>
+      <div class="card-body messages">
+
+    <!-- Form per invio messaggio  -->
+    @if (Auth::user() -> id != $apt -> user -> id)
+    <form class="col-md-12" action="{{ route('msg.guest.create', $apt-> id ) }}" method="post" v-show="isAbilitedForm">
       @csrf
       @method('POST')
 
-      <h1>Contatta il proprietario</h1>
-        <div class="form">
-          <label for="sender_email"><h3>Inserisci la Tua email</h3></label>
-          <input type="email" name="sender_email" value="">
-          <label for="body"><h3>Scrivi il messaggio</h3></label>
-          <textarea #id="textToPossesor" name="body" rows="5" cols="20" minlength="10" maxlength="500"></textarea>
-          <input id="sub-message" class="button" type="submit" name="" value="Manda">
+      <div class="card text-white bg-dark mb-3">
+
+        <div class="card-header row">
+            <label class="col-md-3 col-sm-12" for="sender_email" name="sender_email">Inserisi la tua mail</label>
+            <input class="col-md-8 col-sm-12" type="email" name="sender_email" v-model="email"/>
         </div>
 
-    </form> -->
-    <div class="messages">
-      @foreach ($messages as $message)
-        <div class="card text-white bg-dark mb-3 col-lg-12">
-          <div class="card-header">Messaggio da: {{$message -> sender_email}}</div>
-          <div class="card-body">
-            <h5 class="card-title">Appartamento: {{$apt->address}}</h5>
-            <p class="card-text">{{$message -> body}}</p>
+        <div class="card-body">
+
+          <div class="row">
+            <h5 class="card-title col-md-3">Stai contattando:</h5>
+            <p class="col-md-8">{{$apt->user->firstname}} {{$apt->user->lastname}}</p>
           </div>
-        </div>
-      @endforeach
-    </div>
+          <div class="row">
+            <h5 class="card-title col-md-3">Appartamento:</h5>
+            <p class="col-md-8">{{$apt->address}}</p>
+          </div>
 
-    @if (Auth::user() -> id == $apt -> user -> id)
+
+          <label for="body" name="body"><p class="card-text">inserisci il tuo messaggio:</p></label><br>
+          <textarea class="col-md-12" type="text" name="body" v-model="textarea"></textarea>
+          <br>
+
+          <div class="text-right col-md-12 row">
+            <input type="button" class="btn btn-primary" value="Invia il Messaggio" @click="saveMsg()"/>
+
+          </div>
+
+        </div>
+      </div>
+     </form>
+    @endif
+
+      <div class="col-md-12" v-show="!isAbilitedForm" >
+        @foreach ($apt -> messages as $message)
+          <div class="card text-white bg-dark mb-3 col-lg-12">
+            <div class="card-header">Messaggio da: {{$message -> sender_email}}</div>
+            <div class="card-body">
+              <h5 class="card-title">Appartamento: {{$apt->address}}</h5>
+              <p class="card-text">{{$message -> body}}</p>
+            </div>
+          </div>
+        @endforeach
+      </div>
+
+    </div>
+  </div>
+
+    @if (!Auth::user() -> id == $apt -> user -> id)
       @else
       @endif
 
@@ -46,6 +91,10 @@
 
 <script type="text/javascript">
 
+var token = $('meta[name="csrf-token"]').attr('content');
+window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+
+
   Vue.component('messages', {
 
     template: '#template_messages',
@@ -54,27 +103,99 @@
 
       return {
 
-        user_id: this.id,
-        address_added: false
+        isAbilitedForm: false,
+        isAbilitedMessages: true,
+        active_btn_msg: 'active',
+        active_btn_form: 'disable',
+        textarea: '',
+        email: ''
       }
     },
 
     props: {
 
-      id: Number
+      id: Number,
+      apt_id: Number
     },
 
     computed: {
 
+      show(){
+        return this;
+      },
 
 
     },
 
     methods: {
 
+      setAbilitedForm(){
+
+        this.isAbilitedForm = true;
+        this.isAbilitedMessages = false;
+
+        this.active_btn_form = 'active';
+        this.active_btn_msg = 'disable';
+      },
+
+      setAbilitedMessages(){
+
+        this.isAbilitedForm = false;
+        this.isAbilitedMessages = true;
+
+        this.active_btn_msg = 'active';
+        this.active_btn_form = 'disable';
+      },
+
+      saveMsg(){
+
+        var msg = {
+
+          _token: token,
+          body: this.textarea,
+          sender_email: this.email,
+          apartment_id: this.apt_id
+        };
+
+
+        console.log(this.textarea);
+        axios.post('/message/create/' + this.apt_id, msg)
+          .then(function(res){
+
+            this.textarea = "";
+            this.email = "";
+
+            console.log(res);
+          })
+          .catch(function(err){
+            console.log(err);
+          });
+
+          console.log(msg);
+
+      }
+
+
+
+    },
+
+    watch:{
+
+      'email': function(val){
+
+        this.email = val;
+        console.log(this.email);
+      },
+
+      'textarea': function(val){
+
+        this.textarea = val;
+        console.log(this.textarea);
+      },
+
+
 
     }
-
   });
 
 </script>

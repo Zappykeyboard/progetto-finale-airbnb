@@ -51,7 +51,9 @@
       <div class="contact col-md-6">
 
         <div id="vue_messages">
-          <messages></messages>
+          <messages
+                    :apt_id= "{{ $apt->id }}"
+          ></messages>
         </div>
 
       </div>
