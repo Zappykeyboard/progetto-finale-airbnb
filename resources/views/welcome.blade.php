@@ -45,14 +45,37 @@
     <section class="row">
       <div class="inputApparts col-lg-5 col-md-8 col-sm-12">
         <div class="">
-          Inserisci parole chiave:
+          Inserisci parametri di ricerca:
         </div>
         <div class="">
           <form class="" action="{{route('apt.index')}}" method="get">
             @csrf
             @method('GET')
-            <input type="text" name="search_general" value="">
-            <button type="submit" name="button">Vai</button>
+            <div class="">
+              <label for="beds">Posti letto: </label>
+              <input type="text" name="beds" value="1">
+            </div>
+            <div class="">
+              <label for="rooms">N. stanze</label>
+              <input type="text" name="rooms" value="1">
+            </div>
+            <div class="">
+              <label for="bathrooms">N. Bagni</label>
+              <input type="text" name="bathrooms" value="1">
+            </div>
+            <div class="">
+              <label for="feature"><h3>Servizi disponibili</h3></label>
+              <ul>
+                @foreach ($features as $feature)
+                  <li><input type="checkbox" name="features[]" value="{{$feature -> id}}">{{$feature-> type}}</li>
+                @endforeach
+              </ul>
+            </div>
+
+            <div class="">
+                <button type="submit">Vai</button>
+            </div>
+
           </form>
         </div>
         {{-- <h1>Cerca gli appartamenti nella Tua zona.</h1>
