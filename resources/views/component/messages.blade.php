@@ -1,9 +1,6 @@
 <script type="text/x-template" id="template_messages">
 
-  @php
-    use App\Message;
-    $messages = Message::all()->take(5);
-  @endphp
+
 
   <div class="box">
 
@@ -11,24 +8,15 @@
       <div class="card-header">
         <ul class="nav nav-pills card-header-pills">
 
-          @guest
-          <li class="nav-item">
-            <a class="nav-link" :class="active_btn_form" @click="setAbilitedForm()">Contatta il proprietario</a>
-          </li>
 
-          @else
-          <li class="nav-item">
-            <a class="nav-link" :class="active_btn_msg" @click="setAbilitedMessages()">Messaggi</a>
-          </li>
-          @endguest
 
         </ul>
       </div>
       <div class="card-body messages">
 
     <!-- Form per invio messaggio  -->
-    @guest
-    <form class="col-md-12" action="{{ route('msg.guest.create', $apt-> id ) }}" method="post" v-show="isAbilitedForm">
+    @if (Auth::id() != $apt->user_id || Auth::guest())
+    <form class="col-md-12" action="{{ route('msg.guest.create', $apt-> id ) }}" method="post" >
       @csrf
       @method('POST')
 
@@ -63,7 +51,7 @@
         </div>
       </div>
      </form>
-    @endguest
+    @endif
 
       @if (Auth::id() == $apt->user_id)
       <div class="col-md-12" v-show="!isAbilitedForm" >
