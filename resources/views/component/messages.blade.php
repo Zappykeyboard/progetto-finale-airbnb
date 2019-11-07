@@ -10,22 +10,24 @@
     <div class="card">
       <div class="card-header">
         <ul class="nav nav-pills card-header-pills">
+
+          @guest
+          <li class="nav-item">
+            <a class="nav-link" :class="active_btn_form" @click="setAbilitedForm()">Contatta il proprietario</a>
+          </li>
+
+          @else
           <li class="nav-item">
             <a class="nav-link" :class="active_btn_msg" @click="setAbilitedMessages()">Messaggi</a>
           </li>
-
-          @if (Auth::user() -> id != $apt -> user -> id)
-            <li class="nav-item">
-              <a class="nav-link" :class="active_btn_form" @click="setAbilitedForm()">Contatta il proprietario</a>
-            </li>
-            @endif
+          @endguest
 
         </ul>
       </div>
       <div class="card-body messages">
 
     <!-- Form per invio messaggio  -->
-    @if (Auth::user() -> id != $apt -> user -> id)
+    @guest
     <form class="col-md-12" action="{{ route('msg.guest.create', $apt-> id ) }}" method="post" v-show="isAbilitedForm">
       @csrf
       @method('POST')
@@ -61,8 +63,9 @@
         </div>
       </div>
      </form>
-    @endif
+    @endguest
 
+      @if (Auth::id() == $apt->user_id)
       <div class="col-md-12" v-show="!isAbilitedForm" >
         @foreach ($apt -> messages as $message)
           <div class="card text-white bg-dark mb-3 col-lg-12">
@@ -74,14 +77,11 @@
           </div>
         @endforeach
       </div>
+      @endif
+
 
     </div>
   </div>
-
-    @if (!Auth::user() -> id == $apt -> user -> id)
-      @else
-      @endif
-
 
 
   </div>
