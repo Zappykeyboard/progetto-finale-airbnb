@@ -8,10 +8,10 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Filepond
-@import '~filepond/dist/filepond.min.scss';
+@import 'node_modules/filepond/dist/filepond';
 
 // Filepond
-@import '~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.scss';
+@import 'node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview';
 
 
 // @import 'style';
