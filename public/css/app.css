@@ -11121,6 +11121,8 @@ a.text-dark:focus {
   white-space: nowrap;
 }
 
+/* Hard to override styles */
+
 .filepond--browser.filepond--browser {
   position: absolute;
   margin: 0;
@@ -11146,26 +11148,25 @@ a.text-dark:focus {
 }
 
 .filepond--drip-blob {
+  position: absolute;
   -webkit-transform-origin: center center;
   transform-origin: center center;
+  top: 0;
+  left: 0;
   width: 8em;
   height: 8em;
   margin-left: -4em;
   margin-top: -4em;
   background: #292625;
   border-radius: 50%;
-}
-
-.filepond--drip-blob,
-.filepond--drop-label {
-  position: absolute;
-  top: 0;
-  left: 0;
   will-change: transform, opacity;
 }
 
 .filepond--drop-label {
+  position: absolute;
+  left: 0;
   right: 0;
+  top: 0;
   margin: 0;
   color: #4f4f4f;
   display: -webkit-box;
@@ -11174,12 +11175,15 @@ a.text-dark:focus {
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
-  height: 0;
+  height: 0px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  will-change: transform, opacity;
 }
+
+/* Hard to override styles on purpose */
 
 .filepond--drop-label.filepond--drop-label label {
   display: block;
@@ -11190,7 +11194,7 @@ a.text-dark:focus {
 .filepond--drop-label label {
   cursor: default;
   font-size: 0.875em;
-  font-weight: 400;
+  font-weight: normal;
   text-align: center;
   line-height: 1.5;
 }
@@ -11207,6 +11211,8 @@ a.text-dark:focus {
 .filepond--root[data-disabled] .filepond--drop-label label {
   opacity: 0.5;
 }
+
+/* Hard to override styles */
 
 .filepond--file-action-button.filepond--file-action-button {
   font-size: 1em;
@@ -11239,7 +11245,7 @@ a.text-dark:focus {
   height: 100%;
 }
 
-.filepond--file-action-button.filepond--file-action-button:after {
+.filepond--file-action-button.filepond--file-action-button::after {
   position: absolute;
   left: -0.75em;
   right: -0.75em;
@@ -11247,6 +11253,8 @@ a.text-dark:focus {
   bottom: -0.75em;
   content: "";
 }
+
+/* Soft styles */
 
 .filepond--file-action-button {
   cursor: auto;
@@ -11259,8 +11267,8 @@ a.text-dark:focus {
   transition: box-shadow 0.25s ease-in;
 }
 
-.filepond--file-action-button:focus,
-.filepond--file-action-button:hover {
+.filepond--file-action-button:hover,
+.filepond--file-action-button:focus {
   box-shadow: 0 0 0 0.125em rgba(255, 255, 255, 0.9);
 }
 
@@ -11355,6 +11363,8 @@ a.text-dark:focus {
   transition: opacity 0.25s ease-in-out;
 }
 
+/* Hard to override styles */
+
 .filepond--file-wrapper.filepond--file-wrapper {
   border: none;
   margin: 0;
@@ -11383,7 +11393,7 @@ a.text-dark:focus {
   height: 100%;
   -webkit-box-align: start;
           align-items: flex-start;
-  padding: 0.5625em;
+  padding: 0.5625em 0.5625em;
   color: #fff;
   border-radius: 0.5em;
 }
@@ -11402,9 +11412,9 @@ a.text-dark:focus {
   z-index: 3;
 }
 
-.filepond--file .filepond--file-action-button,
 .filepond--file .filepond--processing-complete-indicator,
-.filepond--file .filepond--progress-indicator {
+.filepond--file .filepond--progress-indicator,
+.filepond--file .filepond--file-action-button {
   position: absolute;
 }
 
@@ -11417,7 +11427,7 @@ a.text-dark:focus {
 }
 
 .filepond--file [data-align*=center] {
-  left: calc(50% - .8125em);
+  left: calc(50% - 0.8125em);
 }
 
 .filepond--file [data-align*=bottom] {
@@ -11425,7 +11435,7 @@ a.text-dark:focus {
 }
 
 .filepond--file [data-align=center] {
-  top: calc(50% - .8125em);
+  top: calc(50% - 0.8125em);
 }
 
 .filepond--file .filepond--progress-indicator {
@@ -11440,15 +11450,15 @@ a.text-dark:focus {
   margin-left: 0.1875em;
 }
 
-[data-filepond-item-state*=error] .filepond--file-info,
+[data-filepond-item-state=cancelled] .filepond--file-info,
 [data-filepond-item-state*=invalid] .filepond--file-info,
-[data-filepond-item-state=cancelled] .filepond--file-info {
+[data-filepond-item-state*=error] .filepond--file-info {
   margin-right: 2.25em;
 }
 
 [data-filepond-item-state=processing-complete] .filepond--action-revert-item-processing svg {
-  -webkit-animation: fall 0.5s linear 0.125s both;
-  animation: fall 0.5s linear 0.125s both;
+  -webkit-animation: fall 0.5s 0.125s linear both;
+  animation: fall 0.5s 0.125s linear both;
 }
 
 [data-filepond-item-state=processing-complete] .filepond--file-info-sub,
@@ -11461,10 +11471,10 @@ a.text-dark:focus {
   opacity: 0.5;
 }
 
-[data-filepond-item-state*=error] .filepond--file-wrapper,
-[data-filepond-item-state*=error] .filepond--panel,
+[data-filepond-item-state*=invalid] .filepond--panel,
 [data-filepond-item-state*=invalid] .filepond--file-wrapper,
-[data-filepond-item-state*=invalid] .filepond--panel {
+[data-filepond-item-state*=error] .filepond--panel,
+[data-filepond-item-state*=error] .filepond--file-wrapper {
   -webkit-animation: shake 0.65s linear both;
   animation: shake 0.65s linear both;
 }
@@ -11474,27 +11484,31 @@ a.text-dark:focus {
   animation: spin 1s linear infinite;
 }
 
+/**
+ * States
+ */
+
 @-webkit-keyframes spin {
   0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
   }
 
-  to {
-    -webkit-transform: rotate(1turn);
-    transform: rotate(1turn);
+  100% {
+    -webkit-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
   }
 }
 
 @keyframes spin {
   0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
   }
 
-  to {
-    -webkit-transform: rotate(1turn);
-    transform: rotate(1turn);
+  100% {
+    -webkit-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
   }
 }
 
@@ -11559,7 +11573,7 @@ a.text-dark:focus {
     animation-timing-function: ease-in-out;
   }
 
-  to {
+  100% {
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-animation-timing-function: ease-out;
@@ -11584,7 +11598,7 @@ a.text-dark:focus {
     animation-timing-function: ease-in-out;
   }
 
-  to {
+  100% {
     -webkit-transform: scale(1);
     transform: scale(1);
     -webkit-animation-timing-function: ease-out;
@@ -11596,7 +11610,7 @@ a.text-dark:focus {
   pointer-events: none;
 }
 
-.filepond--hopper[data-hopper-state=drag-over]:after {
+.filepond--hopper[data-hopper-state=drag-over]::after {
   content: "";
   position: absolute;
   left: 0;
@@ -11649,8 +11663,8 @@ a.text-dark:focus {
   background-color: #369763;
 }
 
-[data-filepond-item-state*=error] .filepond--item-panel,
-[data-filepond-item-state*=invalid] .filepond--item-panel {
+[data-filepond-item-state*=invalid] .filepond--item-panel,
+[data-filepond-item-state*=error] .filepond--item-panel {
   background-color: #c44e47;
 }
 
@@ -11674,9 +11688,9 @@ a.text-dark:focus {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   -webkit-mask: -webkit-gradient(linear, left top, left bottom, from(#000), to(transparent));
-  -webkit-mask: linear-gradient(180deg, #000 calc(100% - .5em), transparent);
+  -webkit-mask: linear-gradient(to bottom, #000 calc(100% - 0.5em), transparent 100%);
   mask: -webkit-gradient(linear, left top, left bottom, from(#000), to(transparent));
-  mask: linear-gradient(180deg, #000 calc(100% - .5em), transparent);
+  mask: linear-gradient(to bottom, #000 calc(100% - 0.5em), transparent 100%);
 }
 
 .filepond--list-scroller[data-state=overflow] .filepond--list {
@@ -11703,6 +11717,8 @@ a.text-dark:focus {
   background-clip: content-box;
 }
 
+/* hard to overide styles on purpose */
+
 .filepond--list.filepond--list {
   position: absolute;
   top: 0;
@@ -11711,6 +11727,8 @@ a.text-dark:focus {
   list-style-type: none;
   will-change: transform;
 }
+
+/* used for padding so allowed to be restyled */
 
 .filepond--list {
   left: 0.75em;
@@ -11786,9 +11804,15 @@ a.text-dark:focus {
   border-radius: inherit;
 }
 
-.filepond--root[data-style-panel-layout~=circle] .filepond--file-info,
-.filepond--root[data-style-panel-layout~=circle] .filepond--file-status,
 .filepond--root[data-style-panel-layout~=circle] > .filepond--panel > * {
+  display: none;
+}
+
+.filepond--root[data-style-panel-layout~=circle] .filepond--file-info {
+  display: none;
+}
+
+.filepond--root[data-style-panel-layout~=circle] .filepond--file-status {
   display: none;
 }
 
@@ -11822,9 +11846,9 @@ a.text-dark:focus {
   border: none !important;
 }
 
+.filepond--panel-top,
 .filepond--panel-bottom,
-.filepond--panel-center,
-.filepond--panel-top {
+.filepond--panel-center {
   position: absolute;
   left: 0;
   top: 0;
@@ -11833,8 +11857,8 @@ a.text-dark:focus {
   padding: 0;
 }
 
-.filepond--panel-bottom,
-.filepond--panel-top {
+.filepond--panel-top,
+.filepond--panel-bottom {
   height: 0.5em;
 }
 
@@ -11844,7 +11868,7 @@ a.text-dark:focus {
   border-bottom: none !important;
 }
 
-.filepond--panel-top:after {
+.filepond--panel-top::after {
   content: "";
   position: absolute;
   height: 2px;
@@ -11854,8 +11878,8 @@ a.text-dark:focus {
   background-color: inherit;
 }
 
-.filepond--panel-bottom,
-.filepond--panel-center {
+.filepond--panel-center,
+.filepond--panel-bottom {
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -11871,7 +11895,7 @@ a.text-dark:focus {
   border-top: none !important;
 }
 
-.filepond--panel-bottom:before {
+.filepond--panel-bottom::before {
   content: "";
   position: absolute;
   height: 2px;
@@ -11935,12 +11959,17 @@ a.text-dark:focus {
 }
 
 .filepond--root {
+  /* layout*/
   box-sizing: border-box;
   position: relative;
   margin-bottom: 1em;
+  /* base font size for whole component */
   font-size: 1rem;
+  /* base line height */
   line-height: normal;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  /* up uses default system font family */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  /* will increase font weight a bit on Safari */
   font-weight: 450;
   text-align: left;
   text-rendering: optimizeLegibility;
@@ -11953,13 +11982,17 @@ a.text-dark:focus {
   line-height: inherit;
 }
 
-.filepond--root :not(text) {
+.filepond--root *:not(text) {
   font-size: inherit;
 }
 
 .filepond--root[data-disabled] {
   pointer-events: none;
 }
+
+/**
+ * Root element children layout
+ */
 
 .filepond--root .filepond--drop-label {
   min-height: 4.75em;
@@ -12066,10 +12099,10 @@ a.text-dark:focus {
   will-change: transform, opacity;
 }
 
-.filepond--image-preview[data-transparency-indicator=grid] canvas,
-.filepond--image-preview[data-transparency-indicator=grid] img {
+.filepond--image-preview[data-transparency-indicator=grid] img,
+.filepond--image-preview[data-transparency-indicator=grid] canvas {
   background-color: #fff;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg' fill='%23eee'%3E%3Cpath d='M0 0h50v50H0M50 50h50v50H50'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg' fill='%23eee'%3E%3Cpath d='M0 0 H50 V50 H0'/%3E%3Cpath d='M50 50 H100 V100 H50'/%3E%3C/svg%3E");
   background-size: 1.25em 1.25em;
 }
 
@@ -12126,7 +12159,7 @@ a.text-dark:focus {
 
 .filepond--root[data-style-panel-layout~=circle] .filepond--progress-indicator[data-align*=bottom][data-align*=left],
 .filepond--root[data-style-panel-layout~=circle] .filepond--progress-indicator[data-align*=bottom][data-align*=right] {
-  margin-bottom: 0.5125em;
+  margin-bottom: calc(0.325em + 0.1875em);
 }
 
 .filepond--root[data-style-panel-layout~=circle] .filepond--progress-indicator[data-align*=bottom][data-align*=center] {
