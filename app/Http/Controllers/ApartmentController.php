@@ -85,7 +85,9 @@ class ApartmentController extends Controller
     public function store(ApartmentRequest $request)
     {
 
+
         $validatedApt = $request->validated();
+
 
         $validatedApt['user_id'] = $request -> user() -> id;
         $validatedApt['visualizations'] = 0;
@@ -94,6 +96,7 @@ class ApartmentController extends Controller
         $file = $request -> file('img');
 
         if ($file) {
+
           $targetPath = 'img/uploads';
           $targetFile = $newApt->id . "apt." . $file->getClientOriginalExtension();
 
@@ -107,7 +110,9 @@ class ApartmentController extends Controller
           //associo le features all'appartamento
           foreach ($request->feature as $feature) {
 
+
             $item = Feature::findOrFail($feature);
+
 
             $item -> apartments() -> attach($newApt);
           }

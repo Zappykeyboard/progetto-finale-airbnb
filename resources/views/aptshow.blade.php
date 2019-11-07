@@ -8,6 +8,8 @@
 
 @section('content')
 
+  @include('component.messages')
+
   <main>
 
     <div class="photos col-md-12">
@@ -50,17 +52,14 @@
 
       <div class="contact col-md-6">
 
-        <form class="" action="index.html" method="post">
-          <h1>Contatta il proprietario</h1>
-            <div class="form">
-              <h3>Inserisci la Tua email</h3>
-              <input type="email" name="" value="">
-              <h3>Scrivi il messaggio</h3>
-              <textarea id="textToPossesor" name="name" rows="5" cols="20" minlength="10" maxlength="500"></textarea>
-              <input id="butt" class="button" type="button" name="" value="Manda">
-            </div>
 
-        </form>
+        <div id="vue_messages">
+          <messages
+                    :apt_id= "{{ $apt->id }}"
+          ></messages>
+        </div>
+
+
       </div>
 
     </section>

@@ -12333,3 +12333,14 @@ header.header-absolute a {
  * Page Styles
  */
 
+.box .messages {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.card a {
+  cursor: pointer;
+}
+

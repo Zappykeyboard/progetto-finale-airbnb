@@ -34,6 +34,10 @@ Route::post('/', 'ApartmentController@store')
       ->name('apt.store')
       ->middleware('auth');
 
+
+Route::post('/message/create/{id}', 'MessageController@storeMessage')
+      ->name('msg.guest.create');
+
 Route::get('/apt/{id}/edit', 'ApartmentController@edit')
       ->name('apt.edit')
       ->middleware('auth');
