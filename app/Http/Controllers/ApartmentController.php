@@ -12,9 +12,6 @@ use App\Http\Requests\ApartmentRequest;
 class ApartmentController extends Controller
 {
 
-    private function cycleFeatures(Apartment $apt){
-
-    }
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +25,9 @@ class ApartmentController extends Controller
           'bathrooms'=>'required|numeric|min:1',
           'rooms'=> 'required|numeric|min:1'
         ]);
+
         $foundApts = new Apartment;
+
         //cerco solo appartamenti attivi
         $foundApts = $foundApts->where('active','>','0');
 
@@ -46,8 +45,6 @@ class ApartmentController extends Controller
             });
           }
         }
-
-
 
         $foundApts = $foundApts -> get();
 
