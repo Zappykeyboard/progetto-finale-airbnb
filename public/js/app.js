@@ -49373,12 +49373,16 @@ window.FilePondPluginImagePreview = __webpack_require__(/*! ./filepond-plugin-im
 $(document).ready(init);
 
 function init() {
-  console.log("hello mikke");
   var token = $('meta[name="csrf-token"]').attr('content');
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
-  var app = new Vue({
+  console.log(token);
+  var create_apt = new Vue({
     el: '#app'
   }); // filePondDropImg();
+
+  var message_comp = new Vue({
+    el: '#vue_messages'
+  });
 }
 
 ; // funzione per DROPIN file immagine

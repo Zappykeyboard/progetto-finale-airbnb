@@ -7,13 +7,11 @@ use App\Apartment;
 use App\Feature;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use App\Http\Requests\ApartmentRequest;
 
 class ApartmentController extends Controller
 {
 
-    private function cycleFeatures(Apartment $apt){
-
-    }
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +25,9 @@ class ApartmentController extends Controller
           'bathrooms'=>'required|numeric|min:1',
           'rooms'=> 'required|numeric|min:1'
         ]);
+
         $foundApts = new Apartment;
+
         //cerco solo appartamenti attivi
         $foundApts = $foundApts->where('active','>','0');
 
@@ -45,8 +45,6 @@ class ApartmentController extends Controller
             });
           }
         }
-
-
 
         $foundApts = $foundApts -> get();
 
@@ -81,48 +79,44 @@ class ApartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ApartmentRequest $request)
     {
 
-        $validatedApt = $request->validate([
-          'description' => 'required',
-          'address' => 'required',
-          'mq'=> 'required',
-          'rooms'=> 'required',
-          'beds'=> 'required',
-          'bathrooms'=> 'required',
-          'img'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4048'
-        ]);
+
+        $validatedApt = $request->validated();
+
 
         $validatedApt['user_id'] = $request -> user() -> id;
-        //creo la nuova entità sul db
-        $newApt = Apartment::create($validatedApt);
+        $validatedApt['visualizations'] = 0;
 
         //aggiungo la path per l'immagine
         $file = $request -> file('img');
 
         if ($file) {
+
           $targetPath = 'img/uploads';
           $targetFile = $newApt->id . "apt." . $file->getClientOriginalExtension();
 
           $file->move($targetPath, $targetFile);
+            $newApt -> update([
+              'img_path'=>$targetFile
+            ]);
         }
-        $newApt -> update([
-          'img_path'=>$targetFile
-        ]);
 
-        //raccolgo l'array di features
-        $validatedFeatures = $request->validate([
-          'feature' => 'nullable'
-        ]);
+        if($request->feature){
+          //associo le features all'appartamento
+          foreach ($request->feature as $feature) {
 
-        //associo le features all'appartamento
-        foreach ($validatedFeatures['feature'] as $feature) {
 
-          $item = Feature::findOrFail($feature);
+            $item = Feature::findOrFail($feature);
 
-          $item -> apartments() -> attach($newApt);
+
+            $item -> apartments() -> attach($newApt);
+          }
         }
+
+        //creo la nuova entità sul db
+        $newApt = Apartment::create($validatedApt);
 
         return redirect('/home');
     }
@@ -168,17 +162,9 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ApartmentRequest $request, $id)
     {
-      $validatedApt = $request->validate([
-        'description' => 'required',
-        'address' => 'required',
-        'mq'=> 'required',
-        'rooms'=> 'required',
-        'beds'=> 'required',
-        'bathrooms'=> 'required',
-        'img'=> 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:4048'
-      ]);
+      $validatedApt = $request->validated();
 
       $apt = Apartment::findOrFail($id);
 
@@ -192,26 +178,25 @@ class ApartmentController extends Controller
           $targetFile = $apt->id . "apt." . $file->getClientOriginalExtension();
 
           $file->move($targetPath, $targetFile);
+
+          $apt -> update([
+            'img_path'=>$targetFile
+          ]);
         }
-        $apt -> update([
-          'img_path'=>$targetFile
-        ]);
+        //controllo se esistono feature nella request
+        if($request->feature){
+          //associo le features all'appartamento
+          foreach ($request->feature as $feature) {
 
-        //raccolgo l'array di features
-        $validatedFeatures = $request->validate([
-          'feature' => 'nullable'
-        ]);
+            $item = Feature::findOrFail($feature);
 
-        //associo le features all'appartamento
-        foreach ($validatedFeatures['feature'] as $feature) {
+            //sync() aggiorna apartment_feature senza aggiungere duplicati
+            $item -> apartments() -> sync($apt,false);
 
-          $item = Feature::findOrFail($feature);
-
-          //sync() aggiorna apartment_feature senza aggiungere duplicati
-          $item -> apartments() -> sync($apt,false);
-
+          }
         }
 
+        $apt->update($validatedApt);
 
         return redirect('/home');
 
