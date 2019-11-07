@@ -13,7 +13,7 @@
   <main>
 
     <div class="photos col-md-12">
-      <img class="otherjpg col-md-12" src="/img/ap1.jpg" alt="">
+      <img class="otherjpg col-md-12" src="/img/uploads/{{$apt->img_path}}" alt="Foto dell'appartamento">
     </div>
 
 
@@ -31,7 +31,9 @@
         <p>Numero di bagni: {{$apt->bathrooms}}</p>
         <p>Indirizzo: {{$apt->address}}</p>
         @if(Auth::id()==$apt->user->id)
-          Visualizzazioni: {{$apt-> visualizations}}
+          Visualizzazioni: {{$apt-> visualizations}} <br>
+          <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
+          <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
         @endif
       </div>
 
@@ -50,11 +52,13 @@
 
       <div class="contact col-md-6">
 
+
         <div id="vue_messages">
           <messages
                     :apt_id= "{{ $apt->id }}"
           ></messages>
         </div>
+
 
       </div>
 

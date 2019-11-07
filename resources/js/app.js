@@ -33,7 +33,6 @@ $(document).ready(init);
 
 function init(){
 
-
   var token = $('meta[name="csrf-token"]').attr('content');
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 
