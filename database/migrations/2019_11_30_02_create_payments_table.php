@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTiersTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateTiersTable extends Migration
      */
     public function up()
     {
-        Schema::create('tiers', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('price')->nullable();
-            $table->integer('level');
-            $table->integer('duration')->nullable();
             $table->timestamps();
+            $table->string('expiration_date');
         });
     }
 
@@ -29,6 +27,6 @@ class CreateTiersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tiers');
+        Schema::dropIfExists('payments');
     }
 }

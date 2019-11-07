@@ -16,4 +16,9 @@ class Tier extends Model
 
     return $this -> hasMany(Apartment::class);
   }
+
+  public function payments(){
+
+    return $this -> hasMany(Payment::class);
+  }
 }

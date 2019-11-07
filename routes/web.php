@@ -49,3 +49,7 @@ Route::post('/{id}', 'ApartmentController@update')
 Route::get('/{id}', 'ApartmentController@destroy')
       ->name('apt.destroy')
       ->middleware('auth');
+
+Route::post('/payment/{id}', 'PaymentController@store')
+      ->name('send.payment')
+      ->middleware('auth');

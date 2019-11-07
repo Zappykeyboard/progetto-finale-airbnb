@@ -10,6 +10,12 @@
 
   @include('component.messages')
 
+  @php
+    use App\Tier;
+    $tiers = DB::table('tiers')->orderBy('level', 'desc')
+                ->get();
+  @endphp
+
   <main>
 
     <div class="photos col-md-12">
@@ -59,6 +65,20 @@
           ></messages>
         </div>
 
+        <div id="vue_payment">
+          <form class="" action="{{route('send.payment', $apt->id)}}" method="post">
+            @csrf
+            @method('POST')
+
+            <select class="" name="">
+              @foreach ($tiers as $key => $value)
+                <option value="">{{$key}}</option>
+              @endforeach
+            </select>
+
+            <input type="submit" name="" value="send payment">
+          </form>
+        </div>
 
       </div>
 

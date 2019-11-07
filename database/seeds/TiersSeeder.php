@@ -35,13 +35,15 @@ class TiersSeeder extends Seeder
       ];
 
       $sub = [];
+
       for ($i=0; $i < 4; $i++) {
 
         $sub[$i] = [
           'price' => $price[$i],
           'level' => $level[$i] ,
           'duration' => $duration[$i]
-        ];
+          
+          ];
 
         Tier::create($sub[$i]);
       }
