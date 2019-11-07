@@ -8,8 +8,8 @@ class Tier extends Model
 {
   protected $fillable = [
     'price',
-    'name',
-    'duration'
+    'level',
+    'duration',
   ];
 
   public function apartaments(){

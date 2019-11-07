@@ -15,9 +15,9 @@ class CreateTiersTable extends Migration
     {
         Schema::create('tiers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('price');
-            $table->string('name');
-            $table->integer('duration');
+            $table->float('price')->nullable();
+            $table->string('level');
+            $table->integer('duration')->nullable();
             $table->timestamps();
         });
     }
