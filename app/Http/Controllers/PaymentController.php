@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Apartment;
+use App\Payment;
+
 class PaymentController extends Controller
 {
     /**
@@ -35,12 +38,24 @@ class PaymentController extends Controller
     public function store(Request $request, $id)
     {
 
-        dd($request);
-
         $validatedData = $request->validate([
 
-
+          "tier_id" => 'required'
         ]);
+
+        $apartment = Apartment::findOrFail($id);
+
+        if ($apartment) {
+
+            $tier_id = $validatedData['tier_id'];
+
+            $apartment->update(["tier_id" => $tier_id]);
+
+        }
+
+        $newPay = Payment::create(['apartment_id' => $id]);
+
+        dd($newPay);
     }
 
     /**

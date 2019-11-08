@@ -14,10 +14,10 @@
     use App\Tier;
     use App\Payment;
 
-    $tiers = DB::table('tiers')->orderBy('level', 'asc')
+    $tiers = DB::table('tiers')->where('level', '>', 0)->orderBy('level', 'asc')
                 ->get();
 
-
+                // echo $tiers;
   @endphp
 
   <main>
@@ -138,7 +138,10 @@
                     <th scope="row">{{$tier->level}}</th>
                     <td>{{$tier->price}}</td>
                     <td>{{$tier->duration}}</td>
-                    <td><input type="checkbox" val="{{$tier->id}}"/></td>
+                    <td>
+                      
+                      <input type="checkbox" name="tier_id" value="{{$tier->id}}"/>
+                    </td>
                   </tr>
                 @endforeach
 

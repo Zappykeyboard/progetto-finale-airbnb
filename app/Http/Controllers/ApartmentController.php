@@ -110,7 +110,7 @@ class ApartmentController extends Controller
             $item = Feature::findOrFail($feature);
 
 
-            $item -> apartments() -> attach($validatedApt);
+            $item -> apartments() -> attach($newApt);
 
             // dd($item);
           }
