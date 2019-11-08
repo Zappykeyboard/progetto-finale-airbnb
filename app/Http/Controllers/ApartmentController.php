@@ -82,7 +82,6 @@ class ApartmentController extends Controller
     public function store(ApartmentRequest $request)
     {
 
-
         $validatedApt = $request->validated();
 
 
@@ -94,29 +93,27 @@ class ApartmentController extends Controller
 
         if ($file) {
 
-          $targetPath = 'img/uploads';
-          $targetFile = $newApt->id . "apt." . $file->getClientOriginalExtension();
+          $targetPath = 'img';
+          $targetFile = uniqid() . "apt." . $file->getClientOriginalExtension();
 
           $file->move($targetPath, $targetFile);
-            $newApt -> update([
-              'img_path'=>$targetFile
-            ]);
+            $validatedApt['img_path']=$targetFile;
         }
+
+        //creo la nuova entità sul db
+        $newApt = Apartment::create($validatedApt);
 
         if($request->feature){
           //associo le features all'appartamento
           foreach ($request->feature as $feature) {
 
-
             $item = Feature::findOrFail($feature);
-
 
             $item -> apartments() -> attach($newApt);
           }
         }
 
-        //creo la nuova entità sul db
-        $newApt = Apartment::create($validatedApt);
+
 
         return redirect('/home');
     }

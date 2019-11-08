@@ -13,7 +13,7 @@
   <main>
 
     <div class="photos col-md-12">
-      <img class="otherjpg col-md-12" src="/img/uploads/{{$apt->img_path}}" alt="Foto dell'appartamento">
+      <img class="otherjpg col-md-12" src="/img/{{$apt->img_path}}" alt="Foto dell'appartamento">
     </div>
 
 
