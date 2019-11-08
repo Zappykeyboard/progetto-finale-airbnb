@@ -34,9 +34,12 @@ class PaymentController extends Controller
      */
     public function store(Request $request, $id)
     {
+
+        dd($request);
+
         $validatedData = $request->validate([
 
-          
+
         ]);
     }
 

@@ -8,6 +8,7 @@ use App\Feature;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\ApartmentRequest;
+use Imagick;
 
 class ApartmentController extends Controller
 {
@@ -63,12 +64,6 @@ class ApartmentController extends Controller
         $file= $request->file('file');
 
         $features= Feature::all();
-        // File::create([
-        //   'title'=> $file-> getClientOriginalName(),
-        //   'description' => 'upload whit dropzone.js',
-        //   'path' => $file-> store('public/storage')
-        //
-        // ]);
 
         return view('aptcreate_address', compact('features'));
     }
@@ -95,13 +90,16 @@ class ApartmentController extends Controller
         if ($file) {
 
           $targetPath = 'img/uploads';
-          $targetFile = $newApt->id . "apt." . $file->getClientOriginalExtension();
+          $targetFile = rand(0,1000) . "apt." . $file->getClientOriginalExtension();
 
           $file->move($targetPath, $targetFile);
-            $newApt -> update([
-              'img_path'=>$targetFile
-            ]);
+          // $file->fails();
+
+          // aggungo path_img nei dati validati
+          $validatedApt['img_path'] = $targetFile;
         }
+
+
 
         if($request->feature){
           //associo le features all'appartamento
@@ -111,14 +109,18 @@ class ApartmentController extends Controller
             $item = Feature::findOrFail($feature);
 
 
-            $item -> apartments() -> attach($newApt);
+            $item -> apartments() -> attach($validatedApt);
+            dd($item);
           }
+
         }
-
-        //creo la nuova entità sul db
-        $newApt = Apartment::create($validatedApt);
-
-        return redirect('/home');
+        // dd($validatedApt);
+        //
+        // //creo la nuova entità sul db
+        // $newApt = Apartment::create($validatedApt);
+        // dd($newApt);
+        //
+        // return redirect('/home');
     }
 
     /**
