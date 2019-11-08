@@ -9,6 +9,6 @@ use App\Payment;
 $factory->define(Payment::class, function (Faker $faker) {
 
       return [
-        'expiration_date'=> $faker -> dateTime(),
+        // 'apartment_id'
       ];
 });

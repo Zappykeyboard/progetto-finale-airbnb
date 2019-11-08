@@ -99,7 +99,8 @@ class ApartmentController extends Controller
           $validatedApt['img_path'] = $targetFile;
         }
 
-
+        //creo la nuova entità sul db
+        $newApt = Apartment::create($validatedApt);
 
         if($request->feature){
           //associo le features all'appartamento
@@ -110,17 +111,13 @@ class ApartmentController extends Controller
 
 
             $item -> apartments() -> attach($validatedApt);
-            dd($item);
+
+            // dd($item);
           }
 
         }
-        // dd($validatedApt);
-        //
-        // //creo la nuova entità sul db
-        // $newApt = Apartment::create($validatedApt);
-        // dd($newApt);
-        //
-        // return redirect('/home');
+
+        return redirect('/home');
     }
 
     /**
