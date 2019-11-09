@@ -33,42 +33,6 @@ class PaymentController extends Controller
         //
     }
 
-    public function make(Request $request)
-
-    {
-
-      $gateway = new Gateway([
-            'environment' => env('BRAINTREE_ENV', 'sandbox'),
-            'merchantId' => env('BRAINTREE_MERCHANT_ID'),
-            'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
-            'privateKey' => env('BRAINTREE_PRIVATE_KEY'),
-        ]);
-
-      $nonceFromTheClient = $request-> payment_method_nonce;
-
-      $amount = $request-> amount;
-      $amount = "10";
-
-      dd($gateway, $request);
-
-      //
-      // $result = Braintree_Transaction::sale([
-      //
-      //   'amount' => $amount,
-      //   'paymentMethodNonce' => $nonceFromTheClient,
-      //   'customer' => [
-      //     'firstName' => 'Tony',  //POSSONO ESSERE RIPORTATI I DATI DI CHI EFFETTUA IL PAGAMENTO
-      //     'lastName' => 'Seppia',
-      //     'email' => 'tony.seppia@gmail.com'
-      //   ],
-      //   'options' => [
-      //     'submitForSettlement' => True
-      //   ]
-      // ]);
-      //
-      // dd($nonceFromTheClient, $gateway);
-      // return response()->json($status);
-    }
 
     /**
      * Store a newly created resource in storage.

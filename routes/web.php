@@ -91,11 +91,12 @@ Route::post('/payment/{id}', function(Request $request, $id){
 
       // TODO: TRAMITE ARRAY RESULT posso estrapolare varie informazioni sulla transazione e salvarle nel database,
 
-      //ad esempio posso salvare l'id della transazione e metterlo nel database per tracciabilità
+      //ad esempio posso salvare l'id della transazione e metterlo nel database per tracciabilità o memorizzare i dati
+      //per pagamenti successivi
 
-// -----------------------------------------------------------------------  //
-#  SALVATAGGIO DEL PAGAMENTO E DEL PIANO DI SOTTOSCRIZIONE NEL DATABASE     #
-// ----------------------------------------------------------------------- //
+      // -------------------------------------------------------------------------------------------  //
+      #  SALVATAGGIO DEL PAGAMENTO E DEL PIANO DI SOTTOSCRIZIONE NEL DATABASE                         #
+      // ------------------------------------------------------------------------------------------- //
 
       // Validate data da oggetto request form
       $validatedData = $request->validate([
@@ -104,7 +105,7 @@ Route::post('/payment/{id}', function(Request $request, $id){
       ]);
 
 
-      // UPDATE tier_id in tabella apartments
+      // UPDATE tier_id, piano sottoscritto dall utente per l'appartamento, in tabella apartments
       $apartment = App\Apartment::findOrFail($id);
 
       if ($apartment) {
@@ -118,17 +119,15 @@ Route::post('/payment/{id}', function(Request $request, $id){
       // CREATE nuovo pagamento registrato nel database
       $newPay = App\Payment::create(['apartment_id' => $id]);
 
-      dd($validatedData, $id, $transaction, $tier, $newPay);
+      // -------------------------------------------------------------------------------------------  //
+      #    FINE SALVATAGGIO                                                                           #
+      // ------------------------------------------------------------------------------------------- //
+      return back()
+        ->with('success_message', 'Transazione avvenuta con successo. ID transazione:'
+                    . $transaction -> id
+                  );
 
-// -----------------------------------------------------------------------  //
-#   FINE SALVATAGGIO                                                        #
-// ----------------------------------------------------------------------- //
-      // return back()
-      //   ->with('success_message', 'Transazione avvenuta con successo. ID transazione:'
-      //               . $transaction -> id
-      //             );
-
-
+    // IN CASO DI NON SUCCESSO DELLA TRANSAZIONE
     } else {
         $errorString = "";
         foreach ($result->errors->deepAll() as $error) {

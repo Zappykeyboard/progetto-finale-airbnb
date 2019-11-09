@@ -27,7 +27,7 @@
       <img class="otherjpg col-md-12" src="/img/uploads/{{$apt->img_path}}" alt="Foto dell'appartamento">
     </div>
 
-    {{-- Riga sotto immagine --}}
+    {{-- section 2 sotto immagine --}}
     <section class="row">
       {{-- Col Descrizione --}}
       <div class="card desc col-md-8 col-sm-12">
@@ -85,7 +85,7 @@
 
     </section>
 
-    {{-- Altra riga --}}
+    {{-- Section 3 --}}
     <section class="row">
       {{-- Colonna servizi appartamento --}}
       <div class="servizi col-md-6 col-sm-12">
