@@ -10,6 +10,7 @@
 
   @include('component.messages')
 
+
   @php
     use App\Tier;
     use App\Payment;
@@ -117,47 +118,14 @@
 
     <section class="row">
       <div id="vue_payment" class="col-md-6 col-sm-12">
-        <form class="" action="{{route('send.payment', $apt->id)}}" method="post">
-          @csrf
-          @method('POST')
-
-          <div class="table-responsive-lg">
-            <table class="table table-hover">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Level</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Extension Time</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-
-                @foreach ($tiers as $tier)
-                  <tr>
-                    <th scope="row">{{$tier->level}}</th>
-                    <td>{{$tier->price}}</td>
-                    <td>{{$tier->duration}}</td>
-                    <td>
-                      
-                      <input type="checkbox" name="tier_id" value="{{$tier->id}}"/>
-                    </td>
-                  </tr>
-                @endforeach
-
-              </tbody>
-            </table>
-          </div>
-
-          <input type="submit" name="" value="send payment">
-        </form>
+        @include('component.payment')
       </div>
+
     </section>
 
 
 
-
-
-
   </main>
+
+
 @endsection
