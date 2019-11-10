@@ -84,7 +84,7 @@ class ApartmentController extends Controller
 
         $validatedApt['user_id'] = $request -> user() -> id;
         $validatedApt['visualizations'] = 0;
-        $validatedApt['tier_id'] = 0;
+        $validatedApt['tier_id'] = 1;
 
         //aggiungo la path per l'immagine
         $file = $request -> file('img');

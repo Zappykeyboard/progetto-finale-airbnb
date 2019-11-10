@@ -40,11 +40,10 @@ class AddUsersForeignKey extends Migration
              });
 
 
-        $table -> bigInteger('tier_id') -> unsigned() ->default('1') -> index();
+        $table -> bigInteger('tier_id') -> unsigned() ->default('1') -> index()->nullable();
         $table -> foreign('tier_id', 'apartment_tiers')
                -> references('id')
-               -> on('tiers')
-               ->onDelete('cascade');
+               -> on('tiers');
        });
 
        // Tabella MESSAGES
