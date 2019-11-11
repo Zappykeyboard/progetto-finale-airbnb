@@ -130,19 +130,18 @@ class ApartmentController extends Controller
 
         $foundApts = $foundApts -> get();
 
-        //provo a testare la vicinanza tra appartamenti
-
+        //trovo la distanza tra appartamenti
         if($request->lat && $request->lon){
           $lat = $request->lat;
           $lon = $request->lon;
           $list=[];
           foreach ($foundApts as $index=>$apt) {
+
             if ($this->getDistance($lat, $lon, $apt->toArray()) <= 20 ){
                $list[] = $apt;
+
              }
-
           }
-
         }
 
 
@@ -220,7 +219,21 @@ class ApartmentController extends Controller
     public function show($id)
     {
         $apt = Apartment::findOrFail($id);
-        //TODO recupera sessione utente
+
+        //aggiorno le visualizzazioni
+
+        //genero una chiave per l'appartamento
+        $key = "apt" . $id;
+        //se la chiave non esiste per questa sessione...
+        if (!session()->exists($key)){
+          //...aggiorno il campo
+          $apt->update([
+            'visualizations'=> $apt->visualizations += 1
+          ]);
+          //e salvo la chiave come vistitata
+          session([$key=>'visited']);
+        }
+
 
         return view('aptshow', compact('apt'));
     }
