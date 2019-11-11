@@ -27,6 +27,7 @@ class CreateApartmentsTable extends Migration
             $table->integer('visualizations')->nullable()->deafult('0');
             $table->boolean('active')->nullable()->default('1');
             $table->string('img_path')->nullable();
+            $table->string('map_img_path')->nullable();
         });
 
     }

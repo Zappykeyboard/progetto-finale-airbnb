@@ -20,7 +20,8 @@ class Apartment extends Model
     'tier_id',
     'img_path',
     'lat',
-    'lon'
+    'lon',
+    'map_img_path'
   ];
 
   public function features(){

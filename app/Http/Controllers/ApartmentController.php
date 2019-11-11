@@ -8,9 +8,74 @@ use App\Feature;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\ApartmentRequest;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Storage;
+
 
 class ApartmentController extends Controller
 {
+
+
+    /**
+    * Chiede a TomTom latitudine, longitudine e mappa
+    * richiede array
+    * restituisce array
+    */
+    public function getMapData($validatedApt){
+
+    //Recupera coordinate e mappa
+    $apiKey = env('TOMTOM_APIKEY');
+
+    $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+
+    $response = $tomtom->request('GET',
+                                '/search/2/geocode/'. $validatedApt['address'] . '.json',
+                                [
+                                  'query'=> [
+                                    'key'=>$apiKey,
+                                    'extendedPostalCodesFor'=>'PAD',
+                                    'limit'=>'1'
+                                    ]
+                                  ]);
+    $body = json_decode($response->getBody(), true);
+
+    if ( $body['results']){
+          //recupero lat e lon
+          $positions = $body['results'][0]['position'];
+          $lat = $positions['lat'];
+          $lon = $positions['lon'];
+          $validatedApt['lat'] = $lat;
+          $validatedApt['lon'] = $lon;
+
+
+          //recupero la mappa
+          $response = $tomtom->request('GET',
+                                        '/map/1/staticimage',
+                                        [
+                                          'query' => [
+                                            'key'=>$apiKey,
+                                            'layer' => 'hybrid',
+                                            'style' => 'main',
+                                            'format' => 'png',
+                                            'zoom' => '17',
+                                            'center' => $lon.', '.$lat,
+                                            'width' => '512',
+                                            'height' => '512',
+                                            'view' => 'Unified',
+                                          ]
+                                        ]);
+
+        $fileName =  "map-" . uniqid() .".png";
+
+        file_put_contents('img/'. $fileName, $response->getBody()->getContents());
+
+        $validatedApt['map_img_path']=$fileName;
+
+    }
+
+      return ($validatedApt);
+  }
+
 
     /**
      * Display a listing of the resource.
@@ -41,7 +106,7 @@ class ApartmentController extends Controller
           //...cicla e filtra gli appartamenti
           foreach ($request->features as $featID){
             $foundApts = $foundApts->whereHas('features', function(Builder $query) use($featID){
-              $query->where('features.id', '=', $featID);
+              $query->where('features.id', $featID);
             });
           }
         }
@@ -63,12 +128,6 @@ class ApartmentController extends Controller
         $file= $request->file('file');
 
         $features= Feature::all();
-        // File::create([
-        //   'title'=> $file-> getClientOriginalName(),
-        //   'description' => 'upload whit dropzone.js',
-        //   'path' => $file-> store('public/storage')
-        //
-        // ]);
 
         return view('aptcreate_address', compact('features'));
     }
@@ -85,6 +144,10 @@ class ApartmentController extends Controller
         $validatedApt = $request->validated();
 
 
+
+        $validatedApt = $this->getMapData($validatedApt);
+
+
         $validatedApt['user_id'] = $request -> user() -> id;
         $validatedApt['visualizations'] = 0;
 
@@ -93,8 +156,8 @@ class ApartmentController extends Controller
 
         if ($file) {
 
-          $targetPath = 'img';
-          $targetFile = uniqid() . "apt." . $file->getClientOriginalExtension();
+          $targetPath = 'img/uploads';
+          $targetFile = 'apt-' . uniqid() . "." . $file->getClientOriginalExtension();
 
           $file->move($targetPath, $targetFile);
             $validatedApt['img_path']=$targetFile;
@@ -113,8 +176,6 @@ class ApartmentController extends Controller
           }
         }
 
-
-
         return redirect('/home');
     }
 
@@ -127,6 +188,7 @@ class ApartmentController extends Controller
     public function show($id)
     {
         $apt = Apartment::findOrFail($id);
+        //TODO recupera sessione utente
 
         return view('aptshow', compact('apt'));
     }
@@ -165,14 +227,28 @@ class ApartmentController extends Controller
 
       $apt = Apartment::findOrFail($id);
 
+
+
+      //Solo il proprietario ha il permesso di modificare l'appartmaneto
       if ($apt->user_id == Auth::id()) {
+
+        //se l'indirizzo è cambiato, recuperiamo di nuovo coordinate e mappa
+        if($apt->address != $validatedApt["address"]){
+          $validatedApt = getMapData($validatedApt);
+
+          //Cancello la vecchia immagine dalla cartella DA TESTARE
+          if(file_exists($apt->map_img_path)){
+            unlink($apt->map_img_path);
+          }
+
+        }
 
         //aggiungo la path per l'immagine
         $file = $request -> file('img');
 
         if ($file) {
           $targetPath = 'img/uploads';
-          $targetFile = $apt->id . "apt." . $file->getClientOriginalExtension();
+          $targetFile = 'apt-' . uniqid() . "." . $file->getClientOriginalExtension();
 
           $file->move($targetPath, $targetFile);
 
