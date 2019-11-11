@@ -49,18 +49,24 @@
         </div>
         <div class="">
           <form class="" action="{{route('apt.index')}}" method="get">
-            @csrf
-            @method('GET')
+            <div class="">
+              <label for="lat">Lat: </label>
+              <input type="text" name="lat" value="">
+            </div>
+            <div class="">
+              <label for="lon">Lon: </label>
+              <input type="text" name="lon" value="">
+            </div>
             <div class="">
               <label for="beds">Posti letto: </label>
               <input type="text" name="beds" value="1">
             </div>
             <div class="">
-              <label for="rooms">N. stanze</label>
+              <label for="rooms">N. stanze: </label>
               <input type="text" name="rooms" value="1">
             </div>
             <div class="">
-              <label for="bathrooms">N. Bagni</label>
+              <label for="bathrooms">N. Bagni: </label>
               <input type="text" name="bathrooms" value="1">
             </div>
             <div class="">

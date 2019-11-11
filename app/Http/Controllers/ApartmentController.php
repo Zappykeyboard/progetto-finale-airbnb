@@ -14,7 +14,23 @@ use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
+    //funzione per calcolare la distanza tra due punti
+    public function getDistance($lat1, $lon1, $apartment){
+      $lat2 = $apartment['lat'];
+      $lon2 = $apartment['lon'];
 
+      if($lat1 == $lat2 && $lon1 == $lon2){return 0;}
+
+      $p1 = deg2rad($lat1);
+      $p2 = deg2rad($lat2);
+      $dp = deg2rad($lat2 - $lat1);
+      $dl = deg2rad($lon2 - $lon1);
+      $a = (sin($dp/2) * sin($dp/2)) + (cos($p1) * cos($p2) * sin($dl/2) * sin($dl/2));
+      $c = 2 * atan2(sqrt($a),sqrt(1-$a));
+      $r = 6371008;
+      $d = $r * $c;
+      return $d/1000;
+    }
 
     /**
     * Chiede a TomTom latitudine, longitudine e mappa
@@ -111,10 +127,26 @@ class ApartmentController extends Controller
           }
         }
 
+
         $foundApts = $foundApts -> get();
 
+        //provo a testare la vicinanza tra appartamenti
 
-        dd($foundApts);
+        if($request->lat && $request->lon){
+          $lat = $request->lat;
+          $lon = $request->lon;
+          $list=[];
+          foreach ($foundApts as $index=>$apt) {
+            if ($this->getDistance($lat, $lon, $apt->toArray()) <= 20 ){
+               $list[] = $apt;
+             }
+
+          }
+
+        }
+
+
+        dd($list);
 
     }
 
