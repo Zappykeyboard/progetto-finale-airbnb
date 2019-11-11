@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\ApartmentRequest;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Storage;
 
 
 class ApartmentController extends Controller
@@ -142,10 +141,12 @@ class ApartmentController extends Controller
 
              }
           }
+          //ritorna pagina con $list
         }
 
 
         dd($list);
+        //ritorna pagina con $foundApts
 
     }
 
