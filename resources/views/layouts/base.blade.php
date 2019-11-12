@@ -22,7 +22,7 @@
 
         <!-- CSS Libreria DROPZoNE drag and drop file -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" rel="stylesheet">
-        <!-- Libreria FILEPOND drag and drop file -->
+      
 
 
     </head>
