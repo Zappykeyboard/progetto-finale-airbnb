@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
           ApartmentsSeeder::class,
           FeaturesSeeder::class,
           MessagesSeeder::class,
-          PaymentsSeeder::class 
+          // PaymentsSeeder::class 
           // ApartmentsFeaturesSeeder::class
         ]);
 
