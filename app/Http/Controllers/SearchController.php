@@ -52,11 +52,14 @@ class SearchController extends Controller
 
            }
         }
+
+        return response()->json($list, 200);
+
       }
 
-      //TODO: restituire JSON
+      return response()->json($foundApts, 200);
 
-      dd($list);
+
 
 
     }
