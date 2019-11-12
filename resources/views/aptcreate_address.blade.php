@@ -11,7 +11,7 @@
 
   <div id="app">
     <addapartment
-            :id="{{ Auth::id() }}"
+            route="{{ route('apt.store') }}"
     ></addapartment>
   </div>
 @endsection

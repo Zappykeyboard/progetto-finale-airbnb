@@ -249,9 +249,10 @@ class ApartmentController extends Controller
     {
 
         $apt = Apartment::findOrFail($id);
+        $features = Feature::all();
 
         if ($apt->user_id == Auth::id()) {
-          return view('aptedit', compact('apt'));
+          return view('aptedit', compact('apt', 'features'));
 
         } else {
           return redirect('/');
@@ -270,29 +271,22 @@ class ApartmentController extends Controller
     public function update(ApartmentRequest $request, $id)
     {
       $validatedApt = $request->validated();
-
+      //dd($validatedApt);
       $apt = Apartment::findOrFail($id);
-
-
 
       //Solo il proprietario ha il permesso di modificare l'appartmaneto
       if ($apt->user_id == Auth::id()) {
 
-        //se l'indirizzo è cambiato, recuperiamo di nuovo coordinate e mappa
-        if($apt->address != $validatedApt["address"]){
-          $validatedApt = getMapData($validatedApt);
-
-          //Cancello la vecchia immagine dalla cartella DA TESTARE
-          if(file_exists($apt->map_img_path)){
-            unlink($apt->map_img_path);
+          //se l'indirizzo è cambiato, recuperiamo di nuovo coordinate e mappa
+          if($apt->address != $validatedApt["address"]){
+            $validatedApt = $this->getMapData($validatedApt);
           }
-
-        }
 
         //aggiungo la path per l'immagine
         $file = $request -> file('img');
 
         if ($file) {
+
           $targetPath = 'img/uploads';
           $targetFile = 'apt-' . uniqid() . "." . $file->getClientOriginalExtension();
 
@@ -302,8 +296,11 @@ class ApartmentController extends Controller
             'img_path'=>$targetFile
           ]);
         }
+
+        $apt->features()->detach();
         //controllo se esistono feature nella request
         if($request->feature){
+
           //associo le features all'appartamento
           foreach ($request->feature as $feature) {
 

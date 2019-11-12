@@ -7,5 +7,18 @@
 @endsection
 
 @section('content')
-  TODO: aggiungere form precompilato 
+  @include('component.addressBar')
+  <div id="app">
+    <addapartment
+            route = "{{route('apt.update', $apt->id)}}"
+            address = "{{$apt->address}}"
+            description = "{{$apt->description}}"
+            rooms = "{{$apt->rooms}}"
+            beds = "{{$apt->beds}}"
+            mq = "{{$apt->mq}}"
+            bathrooms = "{{$apt->bathrooms}}"
+    ></addapartment>
+  </div>
+
+
 @endsection
