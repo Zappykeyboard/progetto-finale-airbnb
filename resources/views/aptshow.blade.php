@@ -118,7 +118,6 @@
     <section class="row">
 
 
-
         @if (Auth::id()==$apt->user->id)
           @include('component.payment_checkout')
           @php
@@ -130,6 +129,7 @@
           <payments
                     :apt_id= "{{ $apt -> id}}"
                     :user_id="{{ $apt->user-> id }}"
+                    :tier_id="{{ $apt-> tier_id }}"
                     :tier_active="{{ $tier_active }}"
                     :payments_story="{{ $storyPayments }}"
           ><payments>

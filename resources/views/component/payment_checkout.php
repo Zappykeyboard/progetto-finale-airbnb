@@ -11,11 +11,11 @@
         Piano Attivo
       </div>
       <div class="card-body">
-        <h5 class="card-title" v-show="seenSubsBtn">Sponsorizzazioni del tuo appartamento</h5>
-        <h5 class="card-title" v-show="!seenSubsBtn">Nessuna Sponsorizzazione attiva</h5>
+        <h5 class="card-title" v-if="!seenSubsBtn">Sponsorizzazioni del tuo appartamento</h5>
+        <h5 class="card-title" v-if="seenSubsBtn">Nessuna Sponsorizzazione attiva</h5>
 
         <!-- Sponsorizzazioni attive -->
-        <div class="table-responsive-lg" v-show="seenSubsBtn">
+        <div class="table-responsive-lg" v-if="!seenSubsBtn">
           <table class="table table-hover">
             <thead class="thead-light">
               <tr v-for="tier in tierActive">
@@ -32,12 +32,10 @@
         </div>
 
 
-        <p class="card-text"  v-text="returnMsgSubscription"></p>
-        <!-- <p class="card-text"  v-show="seenSubsBtn">dddd</p> -->
+        <p class="card-text" v-if="!seenSubsBtn">{{ results.msg_subs }}</p>
+        <!-- <p class="card-text"  v-if="isExpiredTime(seenSubsBtn)">dddd</p> -->
 
-
-
-        <a class="btn btn-primary"  @click="getFormPayment()" v-show="!seenSubsBtn">Sottoscrivi un piano!</a>
+        <a class="btn btn-primary"  @click="setShowForm()" v-if="seenSubsBtn">Sottoscrivi un piano!</a>
       </div>
       <div class="card-footer text-muted">
         Last Payment: {{ results.diff }}
@@ -84,7 +82,8 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         seenSubsBtn : true,
         msgSubscription : "",
         lastPayment: "",
-        results: []
+        results: [],
+        show_form: false
 
       }
 
@@ -97,7 +96,9 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
       address: String,
       apt_id: Number,
       user_id: Number,
-      tier_active: Array
+      tier_active: Array,
+      payments_story: Array,
+      tier_id: Number
 
     },
 
@@ -107,16 +108,23 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 
         this.msgSubscription = res.data.msgSubscription;
         this.results = res.data;
-        console.log("mounted response" , res.data, msgSubscription);
+
+
+        console.log("mounted response" , res.data, this.msgSubscription, res.data.tier_id_apt);
       })
       .catch( error => { console.log(error); });
       console.log("mounted" , this.results);
+
     },
 
     created() {
 
       // this.returnMsgSubscription;
       console.log("created component" + this.msgSubscription);
+      if (this.tier_id > 1) {
+        this.seenSubsBtn = false;
+      }
+      console.log(this.seenSubsBtn);
 
     },
   //
@@ -129,25 +137,19 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         console.log("ciao", this.results.msg_subs);
         return this.results.msg_subs;
 
-    },
-
-
+      },
 
     },
 
     methods: {
 
+      setShowForm(){
 
-      // isExpiredTime(){
-      //
-      //   if (this.results.seen_btn_sub) {
-      //
-      //     return this.seenSubsBtn = false;
-      //   }
-      // },
+        this.show_form = !this.show_form;
+        console.log(this.show_form);
+      },
 
       getFormPayment(){
-
 
         alert(this.msgSubscription);
         this.getInfo();
@@ -166,9 +168,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             // Salvo i valori di ritorno della tabella tiers in un ARRAY
             this.tiers = res.data['tiers'];
 
-            if (this.tiers != null) {
-              this.seenSubsBtn = false;
-            }
+
 
 
             console.log(res.data, this.token_payment, this.tiers,);

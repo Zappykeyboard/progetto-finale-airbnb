@@ -24,6 +24,7 @@ class PaymentController extends Controller
     {
         $apartment = Apartment::findOrFail($id);
 
+        $tier_id = $apartment -> tier_id;
 
         $id_tier_active= Tier::findOrFail($apartment -> tier_id);
 
@@ -65,7 +66,8 @@ class PaymentController extends Controller
           $duration,
           $now,
           "msg_subs" => $msg,
-          "diff" => $diff
+          "diff" => $diff,
+          "tier_id_from_apt" => $tier_id                          
         ]);
     }
 
