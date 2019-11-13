@@ -6,7 +6,13 @@
 
 require('./bootstrap');
 
+window.$ = window.jQuery = require('jquery');
 window.Vue = require('vue');
+import BootstrapVue from 'bootstrap-vue' //Importing
+
+Vue.use(BootstrapVue) // Telling Vue to use this in whole application
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -48,6 +54,13 @@ function init(){
 
       el: '#vue_messages'
   });
+
+
+  // Component Pagamento
+  var payment_comp = new Vue({
+
+      el: '#vue_payment'
+  });
 };
 
 // funzione per DROPIN file immagine
@@ -69,4 +82,3 @@ function filePondDropImg(){
   var inputElement = document.querySelector('input[type="file"]');
   var pond = FilePond.create( inputElement );
 }
-

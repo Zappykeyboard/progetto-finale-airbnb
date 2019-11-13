@@ -18,7 +18,6 @@
     $tiers = DB::table('tiers')->where('level', '>', 0)->orderBy('level', 'asc')
                 ->get();
 
-                // echo $tiers;
   @endphp
 
   <main>
@@ -117,9 +116,27 @@
     </section>
 
     <section class="row">
-      <div id="vue_payment" class="col-md-6 col-sm-12">
-        @include('component.payment')
-      </div>
+
+
+
+        @if (Auth::id()==$apt->user->id)
+          @include('component.payment_checkout')
+          @php
+            $tier_active = App\Tier::where("id", $apt -> tier_id)->select('price', 'level', 'duration')->get();
+            $storyPayments = $apt -> payments()->get();
+          @endphp
+        {{-- componenete pagamento --}}
+        <div id="vue_payment" class="col-md-6 col-sm-12">
+          <payments
+                    :apt_id= "{{ $apt -> id}}"
+                    :user_id="{{ $apt->user-> id }}"
+                    :tier_active="{{ $tier_active }}"
+                    :payments_story="{{ $storyPayments }}"
+          ><payments>
+        </div>
+        @endif
+
+
 
     </section>
 
