@@ -67,9 +67,11 @@ class PaymentController extends Controller
           $now,
           "msg_subs" => $msg,
           "diff" => $diff,
-          "tier_id_from_apt" => $tier_id                          
+          "tier_id_from_apt" => $tier_id
         ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -79,7 +81,7 @@ class PaymentController extends Controller
     public function create($id)
     {
 
-      $tiers = Tier::all();
+
       $apt=  Apartment::findOrFail($id);
 
        // PER TEST, TOKEN STATICO ACCOUNT BRAINTREE
@@ -87,8 +89,8 @@ class PaymentController extends Controller
        //
        return response()->json([
          "token-braintree"=> $token,
-         "message"=> 'ciao',
-         "tiers"=> $tiers,
+         "message"=> 'ciao'
+         // "tiers"=> $tiers
        ]);
 
 
@@ -168,6 +170,17 @@ class PaymentController extends Controller
     {
         //
     }
+
+    public function showTiers()
+    {
+        $tiers = Tier::where('id', '>', 1)->select('id', 'price', 'level', 'duration')->get();
+        
+        return response()->json([
+
+          "tiers" => $tiers
+        ]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.

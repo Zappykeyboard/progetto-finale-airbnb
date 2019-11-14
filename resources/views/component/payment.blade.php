@@ -21,7 +21,7 @@
             <td>{{$tier->duration}}</td>
             <td>
 
-              <input unchecked type="checkbox" name="tier_id" value="{{$tier->id}}"/>
+              <input checked="" type="checkbox" name="tier_id" value="{{$tier->id}}"/>
             </td>
           </tr>
         @endforeach

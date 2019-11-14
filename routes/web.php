@@ -50,6 +50,10 @@ Route::get('/payment/{id}', 'PaymentController@create')
       ->name('payment.send')
       ->middleware('auth');
 
+Route::get('/tiers/{id}', 'PaymentController@showTiers')
+      ->name('tiers.get')
+      ->middleware('auth');
+
 
 
 // Route::post('/payment/{id}', function(Request $request, $id){
