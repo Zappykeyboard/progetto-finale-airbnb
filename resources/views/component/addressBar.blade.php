@@ -5,13 +5,13 @@
       <img src="/img/imag1.jpg" alt="" v-show='!formShow'>
 
 
-    <form class="" action="{{route('apt.store')}}" method="post" enctype="multipart/form-data">
+    <form class="apt-form" v-bind:action="action_route" method="POST" enctype="multipart/form-data">
       @csrf
       @method('POST')
 
       <div class="center_on_page" v-show='!formShow'>
-        <label class="white" for="address">Dove si trova l Appartamento? </label>
-        <input type="text" name="address" value="" v-model="user_id">
+        <label class="white" for="address">Dove si trova l'appartamento? </label>
+        <input type="text" name="address" v-bind:value="prev_address" >
         <input  @click="setFormShow()" type="button" value="GO"></input>
       </div>
 
@@ -27,22 +27,22 @@
 
           <div class="desc col-md-8 form-group">
             <label for="description"><h2>Inserisci qui una breve descrizione:</h2></label>
-            <textarea name="description" rows="8" cols="80"></textarea>
+            <textarea v-bind:value="prev_description" name="description" rows="8" cols="80" required></textarea>
           </div>
 
           <div class="info col-md-4 form-group">
             <h2>Informazioni:</h2>
             <label for="mq">Dimensioni</label>
-            <input type="text" name="mq" value="">
+            <input type="text" name="mq" v-bind:value="prev_mq" required>
 
             <label for="rooms">Numero di camere</label>
-            <input type="text" name="rooms" value="">
+            <input type="text" name="rooms" v-bind:value="prev_rooms" required>
 
             <label for="beds">Posti letto</label>
-            <input type="text" name="beds" value="">
+            <input type="text" name="beds" v-bind:value="prev_beds" required>
 
             <label for="bathrooms">Numero di bagni</label>
-            <input type="text" name="bathrooms" value="">
+            <input type="text" name="bathrooms" v-bind:value="prev_bathrooms" required>
           </div>
 
         </section>
@@ -53,7 +53,20 @@
             <label for="feature"><h1>Servizi disponibili</h1></label>
             <ul>
               @foreach ($features as $feature)
-                <li><input type="checkbox" name="feature[]" value="{{$feature -> id}}">{{$feature-> type}}</li>
+                <li><input class="feature-checkbox"
+                            type="checkbox"
+                            name="feature[]"
+                            value="{{$feature -> id}}"
+                      @isset($apt)
+                        @foreach ($apt->features as $value)
+                          @if ($value['id'] == $feature->id)
+                            checked
+                          @endif
+                        @endforeach
+                      @endisset
+                            >
+                            {{$feature-> type}}
+                          </li>
               @endforeach
             </ul>
           </div>
@@ -83,15 +96,28 @@
     data: function(){
 
       return {
+        action_route: this.route,
+        prev_address: this.address,
+        prev_description: this.description,
+        prev_rooms: this.rooms,
+        prev_beds: this.beds,
+        prev_mq: this.mq,
+        prev_bathrooms: this.bathrooms,
+        address_added: false,
 
-        user_id: this.id,
-        address_added: false
       }
     },
 
     props: {
 
-      id: Number
+      address: String,
+      description: String,
+      route: String,
+      rooms: String,
+      beds: String,
+      mq: String,
+      bathrooms: String,
+
     },
 
     computed: {
@@ -112,7 +138,6 @@
 
         this.address_added = !this.address_added;
 
-        console.log(this.address_added);
       },
     }
 

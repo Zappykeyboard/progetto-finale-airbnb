@@ -50,24 +50,20 @@
         <div class="">
           <form class="" action="{{route('apt.index')}}" method="get">
             <div class="">
-              <label for="lat">Lat: </label>
-              <input type="text" name="lat" value="">
-            </div>
-            <div class="">
-              <label for="lon">Lon: </label>
-              <input type="text" name="lon" value="">
+              <label for="query">Cerca una località: </label>
+              <input type="text" name="query" value="Milano">
             </div>
             <div class="">
               <label for="beds">Posti letto: </label>
-              <input type="text" name="beds" value="1">
+              <input type="number" name="beds" value="1" required>
             </div>
             <div class="">
               <label for="rooms">N. stanze: </label>
-              <input type="text" name="rooms" value="1">
+              <input type="number" name="rooms" value="1" required>
             </div>
             <div class="">
               <label for="bathrooms">N. Bagni: </label>
-              <input type="text" name="bathrooms" value="1">
+              <input type="number" name="bathrooms" value="1" required>
             </div>
             <div class="">
               <label for="feature"><h3>Servizi disponibili</h3></label>

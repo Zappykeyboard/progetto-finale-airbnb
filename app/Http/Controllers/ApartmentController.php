@@ -31,28 +31,35 @@ class ApartmentController extends Controller
       return $d/1000;
     }
 
+    public function getCoordinates($query)
+    {
+      //Recupera coordinate e mappa
+      $apiKey = env('TOMTOM_APIKEY');
+
+      $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+
+      $response = $tomtom->request('GET',
+                                  '/search/2/geocode/'. $query . '.json',
+                                  [
+                                    'query'=> [
+                                      'key'=>$apiKey,
+                                      'extendedPostalCodesFor'=>'PAD',
+                                      'limit'=>'1'
+                                      ]
+                                    ]);
+      $body = json_decode($response->getBody(), true);
+
+      return $body;
+    }
     /**
     * Chiede a TomTom latitudine, longitudine e mappa
     * richiede array
     * restituisce array
     */
-    public function getMapData($validatedApt){
+    public function getMapData($validatedApt)
+    {
 
-    //Recupera coordinate e mappa
-    $apiKey = env('TOMTOM_APIKEY');
-
-    $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
-
-    $response = $tomtom->request('GET',
-                                '/search/2/geocode/'. $validatedApt['address'] . '.json',
-                                [
-                                  'query'=> [
-                                    'key'=>$apiKey,
-                                    'extendedPostalCodesFor'=>'PAD',
-                                    'limit'=>'1'
-                                    ]
-                                  ]);
-    $body = json_decode($response->getBody(), true);
+    $body = $this-> getCoordinates($validatedApt['address']);
 
     if ( $body['results']){
           //recupero lat e lon
@@ -130,18 +137,24 @@ class ApartmentController extends Controller
         $foundApts = $foundApts -> get();
 
         //trovo la distanza tra appartamenti
-        if($request->lat && $request->lon){
-          $lat = $request->lat;
-          $lon = $request->lon;
-          $list=[];
-          foreach ($foundApts as $index=>$apt) {
+        if($request['query']){
 
-            if ($this->getDistance($lat, $lon, $apt->toArray()) <= 20 ){
-               $list[] = $apt;
+          $coords = $this->getCoordinates($request['query']);
+          if ($coords['results']) {
 
-             }
+            $lat = $coords['results'][0]['position']['lat'];
+            $lon = $coords['results'][0]['position']['lon'];
+
+            $list=[];
+            foreach ($foundApts as $index=>$apt) {
+
+              if ($this->getDistance($lat, $lon, $apt->toArray()) <= 20 ){
+                 $list[] = $apt;
+
+               }
+            }
+            //ritorna pagina con $list
           }
-          //ritorna pagina con $list
         }
 
 
@@ -157,6 +170,7 @@ class ApartmentController extends Controller
      */
     public function create(Request $request)
     {
+
         $file= $request->file('file');
 
         $features= Feature::all();
@@ -172,10 +186,8 @@ class ApartmentController extends Controller
      */
     public function store(ApartmentRequest $request)
     {
-
+        dd($request);
         $validatedApt = $request->validated();
-
-
 
         $validatedApt = $this->getMapData($validatedApt);
 
@@ -211,6 +223,7 @@ class ApartmentController extends Controller
         return redirect('/home');
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -231,7 +244,7 @@ class ApartmentController extends Controller
           $apt->update([
             'visualizations'=> $apt->visualizations += 1
           ]);
-          //e salvo la chiave come vistitata
+          //e salvo la chiave come visitata
           session([$key=>'visited']);
         }
 
@@ -249,9 +262,10 @@ class ApartmentController extends Controller
     {
 
         $apt = Apartment::findOrFail($id);
+        $features = Feature::all();
 
         if ($apt->user_id == Auth::id()) {
-          return view('aptedit', compact('apt'));
+          return view('aptedit', compact('apt', 'features'));
 
         } else {
           return redirect('/');
@@ -270,29 +284,22 @@ class ApartmentController extends Controller
     public function update(ApartmentRequest $request, $id)
     {
       $validatedApt = $request->validated();
-
+      //dd($validatedApt);
       $apt = Apartment::findOrFail($id);
-
-
 
       //Solo il proprietario ha il permesso di modificare l'appartmaneto
       if ($apt->user_id == Auth::id()) {
 
-        //se l'indirizzo è cambiato, recuperiamo di nuovo coordinate e mappa
-        if($apt->address != $validatedApt["address"]){
-          $validatedApt = getMapData($validatedApt);
-
-          //Cancello la vecchia immagine dalla cartella DA TESTARE
-          if(file_exists($apt->map_img_path)){
-            unlink($apt->map_img_path);
+          //se l'indirizzo è cambiato, recuperiamo di nuovo coordinate e mappa
+          if($apt->address != $validatedApt["address"]){
+            $validatedApt = $this->getMapData($validatedApt);
           }
-
-        }
 
         //aggiungo la path per l'immagine
         $file = $request -> file('img');
 
         if ($file) {
+
           $targetPath = 'img/uploads';
           $targetFile = 'apt-' . uniqid() . "." . $file->getClientOriginalExtension();
 
@@ -302,8 +309,11 @@ class ApartmentController extends Controller
             'img_path'=>$targetFile
           ]);
         }
+
+        $apt->features()->detach();
         //controllo se esistono feature nella request
         if($request->feature){
+
           //associo le features all'appartamento
           foreach ($request->feature as $feature) {
 
