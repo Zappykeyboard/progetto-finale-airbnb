@@ -59,22 +59,6 @@ class ApartmentController extends Controller
     public function getMapData($validatedApt)
     {
 
-    //Recupera coordinate e mappa
-    // $apiKey = env('TOMTOM_APIKEY');
-    //
-    // $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
-    //
-    // $response = $tomtom->request('GET',
-    //                             '/search/2/geocode/'. $validatedApt['address'] . '.json',
-    //                             [
-    //                               'query'=> [
-    //                                 'key'=>$apiKey,
-    //                                 'extendedPostalCodesFor'=>'PAD',
-    //                                 'limit'=>'1'
-    //                                 ]
-    //                               ]);
-    // $body = json_decode($response->getBody(), true);
-
     $body = $this-> getCoordinates($validatedApt['address']);
 
     if ( $body['results']){
@@ -160,7 +144,7 @@ class ApartmentController extends Controller
 
             $lat = $coords['results'][0]['position']['lat'];
             $lon = $coords['results'][0]['position']['lon'];
-            
+
             $list=[];
             foreach ($foundApts as $index=>$apt) {
 
