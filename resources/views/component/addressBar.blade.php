@@ -5,7 +5,7 @@
       <img src="/img/imag1.jpg" alt="" v-show='!formShow'>
 
 
-    <form class="" v-bind:action="action_route" method="post" enctype="multipart/form-data">
+    <form class="apt-form" v-bind:action="action_route" method="POST" enctype="multipart/form-data">
       @csrf
       @method('POST')
 
@@ -27,22 +27,22 @@
 
           <div class="desc col-md-8 form-group">
             <label for="description"><h2>Inserisci qui una breve descrizione:</h2></label>
-            <textarea v-bind:value="prev_description" name="description" rows="8" cols="80"></textarea>
+            <textarea v-bind:value="prev_description" name="description" rows="8" cols="80" required></textarea>
           </div>
 
           <div class="info col-md-4 form-group">
             <h2>Informazioni:</h2>
             <label for="mq">Dimensioni</label>
-            <input type="text" name="mq" v-bind:value="prev_mq">
+            <input type="text" name="mq" v-bind:value="prev_mq" required>
 
             <label for="rooms">Numero di camere</label>
-            <input type="text" name="rooms" v-bind:value="prev_rooms">
+            <input type="text" name="rooms" v-bind:value="prev_rooms" required>
 
             <label for="beds">Posti letto</label>
-            <input type="text" name="beds" v-bind:value="prev_beds">
+            <input type="text" name="beds" v-bind:value="prev_beds" required>
 
             <label for="bathrooms">Numero di bagni</label>
-            <input type="text" name="bathrooms" v-bind:value="prev_bathrooms">
+            <input type="text" name="bathrooms" v-bind:value="prev_bathrooms" required>
           </div>
 
         </section>
@@ -64,7 +64,6 @@
                           @endif
                         @endforeach
                       @endisset
-
                             >
                             {{$feature-> type}}
                           </li>
@@ -123,7 +122,6 @@
 
     computed: {
 
-
       formShow(){
 
         if (this.address_added) {
@@ -140,7 +138,6 @@
 
         this.address_added = !this.address_added;
 
-        console.log(this.address_added);
       },
     }
 

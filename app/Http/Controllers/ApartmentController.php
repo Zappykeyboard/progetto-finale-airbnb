@@ -157,6 +157,7 @@ class ApartmentController extends Controller
      */
     public function create(Request $request)
     {
+
         $file= $request->file('file');
 
         $features= Feature::all();
@@ -172,10 +173,8 @@ class ApartmentController extends Controller
      */
     public function store(ApartmentRequest $request)
     {
-
+        dd($request);
         $validatedApt = $request->validated();
-
-
 
         $validatedApt = $this->getMapData($validatedApt);
 
@@ -211,6 +210,7 @@ class ApartmentController extends Controller
         return redirect('/home');
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -231,7 +231,7 @@ class ApartmentController extends Controller
           $apt->update([
             'visualizations'=> $apt->visualizations += 1
           ]);
-          //e salvo la chiave come vistitata
+          //e salvo la chiave come visitata
           session([$key=>'visited']);
         }
 

@@ -1,5 +1,5 @@
 <header class="row col-md-12">
-  {{-- <div class=""> --}}
+
     <div class="logo col-md-4 col-xs-10">
       <a class="col-md-2 col-xs-1"href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a>
     </div>
@@ -29,7 +29,5 @@
       </form>
       @endguest
       </ul>
-    {{-- </div> --}}
-
 
 </header>
