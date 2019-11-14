@@ -31,28 +31,51 @@ class ApartmentController extends Controller
       return $d/1000;
     }
 
+    public function getCoordinates($query)
+    {
+      //Recupera coordinate e mappa
+      $apiKey = env('TOMTOM_APIKEY');
+
+      $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+
+      $response = $tomtom->request('GET',
+                                  '/search/2/geocode/'. $query . '.json',
+                                  [
+                                    'query'=> [
+                                      'key'=>$apiKey,
+                                      'extendedPostalCodesFor'=>'PAD',
+                                      'limit'=>'1'
+                                      ]
+                                    ]);
+      $body = json_decode($response->getBody(), true);
+
+      return $body;
+    }
     /**
     * Chiede a TomTom latitudine, longitudine e mappa
     * richiede array
     * restituisce array
     */
-    public function getMapData($validatedApt){
+    public function getMapData($validatedApt)
+    {
 
     //Recupera coordinate e mappa
-    $apiKey = env('TOMTOM_APIKEY');
+    // $apiKey = env('TOMTOM_APIKEY');
+    //
+    // $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+    //
+    // $response = $tomtom->request('GET',
+    //                             '/search/2/geocode/'. $validatedApt['address'] . '.json',
+    //                             [
+    //                               'query'=> [
+    //                                 'key'=>$apiKey,
+    //                                 'extendedPostalCodesFor'=>'PAD',
+    //                                 'limit'=>'1'
+    //                                 ]
+    //                               ]);
+    // $body = json_decode($response->getBody(), true);
 
-    $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
-
-    $response = $tomtom->request('GET',
-                                '/search/2/geocode/'. $validatedApt['address'] . '.json',
-                                [
-                                  'query'=> [
-                                    'key'=>$apiKey,
-                                    'extendedPostalCodesFor'=>'PAD',
-                                    'limit'=>'1'
-                                    ]
-                                  ]);
-    $body = json_decode($response->getBody(), true);
+    $body = $this-> getCoordinates($validatedApt['address']);
 
     if ( $body['results']){
           //recupero lat e lon
@@ -130,18 +153,24 @@ class ApartmentController extends Controller
         $foundApts = $foundApts -> get();
 
         //trovo la distanza tra appartamenti
-        if($request->lat && $request->lon){
-          $lat = $request->lat;
-          $lon = $request->lon;
-          $list=[];
-          foreach ($foundApts as $index=>$apt) {
+        if($request['query']){
 
-            if ($this->getDistance($lat, $lon, $apt->toArray()) <= 20 ){
-               $list[] = $apt;
+          $coords = $this->getCoordinates($request['query']);
+          if ($coords['results']) {
 
-             }
+            $lat = $coords['results'][0]['position']['lat'];
+            $lon = $coords['results'][0]['position']['lon'];
+            
+            $list=[];
+            foreach ($foundApts as $index=>$apt) {
+
+              if ($this->getDistance($lat, $lon, $apt->toArray()) <= 20 ){
+                 $list[] = $apt;
+
+               }
+            }
+            //ritorna pagina con $list
           }
-          //ritorna pagina con $list
         }
 
 
