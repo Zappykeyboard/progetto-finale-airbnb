@@ -45,10 +45,6 @@
 </form>
 
 
-
-{{-- BRAINTREE PAYMENT --}}
-  <script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
-
   <script>
     var form = document.querySelector('#payment-form');
     //Se occorre registrare i metodi di pagamento, bisogna creare customer_id (Id braintree) su tabella user

@@ -1,19 +1,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
 <script type="text/x-template" id="template_payments">
 
-
-  <div class="col-sm-12">
+  <div class="col-lg-6 col-sm-12">
 
   <!-- Info Piano Sottoscrizione -->
-  <form id="paymeffnt-form" action="{{route('payment.send', $apt->id)}}" method="post">
-    @csrf
-    @method('POST')
+  <div class="" id="paymeffnt-form"  method="post" v-if="!showPayBrayntree">
 
-    <div class="card text-center">
+    <div class="list-group  text-center">
       <div class="card-header">
         Piano Attivo
       </div>
-      <div class="card-body">
+      <div class="list-group-item">
         <h5 class="card-title" v-if="!seenSubsBtn">Sponsorizzazioni del tuo appartamento</h5>
         <h5 class="card-title" v-if="seenSubsBtn">Nessuna Sponsorizzazione attiva</h5>
 
@@ -36,7 +33,7 @@
 
 
         <!-- Tabella delle sponsorizzazioni -->
-        <div class="table-responsive-lg" v-if="show_form" v-for="one in resultsTiers">
+        <div class="table-responsive-lg" v-show="show_form" v-for="one in resultsTiers">
           <table class="table table-hover">
             <thead class="thead-light">
               <tr>
@@ -64,23 +61,22 @@
       </div>
     </div>
 
-    <!-- BRAINTREE Paiment -->
 
-  </form>
 
-  <!-- Braintree -->
+  </div>
+
+  <!-- BRAINTREE Paiment -->
   {{-- layout pagamento --}}
-  <form id="payment-form" action="{{route('payment.send', $apt->id)}}" method="post">
-    @csrf
-    @method('POST')
+  <form id="payment-form" class="col-lg-6 col-sm-12">
 
-    <section>
+    <section v-if="showPayBrayntree">
       <div class="bt-drop-in-wrapper">
           <div id="bt-dropin"></div>
       </div>
 
-      <input id="nonce" name="payment_method_nonce" type="hidden" />
-      <button class="button" type="submit"><span>Test Transaction</span></button>
+      <input id="nonce" name="payment_method_nonce" type="hidden" v-model="payment_method_nonce" />
+      <p @click="turnBack()"><==</p>
+      <button class="button" @click="braintreeScript()"><span>Test Transaction</span></button>
     </section>
 
 
@@ -120,11 +116,8 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         resultsTiers: [],
         show_form: false,
         activePayBtn: false,
-        form: {
-              apt_id: this.apt_id,
-              user_id: this.user_id,
-              tier_id: null
-            },
+        payment_method_nonce: '',
+        selected_tier: this.selected_tier_pay,
 
       }
 
@@ -139,22 +132,24 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
       user_id: Number,
       tier_active: Array,
       payments_story: Array,
-      tier_id: Number
+      tier_id: Number,
+      selected_tier_pay: Number
 
     },
 
     mounted() {
-      axios.get('/index/' + this.apt_id)
-      .then( (res) => {
-
-        this.msgSubscription = res.data.msgSubscription;
-        this.results = res.data;
-
-
-        console.log("mounted response" , res.data, this.msgSubscription, res.data.tier_id_apt);
-      })
-      .catch( error => { console.log(error); });
-      console.log("mounted" , this.results);
+      // axios.get('/index/' + this.apt_id)
+      // .then( (res) => {
+      //
+      //   this.msgSubscription = res.data.msgSubscription;
+      //   this.results = res.data;
+      //
+      //
+      //   console.log("mounted response" , res.data, this.msgSubscription, res.data.tier_id_apt);
+      // })
+      // .catch( error => { console.log(error); });
+      // console.log("mounted" , this.results);
+      this.firstAxios();
 
     },
 
@@ -183,6 +178,118 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 
     methods: {
 
+
+    resetShowBool(){
+      this.showForm= false;
+      this.showInfo= true;
+      this.showPayForm= false;
+      this.showPayBrayntree= false;
+      this.seenSubsBtn = false;
+      this.show_form= false;
+      this.activePayBtn= false;
+    },
+
+    firstAxios(){
+
+      axios.get('/index/' + this.apt_id)
+      .then( (res) => {
+
+        this.msgSubscription = res.data.msgSubscription;
+        this.results = res.data;
+
+
+        console.log("mounted response" , res.data, this.msgSubscription, res.data.tier_id_apt);
+      })
+      .catch( error => { console.log(error); });
+      console.log("mounted" , this.results);
+    },
+
+    function(e){ this.returnMsgSubscription },
+
+    // Funzione per lanciare script Baintree
+    braintreeScript(e){
+
+        var form = document.querySelector('#payment-form');
+        //Se occorre registrare i metodi di pagamento, bisogna creare customer_id (Id braintree) su tabella user
+        var client_token = "sandbox_8hrkkqn6_dh357c6zpkqxdvm9"; // PER TEST, TOKEN STATICO ACCOUNT BRAINTREE
+        var tier_for_braintree = this.selected_tier;
+        var apartment_id = this.apt_id;
+
+        //TODO nascondere nel back end
+        // var data = new FormData();
+        // data.append( 'tier_id', this.selected_tier);
+        console.log("dataaaaaaa", this.selected_tier, tier_for_braintree);
+
+        braintree.dropin.create({
+          authorization: client_token,
+          selector: '#bt-dropin',
+          paypal: {
+            flow: 'vault'
+          }
+        }, function (createErr, instance) {
+          if (createErr) {
+            console.log('Create Error', createErr);
+            return;
+          }
+          form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+
+            // Abilito form pagamento
+            this.showPayBrayntree = true;
+
+            instance.requestPaymentMethod(function (err, payload) {
+              if (err) {
+                console.log('Request Payment Method Error', err);
+                return;
+              }
+              // Add the nonce to the form and submit
+              document.querySelector('#nonce').value = payload.nonce;
+              this.payment_method_nonce = payload.nonce;
+              console.log("methodnonce", this.payment_method_nonce);
+
+              this.showPayBrayntree = false;
+              var data = new FormData();
+              // Axios
+              data.append( '_token',token);
+              data.append( 'payment_method_nonce', this.payment_method_nonce);
+              data.append( 'tier_id', tier_for_braintree);
+              data.append( 'apartment_id', apartment_id)
+              console.log("tier_idddddddd", tier_for_braintree, data);
+
+              axios.post('/payment/' + this.apt_id,
+                          data,
+
+                           {
+                            onUploadProgress: uploadEvent => {
+
+                              console.log(this.payment_method_nonce);
+                              console.log('upload Progress ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100)  + "%");
+                            }
+              })
+                .then(res => {
+
+                  console.log("res.data",res, paymentShow);
+                });
+            });
+
+          });
+        });
+
+          console.log("sono baintreeee");
+    },
+
+      // Funzione bottone back
+      turnBack(){
+
+        this.showPayBrayntree = false;
+        this.show_form = true;
+
+        console.log("turnback", this.showPayBrayntree);
+      },
+
+
+
       // Funzione per check unico checkbox
       check(e){
         if (e.target.checked) {
@@ -206,9 +313,9 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
           e.target.checked = true;
 
           // Assegno al Form il valore id tier cliccato
-          this.form.tier_id = e.target.value;
+          this.selected_tier = e.target.value;
 
-          console.log("event.target", e.target, e.target.value, this.form.tier_id);
+          console.log("event.target", this.selected_tier,  e.target.value);
 
           // se non ho nessuna box attiva
         }else if(!e.target.checked){
@@ -248,7 +355,8 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         this.showPayForm = !this.showPayForm;
         // Mostro il form per inserimento dati carta di credito
         this.showPayBrayntree = true;
-        console.log(this.showPayBrayntree);
+        console.log(this.showPayBrayntree , "tier selected", this.selected_tier);
+        var success =false ;
         // this.showPayBrayntree = true;
         var user_data = {
 
@@ -264,12 +372,16 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             // this.token_payment = res.data['token-braintree'];
             // Salvo i valori di ritorno della tabella tiers in un ARRAY
             // this.tiers = res.data['tiers'];
-
-            console.log(res);
+            success =true;
+            console.log("success", success);
+            console.log("res get form payment",res);
           })
           .catch(function(err){
             console.log(err);
           });
+
+          this.braintreeScript();
+          console.log("ci22222ao", success);
 
       }
 
@@ -282,10 +394,19 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
       //   this.msgSubscription = val ;
       //  },
 
-      'lastPayment': function(val){
+      'payment_method_nonce': function(val){
 
-          this.lastPayment = val;
+          this.payment_method_nonce = val;
+          console.log("log di watch payment method nonce",this.payment_method_nonce);
        },
+
+       'selected_tier': function(val){
+
+           this.selected_tier = val;
+
+        },
+
+
 
     }
 
