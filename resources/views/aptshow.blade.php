@@ -27,6 +27,7 @@
       <img class="otherjpg col-md-12" src="/img/uploads/{{$apt->img_path}}" alt="Foto dell'appartamento">
     </div>
 
+    <div class="container">
     {{-- section 2 sotto immagine --}}
     <section class="row">
       {{-- Col Descrizione --}}
@@ -40,7 +41,7 @@
 
       {{-- Col Info appartamento --}}
 
-        <ul class="list-group info col-lg-6 col-sm-12">
+        <ul class="info col-lg-6 col-sm-12">
           <div class="card-header">
             <h3>Informazioni</h3>
           </div>
@@ -130,7 +131,7 @@
         </section>
         @endif
 
-
+      </div>
   </main>
 
 
