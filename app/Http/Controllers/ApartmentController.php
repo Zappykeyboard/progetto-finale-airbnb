@@ -70,6 +70,10 @@ class ApartmentController extends Controller
           $validatedApt['lon'] = $lon;
 
 
+          $apiKey = env('TOMTOM_APIKEY');
+
+          $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+
           //recupero la mappa
           $response = $tomtom->request('GET',
                                         '/map/1/staticimage',
@@ -159,7 +163,7 @@ class ApartmentController extends Controller
 
 
         return view('welcome', ['apts'=>$foundApts, 'features'=> Feature::all()]);
-        //ritorna pagina con $foundApts
+
 
     }
 
@@ -168,11 +172,8 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-
-        $file= $request->file('file');
-
         $features= Feature::all();
 
         return view('aptcreate_address', compact('features'));
@@ -186,7 +187,7 @@ class ApartmentController extends Controller
      */
     public function store(ApartmentRequest $request)
     {
-        dd($request);
+
         $validatedApt = $request->validated();
 
         $validatedApt = $this->getMapData($validatedApt);
@@ -283,6 +284,7 @@ class ApartmentController extends Controller
      */
     public function update(ApartmentRequest $request, $id)
     {
+
       $validatedApt = $request->validated();
       //dd($validatedApt);
       $apt = Apartment::findOrFail($id);
