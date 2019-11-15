@@ -12222,35 +12222,38 @@ section {
   padding: 30px;
 }
 
+section .my_list_group_item {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+section .my_list_group_item,
+section .list_group_item {
+  border-bottom: 4px solid #bdbdbd;
+  border-bottom-width: 2px;
+  border-collapse: 50%;
+}
+
+section input,
+section textarea {
+  border: none;
+  border-bottom: 3px solid lightgrey;
+  border-radius: 5%;
+}
+
+section .btn,
+section .circle {
+  background-color: gba(239, 83, 80, 1);
+}
+
 .card-header {
   background-color: white;
-  border-bottom: 2px solid #8d6e63;
+  border-bottom: 4px solid #b0bec5;
   border-radius: 50px;
 }
 
-.card input,
-.card textarea,
-.list_group input,
-.list_group textarea,
-.list_group_item input,
-.list_group_item textarea {
-  border: none;
-  border-bottom: 2px solid lightgrey;
-}
-
-.card .btn,
-.card .badge,
-.card .badge-primary,
-.card .badge-pill,
-.list_group .btn,
-.list_group .badge,
-.list_group .badge-primary,
-.list_group .badge-pill,
-.list_group_item .btn,
-.list_group_item .badge,
-.list_group_item .badge-primary,
-.list_group_item .badge-pill {
-  background-color: #ef5350;
+.card-header h3 {
+  color: #7986cb;
 }
 
 header img {
@@ -12392,5 +12395,32 @@ header.header-absolute a {
 
 * {
   color: #263238;
+  font-size: 1.2rem;
+}
+
+.container {
+  min-width: 80vw;
+}
+
+@media all and (max-width: 1280px) {
+  * {
+    font-size: 1em;
+    color: #263238;
+  }
+
+  .row::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .photos {
+    height: 50vh;
+    padding: 0 5%;
+  }
+
+  section {
+    height: 50%;
+  }
 }
 

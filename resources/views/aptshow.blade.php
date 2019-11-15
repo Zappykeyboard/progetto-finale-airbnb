@@ -23,7 +23,7 @@
 
   <main>
 
-    <div class="photos col-md-12">
+    <div class="photos col-lg-12">
       <img class="otherjpg col-md-12" src="/img/uploads/{{$apt->img_path}}" alt="Foto dell'appartamento">
     </div>
 
@@ -31,11 +31,11 @@
     {{-- section 2 sotto immagine --}}
     <section class="row">
       {{-- Col Descrizione --}}
-      <div class="list_group col-lg-6 col-sm-12">
+      <div class="col-lg-6 col-sm-12">
         <div class="card-header">
           <h3 class="">Descrizione:</h3>
         </div>
-        <div class="card-body list_group_item">
+        <div class="card-body">
           <h5 class="card-title">Cosa ti racconto...</h5>
           <p class="card-text">{{$apt->description}}</p>
         </div>
@@ -47,40 +47,43 @@
           <div class="card-header">
             <h3>Informazioni</h3>
           </div>
-          <li class="list_group_item d-flex justify-content-between align-items-center">
-            Dimensioni:
-            <span class="">mq</span>
-            <span class="badge badge-primary badge-pill">{{$apt->mq}}</span>
-          </li>
 
-          <li class="list_group_item d-flex justify-content-between align-items-center">
-            Numero di camere:
-            <span class="badge badge-primary badge-pill">{{$apt->rooms}}</span>
-          </li>
+          <div class="card-body">
 
-          <li class="list_group_item d-flex justify-content-between align-items-center">
-            Posti letto:
-            <span class="badge badge-primary badge-pill">{{$apt->beds}}</span>
-          </li>
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Dimensioni:
+              <span class="">mq</span>
+              <span class="badge badge-primary badge-pill">{{$apt->mq}}</span>
+            </li>
 
-          <li class="list_group_item d-flex justify-content-between align-items-center">
-            Numero di bagni:
-            <span class="badge badge-primary badge-pill">{{$apt->bathrooms}}</span>
-          </li>
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Numero di camere:
+              <span class="badge badge-primary badge-pill">{{$apt->rooms}}</span>
+            </li>
 
-          <li class="list_group_item d-flex justify-content-between align-items-center">
-            Indirizzo:
-            <span class="badge badge-primary badge-pill">{{$apt->address}}</span>
-          </li>
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Posti letto:
+              <span class="badge badge-primary badge-pill">{{$apt->beds}}</span>
+            </li>
 
-          @if(Auth::id()==$apt->user->id)
-          <li class="list_group_item d-flex justify-content-between align-items-center">
-            Visualizzazioni: {{$apt-> visualizations}} <br>
-            <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
-            <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
-          </li>
-          @endif
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Numero di bagni:
+              <span class="badge badge-primary badge-pill">{{$apt->bathrooms}}</span>
+            </li>
 
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Indirizzo:
+              <span class="badge badge-primary badge-pill">{{$apt->address}}</span>
+            </li>
+
+            @if(Auth::id()==$apt->user->id)
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Visualizzazioni: {{$apt-> visualizations}} <br>
+              <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
+              <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
+            </li>
+            @endif
+          </div>
         </ul>
 
 
@@ -91,11 +94,11 @@
     <section class="row">
 
       {{-- Colonna servizi appartamento --}}
-        <div class="list_group servizi col-md-6 col-sm-12">
+        <div class="ervizi col-lg-6 col-md-12 col-sm-12">
           <div class="card-header">
             <h3 class="">Servizi disponibili</h3>
           </div>
-          <div class="card-body list_group_item">
+          <div class="card-body">
 
               @foreach ($apt -> features as $feature)
                 <p>{{ $feature -> type }}</p>
@@ -106,13 +109,13 @@
 
       {{-- Colonna contatti --}}
       <div class="contact col-md-6">
-        
+
           <div id="vue_messages">
             <messages
                       :apt_id= "{{ $apt->id }}"
             ></messages>
           </div>
-        
+
       </div>
 
     </section>

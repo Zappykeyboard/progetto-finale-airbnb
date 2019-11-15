@@ -25,4 +25,35 @@
 
 *{
   color: rgba(38,50,56,1);
+  font-size: 1.2rem;
 }
+
+.container{
+  min-width: 80vw;
+}
+
+@media all and (max-width: 1280px) {
+
+  *{
+
+    font-size: 1em;
+    color: rgba(38,50,56,1);
+  }
+
+  .row::after{
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .photos{
+    height: 50vh;
+    padding: 0 5%;
+  }
+
+  section{
+    height: 50%;
+    
+  }
+
+ }

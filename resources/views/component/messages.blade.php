@@ -42,17 +42,9 @@
      </form>
     @else
 
-    <div class="card">
-      <div class="card-header">
-        <ul class="nav nav-pills card-header-pills">
-
-
-
-        </ul>
-      </div>
+      @if (Auth::id() == $apt->user_id & count($apt -> messages)>0)
+      <div class="card">
       <div class="card-body messages">
-
-      @if (Auth::id() == $apt->user_id)
       <div class="col-md-12" v-show="!isAbilitedForm" >
         @foreach ($apt -> messages as $message)
           <div class="card col-lg-12">

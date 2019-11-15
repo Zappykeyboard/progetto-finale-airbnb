@@ -43,35 +43,54 @@ header {
   }
 }
 
+
+
 section{
 
   height: 50vh;
   padding: 30px;
 
+  .my_list_group_item{
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+
+  .my_list_group_item,
+  .list_group_item{
+    border-bottom: 4px solid $border_bottom_orange;
+    border-bottom-width: 2px;
+    border-collapse: 50%;
+  }
+
+  input,
+  textarea {
+    border: none;
+    border-bottom: 3px solid lightgrey;
+    border-radius: 5%;
+  }
+
+  .btn,
+  .circle{
+    background-color: $bg_btn_etc;
+  }
+
 }
 
 .card-header{
   background-color: white;
-  border-bottom: 2px solid rgba(141,110,99,1);
+  border-bottom: 4px solid $border_bottom;
   border-radius: 50px;
+  h3{
+    color: $card-header-color;
+  }
 }
 
 .card,
 .list_group,
 .list_group_item{
 
-  input,
-  textarea {
-    border: none;
-    border-bottom: 2px solid lightgrey;
-  }
 
-  .btn,
-  .badge,
-  .badge-primary,
-  .badge-pill{
-    background-color: rgba(239,83,80,1);
-  }
 
 }
 
