@@ -45,59 +45,52 @@
     <section class="row">
       <div class="inputApparts col-lg-5 col-md-8 col-sm-12">
         <div class="">
-          Inserisci parametri di ricerca:
-        </div>
-        <div class="">
           <form class="" action="{{route('apt.index')}}" method="get">
-            @csrf
-            @method('GET')
+            <div class="loc-input">
+              <label for="query">Cerca una località: </label>
+              <input type="text" name="query" value="">
+            </div>
             <div class="">
               <label for="beds">Posti letto: </label>
-              <input type="text" name="beds" value="1">
+              <input type="number" name="beds" value="1" required>
             </div>
             <div class="">
-              <label for="rooms">N. stanze</label>
-              <input type="text" name="rooms" value="1">
+              <label for="rooms">N. stanze: </label>
+              <input type="number" name="rooms" value="1" required>
             </div>
             <div class="">
-              <label for="bathrooms">N. Bagni</label>
-              <input type="text" name="bathrooms" value="1">
+              <label for="bathrooms">N. Bagni: </label>
+              <input type="number" name="bathrooms" value="1" required>
             </div>
             <div class="">
               <label for="feature"><h3>Servizi disponibili</h3></label>
-              <ul>
+              <ul class="feature-list">
                 @foreach ($features as $feature)
-                  <li><input type="checkbox" name="features[]" value="{{$feature -> id}}">{{$feature-> type}}</li>
+                  <li class="feature-item"><input type="checkbox" name="features[]" value="{{$feature -> id}}">{{$feature-> type}}</li>
                 @endforeach
               </ul>
             </div>
 
             <div class="">
-                <button type="submit">Vai</button>
+                <button class="submit-btn" type="submit">Vai</button>
             </div>
 
           </form>
         </div>
-        {{-- <h1>Cerca gli appartamenti nella Tua zona.</h1>
-        <form class="" action="index.html" method="post">
-          <h3>Dove: </h3>
-          <input class="position" type="text" name="position" value="" placeholder="Ovunque">
-          <!-- <input class="positionButt" type="button" name="" value="Vai"> -->
-          <h3>Quante persone: </h3>
-          <input class="position" type="text" name="position" value="" placeholder="1">
-          <!-- <input class="positionButt" type="button" name="" value="Vai"> -->
-          <h3>In data: </h3>
-          <input class="position" type="text" name="position" value="" placeholder="01-11-2019">
-          <!-- <input class="positionButt" type="button" name="" value="Vai"> -->
-          <button class ="searchGo" type="button" name="button">Avvia la ricerca</button>
-        </form> --}}
+
       </div>
     </section>
   </div>
 
   <div class="apartments-wrapper">
-    <ul class="row">
-      <h1 class="col-md-12">Gli appartamenti in evidenza</h1>
+    {{-- <div class="row">
+      @if ($apts)
+
+
+      @else
+        <h1 class="col-md-12 text-center">Nessun risultato...</h1>
+      @endif
+
       @foreach ($apts as $apt)
         <li class="col-md-4 col-sm-6">{{$apt->description}}
            <br>
@@ -106,7 +99,40 @@
           <a href="{{route('apt.show', $apt->id)}}">Visualizza</a>
         </li>
       @endforeach
-    </ul>
+    </div> --}}
+
+
+      @if ($apts)
+        <h1 class="col-md-12 text-center">In evidenza</h1>
+        <div class="flex-container">
+
+          @foreach ($apts as $apt)
+            <div class="apt-card">
+              <div class="card-img">
+
+                <img src=
+                @if ($apt->img_path)
+                  "{{$apt->img_path}}"
+                @else
+                  "/img/ap1.jpg"
+                @endif
+                 alt="foto appartamento">
+
+              </div>
+              <div class="card-desc">
+                {{ strlen($apt->description) > 100 ? substr($apt->description, 0, 100) . '...' : $apt->description }}
+                
+              </div>
+              <form action="{{route('apt.show', $apt->id)}}">
+                  <input type="submit" value="Visualizza" />
+              </form>
+            </div>
+          @endforeach
+
+        </div>
+      @else
+        <h1 class="col-md-12 text-center">Nessun risultato...</h1>
+      @endif
 
   </div>
 
