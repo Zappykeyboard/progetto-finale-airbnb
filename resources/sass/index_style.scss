@@ -32,7 +32,8 @@ header.header-absolute{
 }
 
 .inputApparts {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: 450px;
   background-color: white;
   position: absolute;
@@ -51,12 +52,62 @@ header.header-absolute{
     display: flex;
     flex-direction: column;
 
-    button{
+    .submit-btn{
+      border: none;
+      background-color: #ea1226;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
 
-      margin: 20px 0;
-      padding: 10px;
+      width: 126px;
+      height: 73px;
+
+      margin: 0 auto;
+      display: block;
 
     }
+
+    .feature-list{
+      display: flex;
+      flex-wrap: wrap;
+
+
+      .feature-item{
+        list-style: none;
+        margin: 5px;
+        font-weight: bold;
+      }
+    }
+
+    label[for="feature"]{
+      margin-top: 20px;
+      margin-bottom: -5px;
+    }
+
+
+    .loc-input{
+      margin: 10px auto;
+
+      label{
+        text-align: center;
+        width: 100%;
+        font-weight: bold;
+        line-height: 1.25rem;
+      }
+      input{
+        width: 400px;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+      }
+    }
+
+    input[type="number"]{
+      width: 50px;
+    }
+
+
+
   }
 
 }

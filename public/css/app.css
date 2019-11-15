@@ -12288,7 +12288,8 @@ header.header-absolute a {
 }
 
 .inputApparts {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: 450px;
   background-color: white;
   position: absolute;
@@ -12308,9 +12309,55 @@ header.header-absolute a {
           flex-direction: column;
 }
 
-.inputApparts form button {
-  margin: 20px 0;
-  padding: 10px;
+.inputApparts form .submit-btn {
+  border: none;
+  background-color: #ea1226;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  width: 126px;
+  height: 73px;
+  margin: 0 auto;
+  display: block;
+}
+
+.inputApparts form .feature-list {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.inputApparts form .feature-list .feature-item {
+  list-style: none;
+  margin: 5px;
+  font-weight: bold;
+}
+
+.inputApparts form label[for=feature] {
+  margin-top: 20px;
+  margin-bottom: -5px;
+}
+
+.inputApparts form .loc-input {
+  margin: 10px auto;
+}
+
+.inputApparts form .loc-input label {
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  line-height: 1.25rem;
+}
+
+.inputApparts form .loc-input input {
+  width: 400px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+.inputApparts form input[type=number] {
+  width: 50px;
 }
 
 .apartments-wrapper {

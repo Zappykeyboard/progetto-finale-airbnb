@@ -153,12 +153,12 @@ class ApartmentController extends Controller
 
                }
             }
-            //ritorna pagina con $list
+            return view('welcome', ['apts'=>$list, 'features'=> Feature::all()]);
           }
         }
 
 
-        dd($list);
+        return view('welcome', ['apts'=>$foundApts, 'features'=> Feature::all()]);
         //ritorna pagina con $foundApts
 
     }
