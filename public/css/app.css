@@ -12321,6 +12321,11 @@ header.header-absolute a {
   display: block;
 }
 
+.inputApparts form .submit-btn:hover {
+  background-color: #ea1226a8;
+  cursor: pointer;
+}
+
 .inputApparts form .feature-list {
   display: -webkit-box;
   display: flex;
@@ -12362,6 +12367,61 @@ header.header-absolute a {
 
 .apartments-wrapper {
   padding: 50px;
+}
+
+.apartments-wrapper .flex-container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+          align-items: center;
+  flex-wrap: wrap;
+}
+
+.apartments-wrapper .flex-container .apt-card {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  margin: 25px auto;
+  border: 1px black;
+}
+
+.apartments-wrapper .flex-container .apt-card img {
+  height: 256px;
+  width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+
+.apartments-wrapper .flex-container .apt-card .card-desc {
+  text-align: center;
+}
+
+.apartments-wrapper .flex-container .apt-card input {
+  border: none;
+  background-color: #ea1226;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  width: 126px;
+  height: 73px;
+  margin: 0 auto;
+  display: block;
+}
+
+.apartments-wrapper .flex-container .apt-card input:hover {
+  background-color: #ea1226a8;
+  cursor: pointer;
 }
 
 .myContainer {

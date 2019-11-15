@@ -83,9 +83,9 @@
   </div>
 
   <div class="apartments-wrapper">
-    <ul class="row">
+    {{-- <div class="row">
       @if ($apts)
-        <h1 class="col-md-12 text-center">In evidenza</h1>
+
 
       @else
         <h1 class="col-md-12 text-center">Nessun risultato...</h1>
@@ -99,7 +99,40 @@
           <a href="{{route('apt.show', $apt->id)}}">Visualizza</a>
         </li>
       @endforeach
-    </ul>
+    </div> --}}
+
+
+      @if ($apts)
+        <h1 class="col-md-12 text-center">In evidenza</h1>
+        <div class="flex-container">
+
+          @foreach ($apts as $apt)
+            <div class="apt-card">
+              <div class="card-img">
+
+                <img src=
+                @if ($apt->img_path)
+                  "{{$apt->img_path}}"
+                @else
+                  "/img/ap1.jpg"
+                @endif
+                 alt="foto appartamento">
+
+              </div>
+              <div class="card-desc">
+                {{ strlen($apt->description) > 100 ? substr($apt->description, 0, 100) . '...' : $apt->description }}
+                
+              </div>
+              <form action="{{route('apt.show', $apt->id)}}">
+                  <input type="submit" value="Visualizza" />
+              </form>
+            </div>
+          @endforeach
+
+        </div>
+      @else
+        <h1 class="col-md-12 text-center">Nessun risultato...</h1>
+      @endif
 
   </div>
 

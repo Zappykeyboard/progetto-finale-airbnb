@@ -66,6 +66,10 @@ header.header-absolute{
       display: block;
 
     }
+    .submit-btn:hover{
+      background-color:#ea1226a8;
+      cursor: pointer;
+    }
 
     .feature-list{
       display: flex;
@@ -115,5 +119,57 @@ header.header-absolute{
 .apartments-wrapper{
 
   padding: 50px;
+
+  .flex-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .apt-card{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      max-width: 400px;
+      height: 400px;
+      margin: 25px auto;
+      border: 1px black;
+
+      img{
+        height: 256px;
+        width: 300px;
+        margin: 0 auto;
+        display: block;
+      }
+
+      .card-desc{
+        text-align: center
+      }
+      input{
+        border: none;
+        background-color: #ea1226;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        width: 126px;
+        height: 73px;
+
+        margin: 0 auto;
+        display: block;
+      }
+
+      input:hover{
+        background-color:#ea1226a8;
+        cursor: pointer;
+      }
+    }
+
+  }
+
+
+
 
 }
