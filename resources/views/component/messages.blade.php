@@ -1,8 +1,46 @@
 <script type="text/x-template" id="template_messages">
 
-
-
   <div class="box">
+
+    <!-- Form per invio messaggio  -->
+    @if (Auth::id() != $apt->user_id || Auth::guest())
+    <form class="col-md-12" action="{{ route('msg.guest.create', $apt-> id ) }}" method="post" >
+      @csrf
+      @method('POST')
+
+      <div class="card">
+
+        <div class="card-header">
+            <label class="col-lg-12" for="sender_email" name="sender_email">Inserisi la tua mail</label>
+            <input class="col-lg-12" type="email" name="sender_email" v-model="email"/>
+        </div>
+
+        <div class="card-body">
+
+          <div class="row">
+            <h5 class="card-title col-lg-4 col-sm-12">Stai contattando:</h5>
+            <p class="col-lg-8 col-sm-12">{{$apt->user->firstname}} {{$apt->user->lastname}}</p>
+          </div>
+          <div class="row">
+            <h5 class="card-title col-lg-4 col-sm-12">Appartamento:</h5>
+            <p class="col-lg-8 col-sm-12">{{$apt->address}}</p>
+          </div>
+
+
+          <div class="row">
+            <label for="body" name="body" class="col-lg-12"><p class="card-text">inserisci il tuo messaggio:</p></label><br>
+            <textarea class="col-md-12" type="text" name="body" v-model="textarea">@{ textarea }</textarea>
+          </div>
+          <br>
+
+          <div class="text-right col-md-12">
+            <input type="button" class="btn btn-primary" value="Invia il Messaggio" @click="saveMsg()"/>
+          </div>
+
+        </div>
+      </div>
+     </form>
+    @else
 
     <div class="card">
       <div class="card-header">
@@ -14,49 +52,10 @@
       </div>
       <div class="card-body messages">
 
-    <!-- Form per invio messaggio  -->
-    @if (Auth::id() != $apt->user_id || Auth::guest())
-    <form class="col-md-12" action="{{ route('msg.guest.create', $apt-> id ) }}" method="post" >
-      @csrf
-      @method('POST')
-
-      <div class="card text-white bg-dark mb-3">
-
-        <div class="card-header row">
-            <label class="col-md-3 col-sm-12" for="sender_email" name="sender_email">Inserisi la tua mail</label>
-            <input class="col-md-8 col-sm-12" type="email" name="sender_email" v-model="email"/>
-        </div>
-
-        <div class="card-body">
-
-          <div class="row">
-            <h5 class="card-title col-md-3">Stai contattando:</h5>
-            <p class="col-md-8">{{$apt->user->firstname}} {{$apt->user->lastname}}</p>
-          </div>
-          <div class="row">
-            <h5 class="card-title col-md-3">Appartamento:</h5>
-            <p class="col-md-8">{{$apt->address}}</p>
-          </div>
-
-
-          <label for="body" name="body"><p class="card-text">inserisci il tuo messaggio:</p></label><br>
-          <textarea class="col-md-12" type="text" name="body" v-model="textarea">@{ textarea }</textarea>
-          <br>
-
-          <div class="text-right col-md-12 row">
-            <input type="button" class="btn btn-primary" value="Invia il Messaggio" @click="saveMsg()"/>
-
-          </div>
-
-        </div>
-      </div>
-     </form>
-    @endif
-
       @if (Auth::id() == $apt->user_id)
       <div class="col-md-12" v-show="!isAbilitedForm" >
         @foreach ($apt -> messages as $message)
-          <div class="card text-white bg-dark mb-3 col-lg-12">
+          <div class="card col-lg-12">
             <div class="card-header">Messaggio da: {{$message -> sender_email}}</div>
             <div class="card-body">
               <h5 class="card-title">Appartamento: {{$apt->address}}</h5>
@@ -70,7 +69,7 @@
 
     </div>
   </div>
-
+  @endif
 
   </div>
 

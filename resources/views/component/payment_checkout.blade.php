@@ -6,11 +6,11 @@
   <!-- Info Piano Sottoscrizione -->
   <div class="" id="paymeffnt-form"  method="post" v-if="!showPayBrayntree">
 
-    <div class="list-group  text-center">
+    <div class="list_group  text-center">
       <div class="card-header">
         Piano Attivo
       </div>
-      <div class="list-group-item">
+      <div class="list_group_item">
         <h5 class="card-title" v-if="!seenSubsBtn">Sponsorizzazioni del tuo appartamento</h5>
         <h5 class="card-title" v-if="seenSubsBtn">Nessuna Sponsorizzazione attiva</h5>
 
