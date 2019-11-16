@@ -29,7 +29,7 @@
     @endforeach
 
   @else
-    <h4>Non hai registrato alcun appartamento!</h4>
+    <h4 class="center-text">Non hai registrato alcun appartamento!</h4>
   @endif
 
 
