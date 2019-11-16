@@ -144,9 +144,67 @@ class SearchController extends Controller
 
     }
 
-      return response()->json([
-        "validatedApt" => $validatedApt,
-        "response_tomTom" => $response
-      ]);
+      return ($validatedApt);
+
   }
+
+  /**
+  * Chiede a TomTom latitudine, longitudine e mappa
+  * richiede array
+  * restituisce array
+  **/
+  public function getMapFront($validatedApt){
+
+  //Recupera coordinate e mappa
+  // $apiKey = env('TOMTOM_APIKEY');
+  //
+  // $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+  //
+  // $response = $tomtom->request('GET',
+  //                             '/search/2/geocode/'. $validatedApt['address'] . '.json',
+  //                             [
+  //                               'query'=> [
+  //                                 'key'=>$apiKey,
+  //                                 'extendedPostalCodesFor'=>'PAD',
+  //                                 'limit'=>'1'
+  //                                 ]
+  //                               ]);
+  // $body = json_decode($response->getBody(), true);
+
+  // if ( $body['results']){
+  //
+  //       //recupero la mappa
+  //       $response = $tomtom->request('GET',
+  //                                     '/map/1/staticimage',
+  //                                     [
+  //                                       'query' => [
+  //                                         'key'=>$apiKey,
+  //                                         'layer' => 'hybrid',
+  //                                         'style' => 'main',
+  //                                         'format' => 'png',
+  //                                         'zoom' => '17',
+  //                                         'center' => $lon.', '.$lat,
+  //                                         'width' => '512',
+  //                                         'height' => '512',
+  //                                         'view' => 'Unified',
+  //                                       ]
+  //                                     ]);
+  //
+  //     // $fileName =  "map-" . uniqid() .".png";
+  //
+  //
+  //
+  // }
+
+      return response()->json([
+        "body" => "ciaooooooo",
+        // "response_tomTom" => $response
+      ]);
+
+
+  }
+
+
+
+
 }

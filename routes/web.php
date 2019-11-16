@@ -57,6 +57,9 @@ Route::get('/tiers/{id}', 'PaymentController@showTiers')
       ->middleware('auth');
 
 
+Route::get('/map/{id}', 'SearchController@getMapFront')
+      ->name('map.get');
+
 
 Route::post('/payment/{id}', function(Request $request, $id){
 

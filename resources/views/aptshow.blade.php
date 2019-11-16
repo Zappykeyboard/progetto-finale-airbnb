@@ -9,7 +9,7 @@
 @section('content')
 
   @include('component.messages')
-
+  @include('component.map_comp_tomtom')
 
   @php
     use App\Tier;
@@ -133,27 +133,25 @@
             $storyPayments = $apt -> payments()->get();
           @endphp
         {{-- componenete pagamento --}}
-        <section id="vue_payment" class="row">
+        <section class="row">
 
-          <payments
-                    :apt_id= "{{ $apt -> id}}"
-                    :user_id="{{ $apt->user-> id }}"
-                    :tier_id="{{ $apt-> tier_id }}"
-                    :tier_active="{{ $tier_active }}"
-                    :payments_story="{{ $storyPayments }}"
-          ><payments>
+          <div id="vue_payment" class="col-lg-6 col-md-12">
+            <payments
+                      :apt_id= "{{ $apt -> id}}"
+                      :user_id="{{ $apt->user-> id }}"
+                      :tier_id="{{ $apt-> tier_id }}"
+                      :tier_active="{{ $tier_active }}"
+                      :payments_story="{{ $storyPayments }}"
+            ><payments>
+          </div>
 
 
             {{-- Mappa --}}
-            <div class="col-lg-6 col-md-12">
-              <div class="card bg-dark text-white">
-                <img src="..." class="card-img" alt="...">
-                <div class="card-img-overlay">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <p class="card-text">Last updated 3 mins ago</p>
-                </div>
-              </div>
+            <div id="vue_map" class="col-lg-6 col-md-12">
+                <map-tom-tom
+                      :apt_address= '"{{ $apt -> address }}"'
+                      :apt_id= "{{ $apt -> id}}"
+                ></map-tom-tom>
             </div>
 
         </section>
