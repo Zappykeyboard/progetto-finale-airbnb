@@ -15,6 +15,7 @@
             <input class="col-lg-12" type="email" name="sender_email" v-model="email"/>
         </div>
 
+
         <div class="card-body">
 
           <div class="row">
@@ -44,6 +45,10 @@
 
       @if (Auth::id() == $apt->user_id & count($apt -> messages)>0)
       <div class="card">
+        <div class="servizi">
+          <div class="card-header">
+            <h3 class="">Servizi disponibili</h3>
+          </div>
       <div class="card-body messages">
       <div class="col-md-12" v-show="!isAbilitedForm" >
         @foreach ($apt -> messages as $message)

@@ -1,7 +1,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
 <script type="text/x-template" id="template_payments">
 
-  <div class="col-lg-6 col-sm-12">
+  <div class="col-lg-12 col-sm-12">
 
   <!-- Info Piano Sottoscrizione -->
   <div class="" id="paymeffnt-form"  method="post" v-if="!showPayBrayntree">

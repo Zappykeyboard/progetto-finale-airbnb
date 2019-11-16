@@ -12218,7 +12218,6 @@ header .navBar li:hover {
 }
 
 section {
-  height: 50vh;
   padding: 30px;
 }
 
@@ -12246,6 +12245,11 @@ section .circle {
   background-color: gba(239, 83, 80, 1);
 }
 
+.contact {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
 .card-header {
   background-color: white;
   border-bottom: 4px solid #b0bec5;
@@ -12268,6 +12272,13 @@ header img {
 
 .photos img {
   max-height: 100%;
+}
+
+@media all and (min-width: 1280px) {
+  .photos {
+    height: calc(100vh - 75px);
+    padding: 0 5%;
+  }
 }
 
 .absolute {
@@ -12502,7 +12513,7 @@ header.header-absolute a {
 
 * {
   color: #263238;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .container {
@@ -12515,19 +12526,13 @@ header.header-absolute a {
     color: #263238;
   }
 
-  .row::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  .photos {
-    height: 50vh;
-    padding: 0 5%;
-  }
-
-  section {
-    height: 50%;
+  .container .row .col-md-12,
+  .container .row .col-lg-12,
+  .container .row .col-sm-12,
+  .container .row .col-md-6,
+  .container .row .col-lg-6 {
+    width: 100%;
+    height: 100%;
   }
 }
 

@@ -47,14 +47,15 @@ header {
 
 section{
 
-  height: 50vh;
+  // height: 50vh;
   padding: 30px;
 
   .my_list_group_item{
     margin-top: 0;
     margin-bottom: 1rem;
-  }
 
+
+  }
 
   .my_list_group_item,
   .list_group_item{
@@ -76,6 +77,13 @@ section{
   }
 
 }
+
+
+  .contact{
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
+
 
 .card-header{
   background-color: white;
@@ -107,5 +115,16 @@ header img {
   img{
 
     max-height: 100%;
+  }
+}
+
+@media all and (min-width: 1280px) {
+
+  section{
+    // height: 100vh;
+  }
+  .photos{
+    height: calc(100vh - 75px);
+    padding: 0 5%;
   }
 }

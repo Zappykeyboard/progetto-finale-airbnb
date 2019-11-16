@@ -100,7 +100,7 @@
     <section class="row">
 
       {{-- Colonna servizi appartamento --}}
-        <div class="ervizi col-lg-6 col-md-12 col-sm-12">
+        <div class="servizi col-lg-6 col-md-12 col-sm-12">
           <div class="card-header">
             <h3 class="">Servizi disponibili</h3>
           </div>
@@ -114,13 +114,13 @@
         </div>
 
       {{-- Colonna contatti --}}
-      <div class="contact col-md-6">
+      <div id="vue_messages" class="contact col-lg-6 col-md-12 col-sm-12">
 
-          <div id="vue_messages">
-            <messages
-                      :apt_id= "{{ $apt->id }}"
-            ></messages>
-          </div>
+
+          <messages
+                    :apt_id= "{{ $apt->id }}"
+          ></messages>
+
 
       </div>
 
@@ -134,6 +134,7 @@
           @endphp
         {{-- componenete pagamento --}}
         <section id="vue_payment" class="row">
+      
           <payments
                     :apt_id= "{{ $apt -> id}}"
                     :user_id="{{ $apt->user-> id }}"
@@ -141,6 +142,7 @@
                     :tier_active="{{ $tier_active }}"
                     :payments_story="{{ $storyPayments }}"
           ><payments>
+      
         </section>
         @endif
 
