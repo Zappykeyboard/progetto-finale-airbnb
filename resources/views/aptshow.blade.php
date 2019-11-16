@@ -23,8 +23,14 @@
 
   <main>
 
-    <div class="photos col-lg-12">
-      <img class="otherjpg col-md-12" src="/img/uploads/{{$apt->img_path}}" alt="Foto dell'appartamento">
+    <div class="photos col-md-12">
+      <img class="otherjpg col-md-12"
+      @isset($apt->img_path)
+        src="/img/uploads/{{$apt->img_path}}"
+      @endisset
+
+      alt="Foto dell'appartamento">
+
     </div>
 
     <div class="container">

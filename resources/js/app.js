@@ -49,9 +49,12 @@ function init(){
   });
 
   // filePondDropImg();
+  var App = new Vue({
+    el:'#app'
+  });
+
 
   var message_comp = new Vue({
-
       el: '#vue_messages'
   });
 
