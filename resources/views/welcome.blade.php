@@ -83,23 +83,6 @@
   </div>
 
   <div class="apartments-wrapper">
-    {{-- <div class="row">
-      @if ($apts)
-
-
-      @else
-        <h1 class="col-md-12 text-center">Nessun risultato...</h1>
-      @endif
-
-      @foreach ($apts as $apt)
-        <li class="col-md-4 col-sm-6">{{$apt->description}}
-           <br>
-          Proprietario: {{$apt->user->lastname}}
-          <br>
-          <a href="{{route('apt.show', $apt->id)}}">Visualizza</a>
-        </li>
-      @endforeach
-    </div> --}}
 
 
       @if ($apts)
@@ -121,7 +104,7 @@
               </div>
               <div class="card-desc">
                 {{ strlen($apt->description) > 100 ? substr($apt->description, 0, 100) . '...' : $apt->description }}
-                
+
               </div>
               <form action="{{route('apt.show', $apt->id)}}">
                   <input type="submit" value="Visualizza" />
