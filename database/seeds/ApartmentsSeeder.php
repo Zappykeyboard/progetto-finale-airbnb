@@ -16,7 +16,7 @@ class ApartmentsSeeder extends Seeder
     public function run()
     {
 
-        factory(Apartment::class, 9)
+        factory(Apartment::class, 50)
           -> make()
           -> each(function($apartment){
              //Aggiungo valori per chiave estern user_id
