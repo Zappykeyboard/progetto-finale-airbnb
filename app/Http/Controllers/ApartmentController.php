@@ -226,7 +226,7 @@ class ApartmentController extends Controller
 
             // dd($item);
           }
-
+        }
 
         return redirect('/home');
     }
