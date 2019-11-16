@@ -1,7 +1,7 @@
 <header class="row col-md-12">
 
     <div class="logo col-md-4 col-xs-10">
-      <a class="col-md-2 col-xs-1"href="{{route('index')}}"><img src="../air.jpg" alt="boolbnb logo"></a>
+      <a class="col-md-2 col-xs-1"href="{{route('index')}}"><img src="{{asset('air.jpg')}}" alt="boolbnb logo"></a>
     </div>
 
     <ul class="navBar col-md-8">
