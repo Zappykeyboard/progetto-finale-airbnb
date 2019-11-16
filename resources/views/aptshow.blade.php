@@ -106,18 +106,18 @@
 
       {{-- Colonna contatti --}}
       <div class="contact col-md-6">
-        @if (Auth::id()!=$apt->user->id)
+
           <div id="vue_messages">
             <messages
                       :apt_id= "{{ $apt->id }}"
             ></messages>
           </div>
-        @endif
+      
       </div>
 
     </section>
 
-        @if (Auth::id()==$apt->user->id)
+        @if (Auth::id()==$apt->user_id)
           @include('component.payment_checkout')
           @php
             $tier_active = App\Tier::where("id", $apt -> tier_id)->select('price', 'level', 'duration')->get();
