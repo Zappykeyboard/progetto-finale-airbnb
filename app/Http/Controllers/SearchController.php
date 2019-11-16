@@ -144,6 +144,9 @@ class SearchController extends Controller
 
     }
 
-      return ($validatedApt);
+      return response()->json([
+        "validatedApt" => $validatedApt,
+        "response_tomTom" => $response
+      ]);
   }
 }

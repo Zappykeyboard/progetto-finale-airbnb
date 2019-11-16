@@ -134,7 +134,7 @@
           @endphp
         {{-- componenete pagamento --}}
         <section id="vue_payment" class="row">
-      
+
           <payments
                     :apt_id= "{{ $apt -> id}}"
                     :user_id="{{ $apt->user-> id }}"
@@ -142,7 +142,20 @@
                     :tier_active="{{ $tier_active }}"
                     :payments_story="{{ $storyPayments }}"
           ><payments>
-      
+
+
+            {{-- Mappa --}}
+            <div class="col-lg-6 col-md-12">
+              <div class="card bg-dark text-white">
+                <img src="..." class="card-img" alt="...">
+                <div class="card-img-overlay">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <p class="card-text">Last updated 3 mins ago</p>
+                </div>
+              </div>
+            </div>
+
         </section>
         @endif
 
