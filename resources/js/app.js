@@ -63,9 +63,9 @@ function init(){
   });
 
   // Component Mappa
-  var payment_comp = new Vue({
+  var map_comp = new Vue({
 
-      el: '#vue_payment'
+      el: '#vue_map'
   });
 };
 

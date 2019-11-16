@@ -78695,8 +78695,8 @@ function init() {
     el: '#vue_payment'
   }); // Component Mappa
 
-  var payment_comp = new Vue({
-    el: '#vue_payment'
+  var map_comp = new Vue({
+    el: '#vue_map'
   });
 }
 
