@@ -14,7 +14,6 @@
         </tr>
       </thead>
       <tbody>
-
         @foreach ($tiers as $tier)
           <tr>
             <th scope="row">{{$tier->level}}</th>
@@ -22,13 +21,14 @@
             <td>{{$tier->duration}}</td>
             <td>
 
-              <input type="checkbox" name="tier_id" value="{{$tier->id}}"/>
+              <input checked="" type="checkbox" name="tier_id" value="{{$tier->id}}"/>
             </td>
           </tr>
         @endforeach
 
       </tbody>
     </table>
+    <button type="button" name="button">Pay</button>
   </div>
 
 
@@ -44,10 +44,6 @@
 
 </form>
 
-
-
-{{-- BRAINTREE PAYMENT --}}
-  <script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>
 
   <script>
     var form = document.querySelector('#payment-form');

@@ -11,6 +11,8 @@ use App\Apartment;
 use App\Payment;
 use App\Tier;
 
+use Carbon\Carbon;
+
 class PaymentController extends Controller
 {
     /**
@@ -18,19 +20,94 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $apartment = Apartment::findOrFail($id);
+
+        $tier_id = $apartment -> tier_id;
+
+        $id_tier_active= Tier::findOrFail($apartment -> tier_id);
+
+        $payment = $apartment -> payments()->orderBy('created_at', 'asc')->first();
+
+        $duration =  $id_tier_active -> duration;
+        $last_payment =  Carbon::parse($payment -> created_at);
         //
+        $expiration_date = Carbon::parse($payment -> created_at) -> addHour($duration);
+        $now = Carbon::now();
+        //
+        $msg = "Expiration Time -" . $expiration_date->diffInHours($now,true) . " Hours";
+
+
+        $diff= "Nessun pagamento ancora effettuato";
+        if ($last_payment) {
+
+          // Differenza in giorni dall'ultimo pagamento
+          $diff = $last_payment->diffInHours($now,true) . " Hours ago";
+
+          if ($diff > 24) {
+
+            $diff = $last_payment->diffInDays($now,true) . " Days ago";
+          }
+        }
+
+        if ($now > $expiration_date) {
+
+          $msg = "Sottoscozione scaduta";
+
+          $diff = $expiration_date->diffInHours($now,true);
+        }
+
+        return response()->json([
+
+          "ciao",
+          "last_payment" => $last_payment,
+          "expiration_date" => $expiration_date,
+          $duration,
+          $now,
+          "msg_subs" => $msg,
+          "diff" => $diff,
+          "tier_id_from_apt" => $tier_id
+        ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+
+
+      $apt=  Apartment::findOrFail($id);
+
+       // PER TEST, TOKEN STATICO ACCOUNT BRAINTREE
+       $token = "sandbox_7bgcfdq8_hstckbs9tty2wg8q";
+       //
+       return response()->json([
+         "token-braintree"=> $token,
+         "message"=> 'ciao'
+         // "tiers"=> $tiers
+       ]);
+
+
+      // // Crea nuvo oggetto classe Braintree/gateway
+      // $gateway = new Braintree\Gateway([
+      //       'environment' => config('services.braintree.environment'),
+      //       'merchantId' => config('services.braintree.merchantId'),
+      //       'publicKey' => config('services.braintree.publicKey'),
+      //       'privateKey' => config('services.braintree.privateKey')
+      //   ]);
+      //
+      //   PER TEST, TOKEN STATICO ACCOUNT BRAINTREE
+      //   $token = "sandbox_7bgcfdq8_hstckbs9tty2wg8q";
+      //
+      //   $apt = Apartment::findOrFail($id);
+      //
+      //   return view('aptshow', compact('apt'));
     }
 
 
@@ -93,6 +170,17 @@ class PaymentController extends Controller
     {
         //
     }
+
+    public function showTiers()
+    {
+        $tiers = Tier::where('id', '>', 1)->select('id', 'price', 'level', 'duration')->get();
+        
+        return response()->json([
+
+          "tiers" => $tiers
+        ]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.

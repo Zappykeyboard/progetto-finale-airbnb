@@ -18,8 +18,8 @@
     $tiers = DB::table('tiers')->where('level', '>', 0)->orderBy('level', 'asc')
                 ->get();
 
-                // echo $tiers;
   @endphp
+
 
   <main>
 
@@ -30,13 +30,17 @@
       @endisset
 
       alt="Foto dell'appartamento">
+
     </div>
 
+    <div class="container">
     {{-- section 2 sotto immagine --}}
     <section class="row">
       {{-- Col Descrizione --}}
-      <div class="card desc col-md-8 col-sm-12">
-        <h5 class="card-header">Descrizione:</h5>
+      <div class="col-lg-6 col-sm-12">
+        <div class="card-header">
+          <h3 class="">Descrizione:</h3>
+        </div>
         <div class="card-body">
           <h5 class="card-title">Cosa ti racconto...</h5>
           <p class="card-text">{{$apt->description}}</p>
@@ -44,58 +48,62 @@
       </div>
 
       {{-- Col Info appartamento --}}
-      <div class="info col-md-4 col-sm-12">
 
-        <ul class="list-group info col-md-12">
+        <ul class="info col-lg-6 col-sm-12">
           <div class="card-header">
             <h3>Informazioni</h3>
           </div>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Dimensioni:
-            <span class="">mq</span>
-            <span class="badge badge-primary badge-pill">{{$apt->mq}}</span>
-          </li>
 
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Numero di camere:
-            <span class="badge badge-primary badge-pill">{{$apt->rooms}}</span>
-          </li>
+          <div class="card-body">
 
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Posti letto:
-            <span class="badge badge-primary badge-pill">{{$apt->beds}}</span>
-          </li>
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Dimensioni:
+              <span class="">mq</span>
+              <span class="badge badge-primary badge-pill">{{$apt->mq}}</span>
+            </li>
 
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Numero di bagni:
-            <span class="badge badge-primary badge-pill">{{$apt->bathrooms}}</span>
-          </li>
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Numero di camere:
+              <span class="badge badge-primary badge-pill">{{$apt->rooms}}</span>
+            </li>
 
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Indirizzo:
-            <span class="badge badge-primary badge-pill">{{$apt->address}}</span>
-          </li>
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Posti letto:
+              <span class="badge badge-primary badge-pill">{{$apt->beds}}</span>
+            </li>
 
-          @if(Auth::id()==$apt->user->id)
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Visualizzazioni: {{$apt-> visualizations}} <br>
-            <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
-            <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
-          </li>
-          @endif
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Numero di bagni:
+              <span class="badge badge-primary badge-pill">{{$apt->bathrooms}}</span>
+            </li>
 
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Indirizzo:
+              <span class="badge badge-primary badge-pill">{{$apt->address}}</span>
+            </li>
+
+            @if(Auth::id()==$apt->user->id)
+            <li class="my_list_group_item d-flex justify-content-between align-items-center">
+              Visualizzazioni: {{$apt-> visualizations}} <br>
+              <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
+              <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
+            </li>
+            @endif
+          </div>
         </ul>
 
-      </div>
+
 
     </section>
 
     {{-- Section 3 --}}
     <section class="row">
+
       {{-- Colonna servizi appartamento --}}
-      <div class="servizi col-md-6 col-sm-12">
-        <div class="card servizi col-md-6 col-sm-12">
-          <h5 class="card-header">Servizi disponibili</h5>
+        <div class="ervizi col-lg-6 col-md-12 col-sm-12">
+          <div class="card-header">
+            <h3 class="">Servizi disponibili</h3>
+          </div>
           <div class="card-body">
 
               @foreach ($apt -> features as $feature)
@@ -105,32 +113,41 @@
           </div>
         </div>
 
-
-      </div>
-
       {{-- Colonna contatti --}}
       <div class="contact col-md-6">
 
-        <div id="vue_messages">
-          <messages
-                    :apt_id= "{{ $apt->id }}"
-          ></messages>
-        </div>
+          <div id="vue_messages">
+            <messages
+                      :apt_id= "{{ $apt->id }}"
+            ></messages>
+          </div>
 
       </div>
 
     </section>
 
-    <section class="row">
-      <div id="vue_payment" class="col-md-6 col-sm-12">
-        @include('component.payment')
+        @if (Auth::id()==$apt->user->id)
+          @include('component.payment_checkout')
+          @php
+            $tier_active = App\Tier::where("id", $apt -> tier_id)->select('price', 'level', 'duration')->get();
+            $storyPayments = $apt -> payments()->get();
+          @endphp
+        {{-- componenete pagamento --}}
+        <section id="vue_payment" class="row">
+          <payments
+                    :apt_id= "{{ $apt -> id}}"
+                    :user_id="{{ $apt->user-> id }}"
+                    :tier_id="{{ $apt-> tier_id }}"
+                    :tier_active="{{ $tier_active }}"
+                    :payments_story="{{ $storyPayments }}"
+          ><payments>
+        </section>
+        @endif
+
       </div>
-
-    </section>
-
-
-
   </main>
+
+
 
 
 @endsection

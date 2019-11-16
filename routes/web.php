@@ -3,6 +3,8 @@
 // !! IMPORTANT !!
 use Illuminate\Http\Request;
 use App\Tier;
+use App\Apartment;
+use App\Payment;
 
 Route::get('/', 'IndexController@index')->name('index');
 
@@ -42,16 +44,23 @@ Route::get('/{id}', 'ApartmentController@destroy')
       ->name('apt.destroy')
       ->middleware('auth');
 
-Route::post('/payment/store/{id}', 'PaymentController@make')
-      ->name('payment.store')
+Route::get('/index/{id}', 'PaymentController@index')
+      ->name('payment.index')
       ->middleware('auth');
 
-Route::post('/payment/store/{id}', 'PaymentController@store')
-      ->name('store.payment')
+Route::get('/payment/{id}', 'PaymentController@create')
+      ->name('payment.send')
       ->middleware('auth');
+
+Route::get('/tiers/{id}', 'PaymentController@showTiers')
+      ->name('tiers.get')
+      ->middleware('auth');
+
 
 
 Route::post('/payment/{id}', function(Request $request, $id){
+
+
 
 
     $gateway = new Braintree\Gateway([
@@ -60,15 +69,16 @@ Route::post('/payment/{id}', function(Request $request, $id){
           'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
           'privateKey' => env('BRAINTREE_PRIVATE_KEY'),
       ]);
-
+    //
     // Id pagamento
     $nonceFromTheClient = $request-> payment_method_nonce;
-
+    //
     // Trovo il Piano scelto dall'utente
-    $tier = Tier::findOrFail($request['tier_id']);
+     $tier = Tier::findOrFail($request['tier_id']);
 
-    $amount = $tier -> price;
+     $amount = $tier -> price;
 
+    //
     // TRANSAZIONE
     $result = $gateway->transaction()->sale([
       'amount' => $amount,
@@ -85,14 +95,11 @@ Route::post('/payment/{id}', function(Request $request, $id){
 
 
     // IN CASO DI SUCCESSO DEL PAGAMENTO
-    if ($result->success) {
+    // if ($result->success) {
 
       $transaction = $result->transaction;
 
       // TODO: TRAMITE ARRAY RESULT posso estrapolare varie informazioni sulla transazione e salvarle nel database,
-
-      //ad esempio posso salvare l'id della transazione e metterlo nel database per tracciabilità o memorizzare i dati
-      //per pagamenti successivi
 
       // -------------------------------------------------------------------------------------------  //
       #  SALVATAGGIO DEL PAGAMENTO E DEL PIANO DI SOTTOSCRIZIONE NEL DATABASE                         #
@@ -104,37 +111,50 @@ Route::post('/payment/{id}', function(Request $request, $id){
         "tier_id" => 'required'
       ]);
 
-
       // UPDATE tier_id, piano sottoscritto dall utente per l'appartamento, in tabella apartments
-      $apartment = App\Apartment::findOrFail($id);
+      $apt_id = $request-> apartment_id;
+      $apartment = Apartment::findOrFail($apt_id);
 
-      if ($apartment) {
 
-          $tier_id = $validatedData['tier_id'];
+      $tier_id = $validatedData['tier_id'];
 
-          $apartment->update(["tier_id" => $tier_id]);
+      $apartment->update(["tier_id" => $tier_id]);
 
-      }
 
       // CREATE nuovo pagamento registrato nel database
-      $newPay = App\Payment::create(['apartment_id' => $id]);
+      $newPay = Payment::create(['apartment_id' => $apt_id]);
 
       // -------------------------------------------------------------------------------------------  //
       #    FINE SALVATAGGIO                                                                           #
       // ------------------------------------------------------------------------------------------- //
-      return back()
-        ->with('success_message', 'Transazione avvenuta con successo. ID transazione:'
-                    . $transaction -> id
-                  );
+
+
+      return response()->json([
+        'success_message' => 'Transazione avvenuta con successo.',
+        'ID transazione:' =>  $transaction-> id,
+        'res' => $nonceFromTheClient,
+        'tierid' => $request['tier_id'],
+        'tier' => $tier,
+        // 'price' => $amount,
+        'validateddata' => $validatedData,
+        'apartment' => $apartment,
+        'gateway' => $gateway,
+
+        'transaction result' => $result,
+        'new_pay' => $newPay,
+
+
+        $request->all()
+      ]);
 
     // IN CASO DI NON SUCCESSO DELLA TRANSAZIONE
-    } else {
-        $errorString = "";
-        foreach ($result->errors->deepAll() as $error) {
-            $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
-        }
-
-        return back()->withErrors('An error occurred with the message: ' . $result->message);
-    }
+    // } else {
+        // $errorString = "";
+        // foreach ($result->errors->deepAll() as $error) {
+            // $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
+        // }
+//
+        // return response()->json([$request->all()]);
+    // }
 
 })->name('payment.send')->middleware('auth');

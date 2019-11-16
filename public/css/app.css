@@ -12217,27 +12217,43 @@ header .navBar li:hover {
   cursor: pointer;
 }
 
-section.row {
+section {
   height: 50vh;
   padding: 30px;
 }
 
-section.row .contact form {
-  width: 100%;
-  font-size: 18px;
+section .my_list_group_item {
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
-section.row .contact form .form {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
+section .my_list_group_item,
+section .list_group_item {
+  border-bottom: 4px solid #bdbdbd;
+  border-bottom-width: 2px;
+  border-collapse: 50%;
 }
 
-section.row .contact form .form .button {
-  margin: 20px 0;
-  padding: 10px;
+section input,
+section textarea {
+  border: none;
+  border-bottom: 3px solid lightgrey;
+  border-radius: 5%;
+}
+
+section .btn,
+section .circle {
+  background-color: gba(239, 83, 80, 1);
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 4px solid #b0bec5;
+  border-radius: 50px;
+}
+
+.card-header h3 {
+  color: #7986cb;
 }
 
 header img {
@@ -12482,5 +12498,36 @@ header.header-absolute a {
 
 .card a {
   cursor: pointer;
+}
+
+* {
+  color: #263238;
+  font-size: 1.2rem;
+}
+
+.container {
+  min-width: 80vw;
+}
+
+@media all and (max-width: 1280px) {
+  * {
+    font-size: 1em;
+    color: #263238;
+  }
+
+  .row::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .photos {
+    height: 50vh;
+    padding: 0 5%;
+  }
+
+  section {
+    height: 50%;
+  }
 }
 
