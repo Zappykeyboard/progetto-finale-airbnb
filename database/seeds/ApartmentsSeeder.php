@@ -24,8 +24,8 @@ class ApartmentsSeeder extends Seeder
              $apartment -> user() -> associate($user);
 
              //Aggiungo valori per chiave esterna tier_id
-             $tier = Tier::inRandomOrder() -> first();
-             $apartment -> tier() -> associate($tier);
+             // $tier = Tier::inRandomOrder() -> first();
+             // $apartment -> tier() -> associate($tier);
 
              $apartment -> save();
     });
