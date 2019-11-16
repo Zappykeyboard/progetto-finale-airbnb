@@ -47,7 +47,7 @@
       <div class="card">
         <div class="servizi">
           <div class="card-header">
-            <h3 class="">Servizi disponibili</h3>
+            <h3 class="">Messaggi ricevuti</h3>
           </div>
       <div class="card-body messages">
       <div class="col-md-12" v-show="!isAbilitedForm" >
