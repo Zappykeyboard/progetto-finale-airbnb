@@ -240,17 +240,7 @@ class ApartmentController extends Controller
     public function show($id)
     {
 
-      // // Crea nuvo oggetto classe Braintree/gateway
-      // $gateway = new Braintree\Gateway([
-      //       'environment' => config('services.braintree.environment'),
-      //       'merchantId' => config('services.braintree.merchantId'),
-      //       'publicKey' => config('services.braintree.publicKey'),
-      //       'privateKey' => config('services.braintree.privateKey')
-      //   ]);
-
-        // PER TEST, TOKEN STATICO ACCOUNT BRAINTREE
-        // $token = "sandbox_7bgcfdq8_hstckbs9tty2wg8q";
-
+  
         $apt = Apartment::findOrFail($id);
 
         //aggiorno le visualizzazioni

@@ -78682,11 +78682,11 @@ $(document).ready(init);
 
 function init() {
   var token = $('meta[name="csrf-token"]').attr('content');
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token; // filePondDropImg();
-
-  var App = new Vue({
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+  var create_apt = new Vue({
     el: '#app'
-  });
+  }); // filePondDropImg();
+
   var message_comp = new Vue({
     el: '#vue_messages'
   }); // Component Pagamento
@@ -85284,8 +85284,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /srv/http/progetto-finale-airbnb/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /srv/http/progetto-finale-airbnb/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/a/Desktop/sviluppo/bool laravel/progetto-finale-airbnb/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/a/Desktop/sviluppo/bool laravel/progetto-finale-airbnb/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
