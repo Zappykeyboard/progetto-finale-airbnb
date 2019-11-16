@@ -40,11 +40,10 @@ class AddUsersForeignKey extends Migration
              });
 
 
-        $table -> bigInteger('tier_id') -> unsigned() ->default('1') -> index();
+        $table -> bigInteger('tier_id') -> unsigned() ->default('1') -> index()->nullable();
         $table -> foreign('tier_id', 'apartment_tiers')
                -> references('id')
-               -> on('tiers')
-               ->onDelete('cascade');
+               -> on('tiers');
        });
 
        // Tabella MESSAGES
@@ -55,6 +54,20 @@ class AddUsersForeignKey extends Migration
                 -> on('apartments')
                 -> onDelete('cascade');
 
+       });
+
+       // TABELLA PAGAMENTI
+       Schema::table('payments', function(Blueprint $table){
+
+         // $table->bigInteger('tier_id')->unsigned();
+         // $table -> foreign('tier_id', 'tier_payment')
+         //        -> references('id')
+         //        -> on('tiers');
+
+         $table -> bigInteger('apartment_id')->unsigned();
+         $table -> foreign('apartment_id', 'apartment_payments')
+                -> references('id')
+                -> on('apartments');
        });
 
     }
@@ -89,6 +102,17 @@ class AddUsersForeignKey extends Migration
         // Drop Chiavi esterne MESSAGES
         Schema::table('messages', function (Blueprint $table) {
           $table -> dropForeign('apartment_messages');
+          $table -> dropColumn('apartment_id');
+
+        });
+
+
+        // Drop Chiavi esterne PAYMENTS
+        Schema::table('payments', function (Blueprint $table) {
+          // $table -> dropForeign('tier_payment');
+          // $table -> dropColumn('tier_id');
+
+          $table -> dropForeign('apartment_payments');
           $table -> dropColumn('apartment_id');
 
         });

@@ -6,7 +6,13 @@
 
 require('./bootstrap');
 
+window.$ = window.jQuery = require('jquery');
 window.Vue = require('vue');
+import BootstrapVue from 'bootstrap-vue' //Importing
+
+Vue.use(BootstrapVue) // Telling Vue to use this in whole application
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,7 +26,6 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -33,8 +38,15 @@ $(document).ready(init);
 
 function init(){
 
+
   var token = $('meta[name="csrf-token"]').attr('content');
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
+
+  console.log(token);
+
+  var create_apt = new Vue({
+      el: '#app'
+  });
 
   // filePondDropImg();
   var App = new Vue({
@@ -44,6 +56,13 @@ function init(){
 
   var message_comp = new Vue({
       el: '#vue_messages'
+  });
+
+
+  // Component Pagamento
+  var payment_comp = new Vue({
+
+      el: '#vue_payment'
   });
 };
 

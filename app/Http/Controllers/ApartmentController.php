@@ -11,6 +11,8 @@ use App\Http\Requests\ApartmentRequest;
 use GuzzleHttp\Client;
 
 
+use Braintree_Transaction;
+
 class ApartmentController extends Controller
 {
     //funzione per calcolare la distanza tra due punti
@@ -195,6 +197,7 @@ class ApartmentController extends Controller
 
         $validatedApt['user_id'] = $request -> user() -> id;
         $validatedApt['visualizations'] = 0;
+        $validatedApt['tier_id'] = 1;
 
         //aggiungo la path per l'immagine
         $file = $request -> file('img');
@@ -218,7 +221,10 @@ class ApartmentController extends Controller
             $item = Feature::findOrFail($feature);
 
             $item -> apartments() -> attach($newApt);
+
+            // dd($item);
           }
+
         }
 
         return redirect('/home');
@@ -233,6 +239,18 @@ class ApartmentController extends Controller
      */
     public function show($id)
     {
+
+      // // Crea nuvo oggetto classe Braintree/gateway
+      // $gateway = new Braintree\Gateway([
+      //       'environment' => config('services.braintree.environment'),
+      //       'merchantId' => config('services.braintree.merchantId'),
+      //       'publicKey' => config('services.braintree.publicKey'),
+      //       'privateKey' => config('services.braintree.privateKey')
+      //   ]);
+
+        // PER TEST, TOKEN STATICO ACCOUNT BRAINTREE
+        // $token = "sandbox_7bgcfdq8_hstckbs9tty2wg8q";
+
         $apt = Apartment::findOrFail($id);
 
         //aggiorno le visualizzazioni
