@@ -42,16 +42,13 @@ function init(){
   var token = $('meta[name="csrf-token"]').attr('content');
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 
-  console.log(token);
 
   var create_apt = new Vue({
       el: '#app'
   });
 
   // filePondDropImg();
-  var App = new Vue({
-    el:'#app'
-  });
+
 
 
   var message_comp = new Vue({
