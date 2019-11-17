@@ -137,7 +137,7 @@ class SearchController extends Controller
 
         $fileName =  "map-" . uniqid() .".png";
 
-        file_put_contents('img/mapTomTom'. $fileName, $response->getBody()->getContents());
+        file_put_contents('img/'. $fileName, $response->getBody()->getContents());
 
         $validatedApt['map_img_path']=$fileName;
 

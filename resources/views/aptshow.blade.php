@@ -24,9 +24,11 @@
   <main>
 
     <div class="photos col-md-12">
-      <img class="otherjpg col-md-12"
+      <img class="otherjpg col-md-12" src=
       @isset($apt->img_path)
-        src="/img/uploads/{{$apt->img_path}}"
+        "/img/uploads/{{$apt->img_path}}"
+      @else
+        "{{asset('img/ap1.jpg')}}"
       @endisset
 
       alt="Foto dell'appartamento">

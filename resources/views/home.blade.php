@@ -24,7 +24,7 @@
 
           <img src=
           @if ($apt->img_path)
-            "{{asset($apt->img_path)}}"
+            "/img/uploads/{{$apt->img_path}}"
           @else
             "{{asset('img/ap1.jpg')}}"
           @endif

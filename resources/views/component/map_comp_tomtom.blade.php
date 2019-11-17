@@ -90,7 +90,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             if (response.data.filename) {
 
               // Creo la src per immagine mappa
-              this.mapImg = '/img/mapTomTom/' + response.data.filename + '';
+              this.mapImg = '/img/' + response.data.filename + '';
               this.mapExists = true;
             }
 
@@ -99,7 +99,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
           .catch(e => {
             console.log("errors", e);
           })
-          // return thisAddress
+          
       }
 
 
