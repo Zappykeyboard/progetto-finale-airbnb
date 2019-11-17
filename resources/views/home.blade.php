@@ -15,7 +15,7 @@
   <div class="flex-container">
 
     <form class="new-apt-form" action="{{route('apt.create')}}">
-        <input class="new-apt-button" type="submit" value="Nuovo..." />
+        <input class="new-apt-button" type="submit" value="+" />
     </form>
 
     @foreach ($apts as $apt)
