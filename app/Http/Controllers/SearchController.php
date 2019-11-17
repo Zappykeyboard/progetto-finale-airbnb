@@ -138,7 +138,7 @@ class SearchController extends Controller
 
         $fileName =  "map-" . uniqid() .".png";
 
-        file_put_contents('img/'. $fileName, $response->getBody()->getContents());
+        file_put_contents('img/mapTomTom'. $fileName, $response->getBody()->getContents());
 
         $validatedApt['map_img_path']=$fileName;
 
@@ -193,29 +193,20 @@ class SearchController extends Controller
                                         'view' => 'Unified',
                                       ]
                                     ]);
-
-
-    $jsonMap = json_decode($responseMap->getBody(), true);
-
-    $fileName =  "map-" . $id .".png";
-
-    file_put_contents('img/mapTomTom/'. $fileName, $response->getBody()->getContents());
-
+     // Cerco img_map_path nel database
+     $pat_img = Apartment::findOrFail($id) -> map_img_path;
   }
-
-
-  $mappaImg = $response;
 
       return response()->json([
         "body" => $apiKey,
         "ciaooooo",
         $request -> address,
         "body" => $body,
-        "mappa" => $jsonMap,
-        "filename" => $fileName,
+        // "mappa" => $jsonMap,
+        "filename" => $pat_img,
         $lat,
         $lon,
-        $response ->getBody()
+        // $response ->getBody()
         // "correct_address" => $body-> results
         // "response_tomTom" => $response
       ]);

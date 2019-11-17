@@ -12226,6 +12226,11 @@ section .my_list_group_item {
   margin-bottom: 1rem;
 }
 
+section #vue_map {
+  font-weight: bolder;
+  color: #6574cd;
+}
+
 section .my_list_group_item,
 section .list_group_item {
   border-bottom: 4px solid #bdbdbd;
