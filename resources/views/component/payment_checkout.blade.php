@@ -34,16 +34,15 @@
 
         <!-- Tabella delle sponsorizzazioni -->
         <div class="table-responsive-lg" v-show="show_form">
-          <table class="table table-hover" v-for="one in resultsTiers">
+          <table class="table table-hover" >
             <thead class="thead-light">
               <tr>
                 <th scope="col">Level</th>
                 <th scope="col">Price</th>
                 <th scope="col">Duration</th>
-
               </tr>
             </thead>
-            <tbody>
+            <tbody v-for="one in resultsTiers">
               <tr>
                 <th scope="row" v-for="(value, name) in one">@{{ value }}</th>
                 <td>
