@@ -91,7 +91,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             if (response.data.filename) {
 
               // Creo la src per immagine mappa
-              this.mapImg = '/img/mapTomTom/' + response.data.filename + '';
+              this.mapImg = '/img/' + response.data.filename + '';
             }
 
             console.log('map tom tom response', response, response.data.filename, this.mapImg);
