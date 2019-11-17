@@ -36,6 +36,18 @@
 }
 
 
+  span.btn{
+
+    // padding: 10px;
+    background-color: rgba(239,83,80,1);
+    color: white;
+    a{
+      color: white;
+    }
+  }
+  .circle{
+    border-radius: 100%;
+  }
 
 @media all and (max-width: 1280px) {
 

@@ -89,13 +89,14 @@ section{
     border-bottom: 3px solid lightgrey;
     border-radius: 5%;
   }
+}
 
-  .btn,
-  .circle{
-    background-color: $bg_btn_etc;
+
+  .btn.circle{
+    border-radius: 50%;
   }
 
-}
+
 
 
   .contact{
@@ -111,14 +112,6 @@ section{
   h3{
     color: $card-header-color;
   }
-}
-
-.card,
-.list_group,
-.list_group_item{
-
-
-
 }
 
 

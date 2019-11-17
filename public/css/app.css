@@ -12256,9 +12256,8 @@ section textarea {
   border-radius: 5%;
 }
 
-section .btn,
-section .circle {
-  background-color: gba(239, 83, 80, 1);
+.btn.circle {
+  border-radius: 50%;
 }
 
 .contact {
@@ -12544,6 +12543,19 @@ header.header-absolute a {
 
 .container {
   min-width: 80vw;
+}
+
+span.btn {
+  background-color: #ef5350;
+  color: white;
+}
+
+span.btn a {
+  color: white;
+}
+
+.circle {
+  border-radius: 100%;
 }
 
 @media all and (max-width: 1280px) {
