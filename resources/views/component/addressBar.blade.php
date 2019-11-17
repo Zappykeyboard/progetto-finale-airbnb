@@ -11,11 +11,7 @@
 
       <div class="center_on_page" v-show='!formShow'>
         <label class="white" for="address">Dove si trova l'appartamento? </label>
-        <input id="address-field" type="text" name="address"
-        @isset($apt->address)
-          v-bind:value="prev_address"
-        @endisset
-        required>
+        <input id="address-field" type="text" name="address" required>
         <input  @click="setFormShow()" type="button" value="GO"></input>
       </div>
 
