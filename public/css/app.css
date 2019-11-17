@@ -12298,7 +12298,13 @@ header.header-absolute {
 }
 
 header.header-absolute a {
-  color: white;
+  color: black;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+header.header-absolute a:hover {
+  text-decoration: none;
 }
 
 .img-background {
@@ -12420,7 +12426,6 @@ header.header-absolute a {
   max-width: 400px;
   height: 400px;
   margin: 25px auto;
-  border: 1px black;
 }
 
 .apartments-wrapper .flex-container .apt-card img {
@@ -12534,5 +12539,26 @@ header.header-absolute a {
     width: 100%;
     height: 100%;
   }
+}
+
+.new-apt-form {
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  margin: 25px auto;
+}
+
+.new-apt-form .new-apt-button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #ea1226;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.new-apt-form .new-apt-button:hover {
+  background-color: #ea1226a8;
 }
 
