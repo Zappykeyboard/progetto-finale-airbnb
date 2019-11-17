@@ -142,6 +142,7 @@
                       :tier_id="{{ $apt-> tier_id }}"
                       :tier_active="{{ $tier_active }}"
                       :payments_story="{{ $storyPayments }}"
+                      :apt_views="  {{ $apt -> visualizations }}"
             ><payments>
           </div>
 

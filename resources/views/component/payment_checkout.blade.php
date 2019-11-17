@@ -1,15 +1,40 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
 <script type="text/x-template" id="template_payments">
 
   <div class="">
+    <!-- Finestra modale per show statistiche -->
+    <div class="modal_view" v-show="showStatistic">
+      <div class="modal_box">
+        <div class="card-header" style="display: flex;justify-content: space-between;">
+          <h3>Statistics views</h3>
+          <!-- Icona per tornare a Sponsorizzazioni -->
+          <span class="ico_chart" @click="showModal()">
+            <i class="fas fa-chart-bar"></i>
+          </span>
+        </div>
+        <div class="modal_body">
+          <div class="graph" style="position: relative; height:40vh; width:40vw">
+            <canvas id="lineGraph" ></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   <!-- Info Piano Sottoscrizione -->
-  <div class="" id="paymeffnt-form"  method="post" v-if="!showPayBrayntree">
+  <div class="" id="paymeffnt-form"  method="post" v-if="!showPayBrayntree & !showStatistic">
 
     <div class="list_group">
-      <div class="card-header">
+      <div class="card-header" style="display: flex;justify-content: space-between;">
           <h3 class="card-title">Sponsorizzazioni</h3>
+          <!-- Icona per statistivhe -->
+          <span class="ico_chart" @click="showModal()">
+            <i class="fas fa-chart-bar"></i>
+          </span>
       </div>
+
       <div class="list_group_item">
         <h5 class="card-title" v-if="!seenSubsBtn">Sponsorizzazioni del tuo appartamento</h5>
         <h5 class="card-title" v-if="seenSubsBtn">Nessuna Sponsorizzazione attiva</h5>
@@ -121,6 +146,8 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         activePayBtn: false,
         payment_method_nonce: '',
         selected_tier: this.selected_tier_pay,
+        showStatistic: false,
+        views: this.apt_views
 
       }
 
@@ -136,7 +163,8 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
       tier_active: Array,
       payments_story: Array,
       tier_id: Number,
-      selected_tier_pay: Number
+      selected_tier_pay: Number,
+      apt_views: Number
 
     },
 
@@ -177,6 +205,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         return this.results.msg_subs;
       },
 
+
     },
 
     methods: {
@@ -190,6 +219,38 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
       this.seenSubsBtn = false;
       this.show_form= false;
       this.activePayBtn= false;
+    },
+
+    chartJS(){
+
+      var monthsShort = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ];
+
+      var views = this.views;
+
+      var ctx = document.getElementById('lineGraph').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: monthsShort,
+              datasets: [{
+                  label: views,
+                  data: [views, 3, 4, 4, 8,17, 36, 12,39,4,22],
+              }]
+          },
+      });
+    },
+
+    showModal(){
+      this.showStatistic = !this.showStatistic;
+
+      if (this.showStatistic) {
+
+        this.chartJS();
+
+      }
     },
 
     firstAxios(){
