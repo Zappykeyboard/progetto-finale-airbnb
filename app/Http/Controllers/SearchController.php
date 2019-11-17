@@ -194,17 +194,20 @@ class SearchController extends Controller
                                     ]);
      // Cerco img_map_path nel database
      $pat_img = Apartment::findOrFail($id) -> map_img_path;
+     if($pat_img){
+         return response()->json([
+           $request -> address,
+           "body" => $body,
+           // "mappa" => $jsonMap,
+           "filename" => $pat_img,
+           $lat,
+           $lon
+         ]);
+   }
   }
-
-      return response()->json([
-        $request -> address,
-        "body" => $body,
-        // "mappa" => $jsonMap,
-        "filename" => $pat_img,
-        $lat,
-        $lon
-      ]);
-
+    return response()->json([
+      "Couldn't find map data"
+    ],404);
 
   }
 

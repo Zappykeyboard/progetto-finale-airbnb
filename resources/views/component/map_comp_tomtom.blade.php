@@ -1,8 +1,8 @@
 <script type="text/x-template" id="template_map">
 
-  <div class="">
 
-    <!-- <div class=""> -->
+
+   <div class="">
       <div class="card-header">
         <h3 class="card-title">@{{ address }}</h3>
       </div>
@@ -11,12 +11,12 @@
         <div class="card-img-overlay">
           <p class="card-text">@{{ msgDefault }}</p>
         </div>
-        <span class="pointer">
+        <span v-show="mapExists" class="pointer">
           <i class="fas fa-map-marker fa-2x"></i>
         </span>
       </div>
-    <!-- </div> -->
-  </div>
+    </div>
+
 
 </script>
 
@@ -36,10 +36,10 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
       return {
 
         address: this.apt_address,
-        mapImg: "",
+        mapImg: "{{ asset('/img/img_front/map_default.png') }}",
         msgDefault: "Nessuna Mappa Disponibile",
         thisAptId: this.apt_id,
-
+        mapExists: false
       }
 
     },
@@ -47,7 +47,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
     props: {
 
       apt_address : String,
-      apt_id: Number
+      apt_id: String
     },
 
     mounted() {
@@ -84,14 +84,14 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             var objAddress = response.data.body.results[0].address;
             // Assegno il nome corretto di indirizzo
             this.address = objAddress.freeformAddress;
-            // Cambio messagiio nessuna mappa con:
+            // Cambio messaggio nessuna mappa con:
             this.msgDefault = "MAPPA";
-            this.mapImg = "{{ asset('/img/img_front/map_default.png') }}";
 
             if (response.data.filename) {
 
               // Creo la src per immagine mappa
               this.mapImg = '/img/mapTomTom/' + response.data.filename + '';
+              this.mapExists = true;
             }
 
             console.log('map tom tom response', response, response.data.filename, this.mapImg);

@@ -149,8 +149,8 @@
             {{-- Mappa --}}
             <div id="vue_map" class="col-lg-6 col-md-12">
                 <map-tom-tom
-                      :apt_address= '"{{ $apt -> address }}"'
-                      :apt_id= "{{ $apt -> id}}"
+                      apt_address= "{{ $apt -> address }}"
+                      apt_id= "{{ $apt -> id}}"
                 ></map-tom-tom>
             </div>
 
