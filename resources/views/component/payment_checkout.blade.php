@@ -15,8 +15,8 @@
           </span>
         </div>
         <div class="modal_body">
-          <div class="graph" style="position: relative; height:40vh; width:40vw">
-            <canvas id="lineGraph" ></canvas>
+          <div class="graph">
+            <canvas id="lineGraph" width="100%" height="50%"></canvas>
           </div>
         </div>
       </div>
