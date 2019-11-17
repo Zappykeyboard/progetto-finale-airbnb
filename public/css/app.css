@@ -12217,6 +12217,10 @@ header .navBar li:hover {
   cursor: pointer;
 }
 
+tr {
+  background-color: #c5cae9;
+}
+
 section {
   padding: 30px;
 }
@@ -12224,6 +12228,18 @@ section {
 section .my_list_group_item {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+section #vue_map {
+  font-weight: bolder;
+  color: #6574cd;
+}
+
+section #vue_map .pointer {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 section .my_list_group_item,

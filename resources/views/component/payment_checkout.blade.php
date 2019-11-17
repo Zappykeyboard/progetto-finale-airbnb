@@ -1,14 +1,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.js"></script>
 <script type="text/x-template" id="template_payments">
 
-  <div class="col-lg-12 col-sm-12">
+  <div class="">
 
   <!-- Info Piano Sottoscrizione -->
   <div class="" id="paymeffnt-form"  method="post" v-if="!showPayBrayntree">
 
-    <div class="list_group  text-center">
+    <div class="list_group">
       <div class="card-header">
-        Piano Attivo
+          <h3 class="card-title">Sponsorizzazioni</h3>
       </div>
       <div class="list_group_item">
         <h5 class="card-title" v-if="!seenSubsBtn">Sponsorizzazioni del tuo appartamento</h5>
@@ -33,19 +33,22 @@
 
 
         <!-- Tabella delle sponsorizzazioni -->
-        <div class="table-responsive-lg" v-show="show_form" v-for="one in resultsTiers">
-          <table class="table table-hover">
+        <div class="table-responsive-lg" v-show="show_form">
+          <table class="table table-hover" v-for="one in resultsTiers">
             <thead class="thead-light">
               <tr>
-                <th scope="col" v-for="(value, name) in one">@{{ name }} </th>
-                <td>
-                  <input class="checkbox_tier" type="checkbox" name="tier_id" :checked="active" :value="one.id" @click="check($event)"/>
-                </td>
+                <th scope="col">Level</th>
+                <th scope="col">Price</th>
+                <th scope="col">Duration</th>
+
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row" v-for="(value, name) in one">@{{ value }}</th>
+                <td>
+                  <input class="checkbox_tier" type="checkbox" name="tier_id" :checked="active" :value="one.id" @click="check($event)"/>
+                </td>
               </tr>
             </tbody>
           </table>

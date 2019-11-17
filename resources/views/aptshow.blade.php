@@ -9,7 +9,7 @@
 @section('content')
 
   @include('component.messages')
-
+  @include('component.map_comp_tomtom')
 
   @php
     use App\Tier;
@@ -133,15 +133,26 @@
             $storyPayments = $apt -> payments()->get();
           @endphp
         {{-- componenete pagamento --}}
-        <section id="vue_payment" class="row">
+        <section class="row">
 
-          <payments
-                    :apt_id= "{{ $apt -> id}}"
-                    :user_id="{{ $apt->user-> id }}"
-                    :tier_id="{{ $apt-> tier_id }}"
-                    :tier_active="{{ $tier_active }}"
-                    :payments_story="{{ $storyPayments }}"
-          ><payments>
+          <div id="vue_payment" class="col-lg-6 col-md-12">
+            <payments
+                      :apt_id= "{{ $apt -> id}}"
+                      :user_id="{{ $apt->user-> id }}"
+                      :tier_id="{{ $apt-> tier_id }}"
+                      :tier_active="{{ $tier_active }}"
+                      :payments_story="{{ $storyPayments }}"
+            ><payments>
+          </div>
+
+
+            {{-- Mappa --}}
+            <div id="vue_map" class="col-lg-6 col-md-12">
+                <map-tom-tom
+                      :apt_address= '"{{ $apt -> address }}"'
+                      :apt_id= "{{ $apt -> id}}"
+                ></map-tom-tom>
+            </div>
 
         </section>
         @endif
