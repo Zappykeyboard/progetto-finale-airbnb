@@ -1,7 +1,9 @@
 @extends('layouts.base')
 @php
   use App\Apartment;
-  $apts = Apartment::where('user_id', Auth::id())->get();
+  $apts = Apartment::where('user_id', Auth::id())
+          ->orderBy('id', 'desc')
+          ->get();
 
 @endphp
 @section('content_header')
