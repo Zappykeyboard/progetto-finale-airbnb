@@ -7,7 +7,7 @@
         <img v-bind:src="mapImg" class="card-img" alt="map_TOM_TOM">
         <div class="card-img-overlay">
           <h5 class="card-title">@{{ msgDefault }}</h5>
-          <p class="card-text">@{{ apt_address }}</p>
+          <p class="card-text">@{{ address }}</p>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         address: this.apt_address,
         mapImg: "/img/img_front/map_default.png",
         msgDefault: "Nessuna Mappa Disponibile",
-        thisAptId: this.apt_id
+        thisAptId: this.apt_id,
 
       }
 
@@ -68,16 +68,26 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 
 
       axiosMap(){
+
+        // var thisAddress = this.address;
+
         console.log("axiosMap");
-        axios.get(`/map/` + this.thisAptId)
+        axios.post(`/map/` + this.thisAptId, {address: this.apt_address})
           .then(response => {
 
-            console.log('map tom tom response', response);
+            var objAddress = response.data.body.results[0].address;
+            // Assegno il nome corretto di indirizzo
+            this.address = objAddress.freeformAddress;
+            // Cambio messagiio nessuna mappa con:
+            this.msgDefault = "MAPPA";
+            // Creo la src per immagine mappa
+            this.mapImg = "/img/mapTomTom/" + response.data.filename;
+            console.log('map tom tom response', response, response.data.filename);
           })
           .catch(e => {
             console.log("errors", e);
           })
-
+          // return thisAddress
       }
 
 

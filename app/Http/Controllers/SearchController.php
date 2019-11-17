@@ -94,9 +94,9 @@ class SearchController extends Controller
     **/
     public function getMapData($validatedApt){
 
-    //Recupera coordinate e mappa
+    // Recupera coordinate e mappa
     $apiKey = env('TOMTOM_APIKEY');
-
+    $apiKey = "6B7kOXsPocBRwRtDM3Sn9kWBgAtBAMKs";
     $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
 
     $response = $tomtom->request('GET',
@@ -147,57 +147,75 @@ class SearchController extends Controller
       return ($validatedApt);
 
   }
+  //
 
-  /**
-  * Chiede a TomTom latitudine, longitudine e mappa
-  * richiede array
-  * restituisce array
-  **/
-  public function getMapFront($validatedApt){
 
-  //Recupera coordinate e mappa
-  // $apiKey = env('TOMTOM_APIKEY');
+  // /**
+  // * Chiede a TomTom mappa per front
+  // **/
+  public function getMapFront(Request $request, $id){
   //
-  // $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+  // //Recupera coordinate e mappa
+  $apiKey = env('TOMTOM_APIKEY');
   //
-  // $response = $tomtom->request('GET',
-  //                             '/search/2/geocode/'. $validatedApt['address'] . '.json',
-  //                             [
-  //                               'query'=> [
-  //                                 'key'=>$apiKey,
-  //                                 'extendedPostalCodesFor'=>'PAD',
-  //                                 'limit'=>'1'
-  //                                 ]
-  //                               ]);
-  // $body = json_decode($response->getBody(), true);
+  $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
+  //
+  $response = $tomtom->request('GET',
+                              '/search/2/geocode/'. $request -> address . '.json',
+                              [
+                                'query'=> [
+                                  'key'=>$apiKey,
+                                  'extendedPostalCodesFor'=>'PAD',
+                                  'limit'=>'1'
+                                  ]
+                                ]);
+  $body = json_decode($response->getBody(), true);
+  //
+  if ( $body['results']){
+    //recupero lat e lon
+    $positions = $body['results'][0]['position'];
+    $lat = $positions['lat'];
+    $lon = $positions['lon'];
 
-  // if ( $body['results']){
-  //
-  //       //recupero la mappa
-  //       $response = $tomtom->request('GET',
-  //                                     '/map/1/staticimage',
-  //                                     [
-  //                                       'query' => [
-  //                                         'key'=>$apiKey,
-  //                                         'layer' => 'hybrid',
-  //                                         'style' => 'main',
-  //                                         'format' => 'png',
-  //                                         'zoom' => '17',
-  //                                         'center' => $lon.', '.$lat,
-  //                                         'width' => '512',
-  //                                         'height' => '512',
-  //                                         'view' => 'Unified',
-  //                                       ]
-  //                                     ]);
-  //
-  //     // $fileName =  "map-" . uniqid() .".png";
-  //
-  //
-  //
-  // }
+      //recupero la mappa
+      $responseMap = $tomtom->request('GET',
+                                    '/map/1/staticimage',
+                                    [
+                                      'query' => [
+                                        'key'=>$apiKey,
+                                        'layer' => 'hybrid',
+                                        'style' => 'main',
+                                        'format' => 'png',
+                                        'zoom' => '20',
+                                        'center' => $lon.', '.$lat,
+                                        'width' => '512',
+                                        'height' => '512',
+                                        'view' => 'Unified',
+                                      ]
+                                    ]);
+
+
+    $jsonMap = json_decode($responseMap->getBody(), true);
+
+    $fileName =  "map-" . $id .".png";
+
+    file_put_contents('img/mapTomTom/'. $fileName, $response->getBody()->getContents());
+
+  }
+
+
+  $mappaImg = $response;
 
       return response()->json([
-        "body" => "ciaooooooo",
+        "body" => $apiKey,
+        "ciaooooo",
+        $request -> address,
+        "body" => $body,
+        "mappa" => $jsonMap,
+        "filename" => $fileName,
+        $lat,
+        $lon
+        // "correct_address" => $body-> results
         // "response_tomTom" => $response
       ]);
 
