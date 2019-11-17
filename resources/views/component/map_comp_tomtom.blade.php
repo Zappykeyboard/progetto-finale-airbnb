@@ -3,11 +3,13 @@
   <div class="">
 
     <!-- <div class=""> -->
+      <div class="card-header">
+        <h3 class="card-title">@{{ address }}</h3>
+      </div>
       <div class="card">
         <img id="path_map" v-bind:src="mapImg" class="card-img" alt="map_TOM_TOM">
         <div class="card-img-overlay">
-          <h5 class="card-title">@{{ msgDefault }}</h5>
-          <p class="card-text">@{{ address }}</p>
+          <p class="card-text">@{{ msgDefault }}</p>
         </div>
         <span class="pointer">
           <i class="fas fa-map-marker fa-2x"></i>

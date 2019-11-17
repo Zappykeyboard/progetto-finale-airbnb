@@ -12217,6 +12217,10 @@ header .navBar li:hover {
   cursor: pointer;
 }
 
+tr {
+  background-color: #c5cae9;
+}
+
 section {
   padding: 30px;
 }
