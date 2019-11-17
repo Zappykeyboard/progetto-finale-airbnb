@@ -129,7 +129,7 @@ header img {
 
 .photos {
   width: 100%;
-  height: calc(100vh - 75px);
+  // height: calc(100vh - 75px);
 
   img{
 
@@ -143,7 +143,7 @@ header img {
     // height: 100vh;
   }
   .photos{
-    height: calc(100vh - 75px);
-    padding: 0 5%;
+    // height: calc(50vh - 75px);
+    // padding: 0 5%;
   }
 }
