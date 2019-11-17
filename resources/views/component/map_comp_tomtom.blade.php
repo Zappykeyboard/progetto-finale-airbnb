@@ -81,7 +81,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             // Cambio messagiio nessuna mappa con:
             this.msgDefault = "MAPPA";
             // Creo la src per immagine mappa
-            this.mapImg = "/img/mapTomTom/" + response.data.filename;
+            // this.mapImg = "/img/mapTomTom/" + response.data.filename;
             console.log('map tom tom response', response, response.data.filename);
           })
           .catch(e => {

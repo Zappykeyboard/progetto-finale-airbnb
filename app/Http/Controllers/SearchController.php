@@ -214,7 +214,8 @@ class SearchController extends Controller
         "mappa" => $jsonMap,
         "filename" => $fileName,
         $lat,
-        $lon
+        $lon,
+        $response ->getBody()
         // "correct_address" => $body-> results
         // "response_tomTom" => $response
       ]);
