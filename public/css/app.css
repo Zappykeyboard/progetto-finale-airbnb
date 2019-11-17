@@ -12549,6 +12549,7 @@ header.header-absolute a:hover {
 }
 
 .new-apt-form .new-apt-button {
+  font-size: 6rem;
   width: 100%;
   height: 100%;
   border: none;
