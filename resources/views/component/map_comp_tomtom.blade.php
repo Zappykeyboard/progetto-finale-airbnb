@@ -2,7 +2,7 @@
 
   <div class="">
 
-    <div class="">
+    <!-- <div class=""> -->
       <div class="card">
         <img id="path_map" v-bind:src="mapImg" class="card-img" alt="map_TOM_TOM">
         <div class="card-img-overlay">
@@ -10,9 +10,7 @@
           <p class="card-text">@{{ address }}</p>
         </div>
       </div>
-    </div>
-    <input style="z-index: 5" type="button" name="ss" value="mappa" @click="axiosMap()">
-
+    <!-- </div> -->
   </div>
 
 </script>
