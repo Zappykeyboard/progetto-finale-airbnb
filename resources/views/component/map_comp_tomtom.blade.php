@@ -9,6 +9,9 @@
           <h5 class="card-title">@{{ msgDefault }}</h5>
           <p class="card-text">@{{ address }}</p>
         </div>
+        <span class="pointer">
+          <i class="fas fa-map-marker fa-2x"></i>
+        </span>
       </div>
     <!-- </div> -->
   </div>

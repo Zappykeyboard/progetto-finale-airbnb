@@ -12231,6 +12231,13 @@ section #vue_map {
   color: #6574cd;
 }
 
+section #vue_map .pointer {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 section .my_list_group_item,
 section .list_group_item {
   border-bottom: 4px solid #bdbdbd;

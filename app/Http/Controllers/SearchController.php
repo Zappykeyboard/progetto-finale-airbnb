@@ -186,7 +186,7 @@ class SearchController extends Controller
                                         'layer' => 'hybrid',
                                         'style' => 'main',
                                         'format' => 'png',
-                                        'zoom' => '20',
+                                        'zoom' => '7',
                                         'center' => $lon.', '.$lat,
                                         'width' => '512',
                                         'height' => '512',
@@ -198,17 +198,12 @@ class SearchController extends Controller
   }
 
       return response()->json([
-        "body" => $apiKey,
-        "ciaooooo",
         $request -> address,
         "body" => $body,
         // "mappa" => $jsonMap,
         "filename" => $pat_img,
         $lat,
-        $lon,
-        // $response ->getBody()
-        // "correct_address" => $body-> results
-        // "response_tomTom" => $response
+        $lon
       ]);
 
 
