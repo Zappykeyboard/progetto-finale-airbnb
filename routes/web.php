@@ -40,7 +40,7 @@ Route::post('/{id}', 'ApartmentController@update')
       ->name('apt.update')
       ->middleware('auth');
 
-Route::get('/{id}', 'ApartmentController@destroy')
+Route::get('/apt/{id}/delete', 'ApartmentController@destroy')
       ->name('apt.destroy')
       ->middleware('auth');
 
