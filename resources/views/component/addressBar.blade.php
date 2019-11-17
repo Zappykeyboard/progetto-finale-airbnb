@@ -2,7 +2,7 @@
 <script type="text/x-template" id="template_addresBar">
   <div class="myContainer">
     <div class="img-background">
-      <img src="/img/imag1.jpg" alt="" v-show='!formShow'>
+      <img src="{{asset('img/imag1.jpg')}}" alt="" v-show='!formShow'>
 
 
     <form class="apt-form" v-bind:action="action_route" method="POST" enctype="multipart/form-data">

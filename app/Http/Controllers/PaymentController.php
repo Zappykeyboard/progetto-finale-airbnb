@@ -32,10 +32,10 @@ class PaymentController extends Controller
 
         $duration =  $id_tier_active -> duration;
         $last_payment =  Carbon::parse($payment -> created_at);
-        //
+
         $expiration_date = Carbon::parse($payment -> created_at) -> addHour($duration);
         $now = Carbon::now();
-        //
+
         $msg = "Expiration Time -" . $expiration_date->diffInHours($now,true) . " Hours";
 
 
@@ -60,7 +60,6 @@ class PaymentController extends Controller
 
         return response()->json([
 
-          "ciao",
           "last_payment" => $last_payment,
           "expiration_date" => $expiration_date,
           $duration,
@@ -174,7 +173,7 @@ class PaymentController extends Controller
     public function showTiers()
     {
         $tiers = Tier::where('id', '>', 1)->select('id', 'price', 'level', 'duration')->get();
-        
+
         return response()->json([
 
           "tiers" => $tiers

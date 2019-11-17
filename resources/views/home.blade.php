@@ -24,9 +24,9 @@
 
           <img src=
           @if ($apt->img_path)
-            "{{$apt->img_path}}"
+            "{{asset($apt->img_path)}}"
           @else
-            "/img/ap1.jpg"
+            "{{asset('img/ap1.jpg')}}"
           @endif
            alt="foto appartamento">
 

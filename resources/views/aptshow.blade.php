@@ -134,7 +134,7 @@
           @endphp
         {{-- componenete pagamento --}}
         <section id="vue_payment" class="row">
-      
+
           <payments
                     :apt_id= "{{ $apt -> id}}"
                     :user_id="{{ $apt->user-> id }}"
@@ -142,7 +142,7 @@
                     :tier_active="{{ $tier_active }}"
                     :payments_story="{{ $storyPayments }}"
           ><payments>
-      
+
         </section>
         @endif
 
