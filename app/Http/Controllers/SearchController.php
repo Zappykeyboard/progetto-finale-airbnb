@@ -96,7 +96,6 @@ class SearchController extends Controller
 
     // Recupera coordinate e mappa
     $apiKey = env('TOMTOM_APIKEY');
-    $apiKey = "6B7kOXsPocBRwRtDM3Sn9kWBgAtBAMKs";
     $tomtom = new Client(['base_uri' => 'https://api.tomtom.com']);
 
     $response = $tomtom->request('GET',
