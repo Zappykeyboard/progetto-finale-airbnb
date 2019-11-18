@@ -11,7 +11,7 @@
       <div class="card">
 
         <div class="card-header">
-            <label class="col-lg-12" for="sender_email" name="sender_email">Inserisci la tua mail</label>
+            <label class="" for="sender_email" name="sender_email">Inserisci la tua mail</label>
             <input class="col-lg-12" type="email" name="sender_email" v-model="email"/>
         </div>
 
@@ -142,7 +142,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         };
 
 
-        console.log(this.textarea);
+        //console.log(this.textarea);
         axios.post('/message/create/' + this.apt_id, msg)
           .then(function(res){
 
@@ -150,12 +150,13 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             this.email = "";
 
             console.log(res);
+            location.reload();
           })
           .catch(function(err){
             console.log(err);
           });
 
-          console.log(msg);
+        //  console.log(msg);
 
       }
 
@@ -168,13 +169,13 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
       'email': function(val){
 
         this.email = val;
-        console.log(this.email);
+        //console.log(this.email);
       },
 
       'textarea': function(val){
 
         this.textarea = val;
-        console.log(this.textarea);
+        //console.log(this.textarea);
       },
 
 

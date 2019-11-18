@@ -32,7 +32,7 @@
 
           <div class="info col-md-4 form-group">
             <h2>Informazioni:</h2>
-            <label for="mq">Dimensioni</label>
+            <label for="mq">Dimensioni in mq</label>
             <input type="number" name="mq" v-bind:value="prev_mq" required>
 
             <label for="rooms">Numero di camere</label>

@@ -45,7 +45,7 @@ class IndexController extends Controller
       });
 
       $apts = Apartment::where('tier_id', '>', '0')
-                ->orderBy('tier_id', 'desc')
+                -> orderBy('tier_id', 'desc')
                 -> take(9)
                 -> get();
       $features = Feature::all();

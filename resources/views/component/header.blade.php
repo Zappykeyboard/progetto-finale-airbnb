@@ -16,7 +16,7 @@
 
       @else
 
-        <li> <a href="{{route('home')}}">Benvenuto, {{ Auth::user()->lastname}}</a>  </li>
+        <li> <a href="{{route('home')}}">Benvenuto, {{ Auth::user()->firstname}}</a>  </li>
         <li>  <a href="{{route('logout')}}"
           onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">

@@ -281,7 +281,7 @@ window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         //TODO nascondere nel back end
         // var data = new FormData();
         // data.append( 'tier_id', this.selected_tier);
-        console.log("dataaaaaaa", this.selected_tier, tier_for_braintree);
+        //console.log("dataaaaaaa", this.selected_tier, tier_for_braintree);
 
         braintree.dropin.create({
           authorization: client_token,

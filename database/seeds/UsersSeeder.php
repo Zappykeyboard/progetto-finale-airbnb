@@ -15,8 +15,8 @@ class UsersSeeder extends Seeder
     {
         factory(User::class, 20)->create();
         $userData = [
-          'firstName'=>'TestName',
-          'lastName' => 'TestLastName',
+          'firstName'=>'Edoardo',
+          'lastName' => "D'Ambrosio",
           'birthdate' => '1990/01/04',
           'password' => bcrypt('password'),
           'email' => 'email@prova.it'
