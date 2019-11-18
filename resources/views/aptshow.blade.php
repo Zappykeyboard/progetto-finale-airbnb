@@ -61,34 +61,34 @@
             <li class="my_list_group_item d-flex justify-content-between align-items-center">
               Dimensioni:
               <span class="">mq</span>
-              <span class="badge badge-primary badge-pill">{{$apt->mq}}</span>
+              <span class="btn circle">{{$apt->mq}}</span>
             </li>
 
             <li class="my_list_group_item d-flex justify-content-between align-items-center">
               Numero di camere:
-              <span class="badge badge-primary badge-pill">{{$apt->rooms}}</span>
+              <span class="btn circle">{{$apt->rooms}}</span>
             </li>
 
             <li class="my_list_group_item d-flex justify-content-between align-items-center">
               Posti letto:
-              <span class="badge badge-primary badge-pill">{{$apt->beds}}</span>
+              <span class="btn circle">{{$apt->beds}}</span>
             </li>
 
             <li class="my_list_group_item d-flex justify-content-between align-items-center">
               Numero di bagni:
-              <span class="badge badge-primary badge-pill">{{$apt->bathrooms}}</span>
+              <span class="btn circle">{{$apt->bathrooms}}</span>
             </li>
 
             <li class="my_list_group_item d-flex justify-content-between align-items-center">
               Indirizzo:
-              <span class="badge badge-primary badge-pill">{{$apt->address}}</span>
+              <span class="btn">{{$apt->address}}</span>
             </li>
 
             @if(Auth::id()==$apt->user->id)
             <li class="my_list_group_item d-flex justify-content-between align-items-center">
               Visualizzazioni: {{$apt-> visualizations}} <br>
-              <a href="{{route('apt.edit', $apt->id)}}">Modifica...</a> <br>
-              <a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a> <br>
+              <span class="btn"><a href="{{route('apt.edit', $apt->id)}}">Modifica...</a></span> <br>
+              <span class="btn"><a href="{{route('apt.destroy', $apt->id)}}">!!ELIMINA!!</a></span> <br>
             </li>
             @endif
           </div>
@@ -144,6 +144,7 @@
                       :tier_id="{{ $apt-> tier_id }}"
                       :tier_active="{{ $tier_active }}"
                       :payments_story="{{ $storyPayments }}"
+                      :apt_views="  {{ $apt -> visualizations }}"
             ><payments>
           </div>
 
